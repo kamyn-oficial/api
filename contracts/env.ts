@@ -29,9 +29,6 @@ declare module '@ioc:Adonis/Core/Env' {
     SMTP_PORT: any
     SMTP_USER: any
     SMTP_PASSWORD: any
-    GOOGLE_MAPS_API_KEY: string
-    MAP_BOX_MAPS_API_KEY: string
-    MAPS_SERVICE: 'GOOGLE' | 'MAP_BOX'
     APP_FRONT_URL: string
     USER_ADM_NAME: string
     USER_ADM_EMAIL: string

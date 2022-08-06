@@ -31,7 +31,6 @@ export default Env.rules({
   SMTP_PORT: Env.schema.string(),
   SMTP_USER: Env.schema.string(),
   SMTP_PASSWORD: Env.schema.string(),
-  GOOGLE_MAPS_API_KEY: Env.schema.string(),
   USER_ADM_NAME: Env.schema.string(),
   USER_ADM_EMAIL: Env.schema.string(),
   USER_ADM_PASSWORD: Env.schema.string()

@@ -11,8 +11,7 @@
     "Config": "config",
     "Database": "database"
   },
-  "metaFiles": [
-    {
+  "metaFiles": [{
       "pattern": "app/views/**/*.edge",
       "reloadServer": false
     },
@@ -23,5 +22,8 @@
   ],
   "preloads": ["./start/routes", "./start/kernel"],
   "providers": ["./providers/AppProvider", "@adonisjs/core", "@adonisjs/ally"],
-  "aceProviders": ["@adonisjs/repl"]
+  "aceProviders": ["@adonisjs/repl"],
+  "directories": {
+    "public": "./app/Assets"
+  }
 }
