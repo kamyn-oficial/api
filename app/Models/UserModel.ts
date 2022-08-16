@@ -55,9 +55,6 @@ const schema = new Schema<UserSchema>({
   avatarUrl: {
     type: String
   },
-  solicitation: {
-    type: String
-  },
   createdAt: {
     type: Number
   }

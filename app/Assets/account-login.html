@@ -429,7 +429,7 @@
 	<div class="container">
 		<ul class="breadcrumbs">
 			<li><a href="index.html">Início</a></li>
-			<li><span>Registrar</span></li>
+			<li><span>Entrar</span></li>
 		</ul>
 	</div>
 </div>
@@ -437,37 +437,22 @@
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-md-18 col-lg-12">
-				<h2 class="text-center">Registrar</h2>
+				<h2 class="text-center">Entrar</h2>
 				<div class="form-wrapper">
-					<p>Para acessar sua lista de desejos, catálogo de endereços e preferências de contato e aproveitar nosso checkout rápido, crie uma conta conosco agora.</p>
-					<form action="#">
-						<div class="row">
-							<div class="col-sm-9">
-								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Nome">
-								</div>
-							</div>
-							<div class="col-sm-9">
-								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Sobrenome">
-								</div>
-							</div>
+					<p>Para acessar sua lista de desejos, catálogo de endereços e preferências de contato e aproveitar nosso checkout rápido, faça login agora.</p>
+					<form id="form-submit">
+						<div class="form-group">
+							<input name="email" type="text" class="form-control" placeholder="E-mail">
 						</div>
 						<div class="form-group">
-							<input type="text" class="form-control" placeholder="E-mail">
-						</div>
-						<div class="form-group">
-							<input type="password" class="form-control" placeholder="Senha">
-						</div>
-						<div class="form-group">
-							<input type="password" class="form-control" placeholder="Confirmar senha">
+							<input name="password" type="password" class="form-control" placeholder="Senha">
 						</div>
 						<div class="clearfix">
-							<input id="checkbox1" name="checkbox1" type="checkbox" checked="checked">
-							<label for="checkbox1">Ao realizar o cadastro você concorda com nossos <a href="#" class="custom-color" data-fancybox data-src="#modalTerms">Termos e Condições</a>.</label>
+							<input id="accept-terms" name="accept-terms" type="checkbox" checked="checked">
+							<label for="accept-terms">Ao realizar o login você concorda com nossos <a href="#" class="custom-color" data-fancybox data-src="#modalTerms">Termos e Condições</a>.</label>
 						</div>
 						<div class="text-center">
-							<button class="btn">Registrar</button>
+							<button class="btn">Entrar</button>
 						</div>
 					</form>
 				</div>
@@ -730,7 +715,7 @@
 <script src="js/vendor-special/instafeed.min.js"></script>
 <script src="js/vendor/vendor.min.js"></script>
 <script src="js/app-html.js"></script>
-<script src="js/vendor/axios-special.min.js"></script>
+<script src="js/vendor-special/axios.min.js"></script>
 <script>
 document.getElementById('form-submit').addEventListener('submit', (e) => {
 	e.preventDefault();

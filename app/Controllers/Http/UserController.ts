@@ -90,7 +90,7 @@ export default class UserController extends BaseController {
         'phone',
         'state',
         'city',
-        'address',
+        'address'
       ])
 
       const errors = JoiValidateService.validate(JoiSchemas.updateUser, data)

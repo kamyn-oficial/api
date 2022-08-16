@@ -151,7 +151,6 @@ export default class AuthController extends BaseController {
         avatarUrl: userDB.avatarUrl,
         accessToken: userDB.accessToken,
         accessTokenExp: userDB.accessTokenExp,
-        isCompany: !!userDB.companyId,
         firstLogin
       }
 
@@ -199,8 +198,7 @@ export default class AuthController extends BaseController {
         email: userDB.email,
         avatarUrl: userDB.avatarUrl,
         accessToken: userDB.accessToken,
-        accessTokenExp: userDB.accessTokenExp,
-        isCompany: !!userDB.companyId
+        accessTokenExp: userDB.accessTokenExp
       }
 
       return response.json({ user })
