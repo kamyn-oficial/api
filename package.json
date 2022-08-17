@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "node ace build --production",
-    "production": "node ace build --production && cp .env build/.env && pm2 reload api",
+    "production": "node ace build --production && cp -R .env build/.env && cp app/Assets build/app/Assets  && pm2 reload api",
     "dev": "node ace serve --watch",
     "lint": "eslint . --ext=.ts",
     "format": "prettier --write ."

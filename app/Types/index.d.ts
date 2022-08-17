@@ -102,13 +102,11 @@ export interface RegisterParams {
 }
 
 export interface UpdateUserParams {
-  entity: 'user' | 'company'
   name: string
   phone: string
-  address: string
   state: string
   city: string
-  solicitation: string
+  address: string
 }
 
 export interface UpdateCompanyParams {

@@ -201,7 +201,7 @@ export default class AuthController extends BaseController {
         accessTokenExp: userDB.accessTokenExp
       }
 
-      return response.json({ user })
+      return response.json(user)
     } catch (error) {
       return this.responseSomethingWrong(response, error)
     }

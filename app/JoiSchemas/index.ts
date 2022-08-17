@@ -140,13 +140,6 @@ class JoiSchemas {
 
   public get updateUser() {
     return Joi.object<UpdateUserParams>({
-      entity: Joi.string()
-        .valid('user', 'company')
-        .error(err => {
-          err[0].message = 'Entidade deve ser user ou company'
-          return err[0]
-        }),
-
       name: this.name,
 
       phone: this.phone,
@@ -155,9 +148,7 @@ class JoiSchemas {
 
       city: this.city,
 
-      address: this.address,
-
-      solicitation: Joi.string().allow('')
+      address: this.address
     })
   }
 
