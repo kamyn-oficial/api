@@ -1,8 +1,3 @@
-/*-----------------------------------------------------------------------------------
- Theme Name: Foxic eCommerce Template
- Author: BigSteps
- Author URI: http://themeforest.net/user/bigsteps
- -----------------------------------------------------------------------------------*/
 "use strict";
 
 window.THEME = {};
@@ -10,6 +5,13 @@ window.THEME = {};
 // Youtube API
 function onYouTubeIframeAPIReady() {
 	THEME.Video.loadVideos();
+}
+
+const cartIcon = document.getElementById('redirectToCart')
+if (cartIcon) {
+	cartIcon.addEventListener('click', () => {
+		location.href = 'cart.html';
+	})
 }
 
 (function ($) {
