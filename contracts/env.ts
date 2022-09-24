@@ -20,10 +20,6 @@ declare module '@ioc:Adonis/Core/Env' {
 
   type CustomTypes = typeof import('../env').default
   interface EnvTypes extends CustomTypes {
-    GOOGLE_CLIENT_ID: string
-    GOOGLE_CLIENT_SECRET: string
-    FACEBOOK_CLIENT_ID: string
-    FACEBOOK_CLIENT_SECRET: string
     MONGODB_URI: string
     SMTP_HOST: any
     SMTP_PORT: any

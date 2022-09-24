@@ -1,5 +1,6 @@
 import UserRepository from 'App/Repositories/UserRepository'
 import Hash from '@ioc:Adonis/Core/Hash'
+import Logger from '@ioc:Adonis/Core/Logger'
 import JwtService from 'App/Services/JwtService'
 import { UserSchema } from 'App/Types'
 
@@ -20,8 +21,8 @@ class UserSeed {
     try {
       const existEmail = await UserRepository.existByEmail(this.adm.email)
 
-      if (existEmail) return console.log('User adm already exists')
-      console.log('User adm created')
+      if (existEmail) return Logger.info('user admin already exists')
+      Logger.info('user admin created')
 
       const passwordHash = await Hash.make(this.adm.password)
       const [accessToken, accessTokenExp] = await JwtService.accessToken
@@ -32,8 +33,7 @@ class UserSeed {
         passwordHash,
         accessToken,
         accessTokenExp,
-        isAdm: true,
-        emailVerified: true
+        isAdm: true
       }
 
       await UserRepository.create(user)

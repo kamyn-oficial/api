@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import Env from '@ioc:Adonis/Core/Env'
+import Logger from '@ioc:Adonis/Core/Logger'
 
 export async function connectMongoDB() {
   const MONGODB_URI = Env.get('MONGODB_URI')
@@ -13,8 +14,8 @@ export async function connectMongoDB() {
       ignoreUndefined: true
     })
 
-    console.log('Connected to MongoDB')
+    Logger.info('connected to mongodb')
   } catch (error) {
-    console.log('Error connecting to MongoDB', error)
+    Logger.error('error to connect mongodb', error)
   }
 }

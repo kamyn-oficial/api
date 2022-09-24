@@ -87,7 +87,7 @@ class UserRepository {
     return UserModel.findByIdAndDelete(id)
   }
 
-  public async singOut(accessToken: string) {
+  public async logout(accessToken: string) {
     return UserModel.findOneAndUpdate(
       { accessToken },
       {

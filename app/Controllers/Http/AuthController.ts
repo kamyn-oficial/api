@@ -1,5 +1,5 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { RegisterParams, UserSchema } from 'App/Types'
+import { RegisterParams } from 'App/Types'
 
 import BaseController from './BaseController'
 import JoiValidateService from 'App/Services/JoiValidateService'
@@ -10,21 +10,8 @@ import UserRepository from 'App/Repositories/UserRepository'
 import Hash from '@ioc:Adonis/Core/Hash'
 
 export default class AuthController extends BaseController {
-  public async register({ request, response, ally }: HttpContextContract) {
+  public async register({ request, response }: HttpContextContract) {
     try {
-      const validProviders = ['google', 'facebook']
-      const provider: string = decodeURI(request.params().provider)
-        .trim()
-        .toLowerCase()
-
-      if (validProviders.includes(provider)) {
-        const driver = ally.use(provider)
-
-        return driver.redirect()
-      }
-
-      if (request.method() !== 'POST') return response.safeStatus(405)
-
       const data: RegisterParams = request.only([
         'name',
         'email',
@@ -32,8 +19,7 @@ export default class AuthController extends BaseController {
         'phone',
         'state',
         'city',
-        'address',
-        'avatarUrl'
+        'address'
       ])
 
       const errors = JoiValidateService.validate(JoiSchemas.register, data)
@@ -58,105 +44,17 @@ export default class AuthController extends BaseController {
         accessToken,
         accessTokenExp,
         confirmationToken,
-        confirmationTokenExp,
-        emailVerified: false
+        confirmationTokenExp
       })
 
       const user = {
         name: data.name,
         email: data.email,
-        avatarUrl: data.avatarUrl,
         accessToken,
         accessTokenExp
       }
 
-      return response.status(201).json({ user })
-    } catch (error) {
-      return this.responseSomethingWrong(response, error)
-    }
-  }
-
-  public async socialMediaCallback({
-    request,
-    response,
-    ally
-  }: HttpContextContract) {
-    try {
-      const { provider } = request.params()
-      const driver = ally.use(provider)
-
-      if (
-        driver.accessDenied() ||
-        driver.stateMisMatch() ||
-        driver.hasError()
-      ) {
-        return response.redirect(this.APP_FRONT_URL)
-      }
-
-      const { name, email, avatarUrl, emailVerificationState } =
-        await driver.user()
-      const userDB = await UserRepository.findByEmail(email)
-
-      const firstLogin = userDB !== null
-
-      if (!userDB) {
-        const [
-          [accessToken, accessTokenExp],
-          [confirmationToken, confirmationTokenExp]
-        ] = await Promise.all([
-          JwtService.accessToken,
-          JwtService.confirmEmailToken
-        ])
-        const emailVerified = emailVerificationState === 'verified'
-
-        const user: UserSchema = {
-          name,
-          email,
-          emailVerified,
-          avatarUrl,
-          accessToken,
-          accessTokenExp,
-          confirmationToken,
-          confirmationTokenExp
-        }
-
-        await UserRepository.create(user)
-
-        return response.redirect(
-          `${this.APP_FRONT_URL}/cadastro/pessoa-negocio-vegano-vegetariano-organico?accessToken=${user.accessToken}&firstLogin=${firstLogin}`
-        )
-      }
-
-      const tokenExpiration = await JwtService.tokenExpiration(
-        userDB.accessToken || ''
-      )
-      const tokenIsExpired = JwtService.tokenIsExpired(tokenExpiration)
-
-      if (tokenIsExpired) {
-        const [newAccessToken, newAccessTokenExp] = await JwtService.accessToken
-
-        await UserRepository.changeAccessTokenByEmail(
-          email,
-          newAccessToken,
-          newAccessTokenExp
-        )
-
-        userDB.accessToken = newAccessToken
-        userDB.accessTokenExp = newAccessTokenExp
-      }
-
-      const user = {
-        name: userDB.name,
-        email,
-        avatarUrl: userDB.avatarUrl,
-        accessToken: userDB.accessToken,
-        accessTokenExp: userDB.accessTokenExp,
-        firstLogin
-      }
-
-      return response.redirect(
-        `${this.APP_FRONT_URL}/?accessToken=${user.accessToken}`
-      )
+      return response.status(201).json(user)
     } catch (error) {
       return this.responseSomethingWrong(response, error)
     }
@@ -196,7 +94,6 @@ export default class AuthController extends BaseController {
       const user = {
         name: userDB.name,
         email: userDB.email,
-        avatarUrl: userDB.avatarUrl,
         accessToken: userDB.accessToken,
         accessTokenExp: userDB.accessTokenExp
       }
@@ -207,13 +104,34 @@ export default class AuthController extends BaseController {
     }
   }
 
-  public async singOut({ request, response }: HttpContextContract) {
+  public async logout({ request, response }: HttpContextContract) {
     try {
       const accessToken = this.getBearerToken(request)
 
-      await UserRepository.singOut(accessToken)
+      if (accessToken) await UserRepository.logout(accessToken)
 
       return response.safeStatus(200)
+    } catch (error) {
+      return this.responseSomethingWrong(response, error)
+    }
+  }
+
+  public async me({ request, response }: HttpContextContract) {
+    try {
+      const accessToken = this.getBearerToken(request)
+
+      const user = await UserRepository.findByAccessToken(accessToken)
+
+      return response.json({
+        name: user?.name,
+        email: user?.email,
+        phone: user?.phone,
+        state: user?.state,
+        city: user?.city,
+        address: user?.address,
+        accessToken: user?.accessToken,
+        emailVerifiedAt: user?.emailVerifiedAt
+      })
     } catch (error) {
       return this.responseSomethingWrong(response, error)
     }

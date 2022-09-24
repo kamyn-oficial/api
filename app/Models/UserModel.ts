@@ -14,10 +14,6 @@ const schema = new Schema<UserSchema>({
     required: true,
     unique: true
   },
-  emailVerified: {
-    type: Boolean,
-    required: true
-  },
   phone: {
     type: String
   },
@@ -52,8 +48,8 @@ const schema = new Schema<UserSchema>({
   confirmationTokenExp: {
     type: Number
   },
-  avatarUrl: {
-    type: String
+  emailVerifiedAt: {
+    type: Number
   },
   createdAt: {
     type: Number

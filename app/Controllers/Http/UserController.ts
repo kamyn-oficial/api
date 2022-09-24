@@ -18,7 +18,6 @@ export default class UserController extends BaseController {
       const user: any = {
         name: userDB.name,
         phone: userDB.phone,
-        avatarUrl: userDB.avatarUrl,
         email: userDB.email,
         state: userDB.state,
         city: userDB.city,
@@ -27,8 +26,7 @@ export default class UserController extends BaseController {
         accessTokenExp: userDB.accessTokenExp,
         hasPassword: !!userDB.passwordHash,
         isAdm: userDB.isAdm,
-        emailVerified: !!userDB.emailVerified,
-        solicitation: userDB.solicitation
+        emailVerifiedAt: userDB.emailVerifiedAt
       }
 
       return response.json({ user })

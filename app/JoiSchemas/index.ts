@@ -1,9 +1,6 @@
 import Joi from 'joi'
 import {
-  AddRecipeParams,
   RegisterParams,
-  UpdateCompanyParams,
-  UpdateRecipeParams,
   UpdateUserParams
 } from 'App/Types'
 
@@ -83,15 +80,6 @@ class JoiSchemas {
     return err[0]
   })
 
-  public socialMediaUsername = Joi.string()
-    .optional()
-    .allow('')
-    .pattern(/^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/im)
-    .error(err => {
-      err[0].message = 'Coloque apenas seu username sem o "@"'
-      return err[0]
-    })
-
   public category = Joi.string()
     .valid(
       'sopas e caldos',
@@ -117,129 +105,22 @@ class JoiSchemas {
   public get register() {
     return Joi.object<RegisterParams>({
       name: this.name.required(),
-
       email: this.email.required(),
-
       password: this.password.required(),
-
-      phone: this.phone.required(),
-
-      state: this.state.required(),
-
-      city: this.city.required(),
-
+      phone: this.phone,
+      state: this.state,
+      city: this.city,
       address: Joi.string()
-        .required()
-        .error(err => {
-          err[0].message = 'Endereço obrigatório'
-          err[0].path = ['address']
-          return err[0]
-        })
     })
   }
 
   public get updateUser() {
     return Joi.object<UpdateUserParams>({
       name: this.name,
-
       phone: this.phone,
-
       state: this.state,
-
       city: this.city,
-
       address: this.address
-    })
-  }
-
-  public get updateCompany() {
-    return Joi.object<UpdateCompanyParams>({
-      avatarUrl: this.picture.error(err => {
-        err[0].path = ['avatarUrl']
-        return err[0]
-      }),
-
-      name: this.name,
-
-      address: Joi.string()
-        .required()
-        .error(err => {
-          err[0].message = 'Endereço não informado'
-          return err[0]
-        }),
-
-      type: Joi.string()
-        .valid('vegetariano', 'vegano', 'orgânico')
-        .error(err => {
-          err[0].message =
-            'Tipo de negócio deve ser: vegetariano, vegano ou orgânico'
-          return err[0]
-        }),
-
-      operation: Joi.string().error(err => {
-        err[0].message = 'Dias e horários de funcionamento inválidos'
-        return err[0]
-      }),
-
-      contacts: Joi.array()
-        .items(
-          Joi.object({
-            type: Joi.string()
-              .valid('phone', 'whatsapp')
-              .error(err => {
-                err[0].message = 'Tipo de contato precisa ser phone ou whatsapp'
-                return err[0]
-              })
-              .required(),
-            number: this.phone.required()
-          })
-        )
-        .error(err => {
-          err[0].path = ['contacts']
-          return err[0]
-        }),
-
-      facebook: this.socialMediaUsername.error(err => {
-        err[0].path = ['facebook']
-        return err[0]
-      }),
-
-      instagram: this.socialMediaUsername.error(err => {
-        err[0].path = ['instagram']
-        return err[0]
-      })
-    })
-  }
-
-  public get addRecipe() {
-    return Joi.object<AddRecipeParams>({
-      name: this.name.required(),
-
-      picture1: this.picture.required(),
-
-      description: this.description.required(),
-
-      price: this.price.required(),
-
-      category: this.category.required()
-    }).options({ stripUnknown: true })
-  }
-
-  public get updateRecipe() {
-    return Joi.object<UpdateRecipeParams>({
-      name: this.name,
-
-      picture1: this.picture,
-
-      picture2: this.picture,
-
-      picture3: this.picture,
-
-      description: this.description,
-
-      price: this.price,
-
-      category: this.category
     })
   }
 }
