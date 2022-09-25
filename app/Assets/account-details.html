@@ -472,6 +472,7 @@
                           type="text"
                           class="form-control form-control--sm"
                           name="name"
+                          requried
                         />
                       </div>
                     </div>
@@ -479,9 +480,10 @@
                       <label class="text-uppercase">Telefone:</label>
                       <div class="form-group">
                         <input
-                          type="text"
+                          type="number"
                           class="form-control form-control--sm"
                           name="phone"
+                          required
                         />
                       </div>
                     </div>
@@ -757,7 +759,7 @@
     <script src="js/vendor-special/axios.min.js"></script>
     <script src="js/vendor-special/toastify.min.js"></script>
     <script>
-      setTimeout(() => {
+      function fetchPersonalData() {
         http_setup.get('me').then(({ data }) => {
           data.phone = data.phone || ''
 
@@ -770,7 +772,10 @@
           <b>Email:</b> ${data.email}<br />
         `
         })
-      }, 300)
+      }
+      setTimeout(() => {
+        fetchPersonalData()
+      }, 250)
 
       document
         .getElementById('account-details-form')
@@ -782,6 +787,8 @@
 
           try {
             const { data } = await http_setup.put('me', dto)
+
+            fetchPersonalData()
 
             Toastify({
               text: 'Dados atualizados com sucesso!'
