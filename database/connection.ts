@@ -9,9 +9,8 @@ export async function connectMongoDB() {
     await mongoose.connect(MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      useFindAndModify: false,
-      autoIndex: false,
-      ignoreUndefined: true
+      useCreateIndex: true,
+      useFindAndModify: false
     })
 
     Logger.info('connected to mongodb')

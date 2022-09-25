@@ -1,8 +1,8 @@
 import UserRepository from 'App/Repositories/UserRepository'
 import Hash from '@ioc:Adonis/Core/Hash'
 import Logger from '@ioc:Adonis/Core/Logger'
-import JwtService from 'App/Services/JwtService'
-import { UserSchema } from 'App/Types'
+
+import type { UserSchema } from 'App/Types'
 
 interface Adm {
   name: string
@@ -25,14 +25,12 @@ class UserSeed {
       Logger.info('user admin created')
 
       const passwordHash = await Hash.make(this.adm.password)
-      const accessToken = await JwtService.accessToken
 
       const user: UserSchema = {
+        isAdm: true,
         name: this.adm.name,
         email: this.adm.email,
-        passwordHash,
-        accessToken,
-        isAdm: true
+        passwordHash
       }
 
       await UserRepository.create(user)

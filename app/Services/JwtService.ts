@@ -9,13 +9,17 @@ class JwtService {
   }
 
   private createToken({
+    userId,
     expireInDays
   }: {
+    userId?: string
     expireInDays: number
   }): Promise<string> {
     return new Promise((resolve, reject) => {
       jwt.sign(
-        {},
+        {
+          userId
+        },
         this.JWT_KEY,
         { expiresIn: `${expireInDays}d` },
         (err, token) => {
@@ -26,8 +30,8 @@ class JwtService {
     })
   }
 
-  public get accessToken() {
-    return this.createToken({ expireInDays: 5 })
+  public accessToken(userId: string) {
+    return this.createToken({ userId, expireInDays: 5 })
   }
 
   public get resetPasswordToken() {
@@ -38,16 +42,16 @@ class JwtService {
     return this.createToken({ expireInDays: 3 })
   }
 
-  public tokenExpiration(token: string): Promise<number> {
+  public payload(token: string): Promise<JwtPayload> {
     return new Promise(resolve => {
       jwt.verify(token, this.JWT_KEY, (_, payload: JwtPayload) =>
-        resolve(payload?.exp || -1)
+        resolve(payload)
       )
     })
   }
 
   public async tokenIsExpired(token: string): Promise<boolean> {
-    const tokenExp = await this.tokenExpiration(token)
+    const tokenExp = (await this.payload(token))?.exp || -1
     const currentTimestamp = new Date().getTime() / 1000
     const isExpired = tokenExp - currentTimestamp < 0
 

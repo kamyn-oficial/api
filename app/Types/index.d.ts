@@ -3,13 +3,10 @@ export interface UserSchema {
   name: string
   email: string
   phone?: string
-  state?: string
-  city?: string
-  address?: string
   passwordHash: string
-  accessToken?: string | null
-  resetPasswordToken?: string | null
-  confirmationToken?: string | null
+  accessToken?: string
+  resetPasswordToken?: string
+  confirmationToken?: string
   emailVerifiedAt?: Number
   createdAt?: Number
 }
@@ -31,9 +28,13 @@ export interface UpdateUserParams {
   phone: string
 }
 
-export interface SearchUserParams {
-  city?: string
-  state?: string
-  email?: string
-  name?: string
+export interface AddressSchema {
+  state: string
+  city: string
+  street: string
+  zipcode: string
+  userId?: string
+  isDefault?: boolean
 }
+
+export type UpdateAddressParams = Omit<AddressSchema, 'userId'>

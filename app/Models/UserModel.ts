@@ -17,15 +17,6 @@ const schema = new Schema<UserSchema>({
   phone: {
     type: String
   },
-  state: {
-    type: String
-  },
-  city: {
-    type: String
-  },
-  address: {
-    type: String
-  },
   passwordHash: {
     type: String,
     required: true

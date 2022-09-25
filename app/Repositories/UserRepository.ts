@@ -1,5 +1,5 @@
 import UserModel from 'App/Models/UserModel'
-import type { UserSchema, SearchUserParams } from 'App/Types'
+import type { UserSchema } from 'App/Types'
 
 class UserRepository {
   public create(schema: UserSchema) {
@@ -14,15 +14,6 @@ class UserRepository {
     return UserModel.findOne({ email })
   }
 
-  public search({ city, state, email, name }: SearchUserParams) {
-    return UserModel.find({
-      city: city ? RegExp(city, 'i') : undefined,
-      state: state ? RegExp(state, 'i') : undefined,
-      email,
-      name: name ? RegExp(`^${name}$`, 'i') : undefined
-    })
-  }
-
   public findById(id: string) {
     return UserModel.findById(id)
   }
@@ -35,19 +26,12 @@ class UserRepository {
     return UserModel.findOneAndUpdate({ email }, { accessToken })
   }
 
-  public changePasswordHashByAccessToken(
-    accessToken: string,
-    passwordHash: string
-  ) {
-    return UserModel.findOneAndUpdate({ accessToken }, { passwordHash })
-  }
-
   public resetPassword(resetPasswordToken: string, passwordHash: string) {
     return UserModel.findOneAndUpdate(
       { resetPasswordToken },
       {
         passwordHash,
-        resetPasswordToken: null
+        resetPasswordToken: undefined
       }
     )
   }
@@ -79,7 +63,7 @@ class UserRepository {
     return UserModel.findOneAndUpdate(
       { accessToken },
       {
-        accessToken: null
+        accessToken: undefined
       }
     )
   }
@@ -89,7 +73,7 @@ class UserRepository {
       { confirmationToken },
       {
         emailVerified: true,
-        confirmationToken: null
+        confirmationToken: undefined
       }
     )
   }

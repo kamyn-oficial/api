@@ -1,9 +1,13 @@
 import Joi from 'joi'
-import { RegisterParams, UpdateUserParams } from 'App/Types'
+import {
+  RegisterParams,
+  UpdateUserParams,
+  UpdateAddressParams
+} from 'App/Types'
 
 class JoiSchemas {
   public name = Joi.string()
-    .max(56)
+    .max(64)
     .error(err => {
       err[0].message = 'Nome inválido'
       err[0].path = ['name']
@@ -29,32 +33,41 @@ class JoiSchemas {
 
   public password = Joi.string()
     .min(6)
-    .max(32)
-
+    .max(64)
     .error(err => {
       err[0].message = 'Senha deve ter no mínimo 6 caracteres'
       err[0].path = ['password']
       return err[0]
     })
 
-  public state = Joi.string().error(err => {
-    err[0].message = 'Estado inválido'
-    err[0].path = ['state']
-    return err[0]
-  })
-
-  public city = Joi.string().error(err => {
-    err[0].message = 'Cidade inválida'
-    err[0].path = ['city']
-    return err[0]
-  })
-
-  public address = Joi.string()
-    .min(6)
+  public state = Joi.string()
+    .max(64)
     .error(err => {
-      err[0].message =
-        'Endereço é obrigatório e deve ter no mínimo 6 caracteres'
-      err[0].path = ['address']
+      err[0].message = 'Estado inválido'
+      err[0].path = ['state']
+      return err[0]
+    })
+
+  public city = Joi.string()
+    .max(64)
+    .error(err => {
+      err[0].message = 'Cidade inválida'
+      err[0].path = ['city']
+      return err[0]
+    })
+
+  public zipcode = Joi.number().error(err => {
+    err[0].message = 'Zipcode inválido'
+    err[0].path = ['zipcode']
+    return err[0]
+  })
+
+  public street = Joi.string()
+    .min(6)
+    .max(64)
+    .error(err => {
+      err[0].message = 'Rua inválida'
+      err[0].path = ['street']
       return err[0]
     })
 
@@ -64,11 +77,13 @@ class JoiSchemas {
     return err[0]
   })
 
-  public description = Joi.string().error(err => {
-    err[0].message = 'Descrição inválida'
-    err[0].path = ['description']
-    return err[0]
-  })
+  public description = Joi.string()
+    .max(512)
+    .error(err => {
+      err[0].message = 'Descrição inválida'
+      err[0].path = ['description']
+      return err[0]
+    })
 
   public price = Joi.number().error(err => {
     err[0].message = 'Preço não informado'
@@ -111,6 +126,16 @@ class JoiSchemas {
     return Joi.object<UpdateUserParams>({
       name: this.name,
       phone: this.phone
+    })
+  }
+
+  public get updateAddress() {
+    return Joi.object<UpdateAddressParams>({
+      state: this.state.required(),
+      city: this.city.required(),
+      street: this.street.required(),
+      zipcode: this.zipcode.required(),
+      isDefault: Joi.boolean()
     })
   }
 }

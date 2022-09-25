@@ -1,7 +1,11 @@
-import { ResponseContract } from '@ioc:Adonis/Core/Response'
-import { RequestContract } from '@ioc:Adonis/Core/Request'
-import { JoiError } from 'App/Types'
 import Env from '@ioc:Adonis/Core/Env'
+
+import JwtService from 'App/Services/JwtService'
+import UserRepository from 'App/Repositories/UserRepository'
+
+import type { ResponseContract } from '@ioc:Adonis/Core/Response'
+import type { RequestContract } from '@ioc:Adonis/Core/Request'
+import type { JoiError } from 'App/Types'
 
 export default class BaseController {
   protected APP_FRONT_URL = Env.get('APP_FRONT_URL')
@@ -51,8 +55,22 @@ export default class BaseController {
   }
 
   protected getBearerToken(request: RequestContract) {
-    const token = request.headers().authorization?.split(' ').pop() || ''
+    const accessToken = request.headers().authorization?.split(' ').pop() || ''
 
-    return token
+    return accessToken
+  }
+
+  protected async getUserId(request: RequestContract) {
+    const accessToken = request.headers().authorization?.split(' ').pop() || ''
+
+    const { userId } = await JwtService.payload(accessToken)
+
+    return userId
+  }
+
+  protected async getUser(request: RequestContract) {
+    const userId = await this.getUserId(request)
+
+    return UserRepository.findById(userId)
   }
 }

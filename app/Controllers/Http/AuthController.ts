@@ -1,5 +1,4 @@
-import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { RegisterParams, UpdateUserParams } from 'App/Types'
+import Hash from '@ioc:Adonis/Core/Hash'
 
 import BaseController from './BaseController'
 import JoiValidateService from 'App/Services/JoiValidateService'
@@ -7,7 +6,9 @@ import JwtService from 'App/Services/JwtService'
 import MailService from 'App/Services/MailService'
 import JoiSchemas from 'App/JoiSchemas'
 import UserRepository from 'App/Repositories/UserRepository'
-import Hash from '@ioc:Adonis/Core/Hash'
+
+import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import type { RegisterParams, UpdateUserParams } from 'App/Types'
 
 export default class AuthController extends BaseController {
   public ping({ response }: HttpContextContract) {
@@ -65,7 +66,7 @@ export default class AuthController extends BaseController {
       )
 
       if (tokenIsExpired) {
-        const newAccessToken = await JwtService.accessToken
+        const newAccessToken = await JwtService.accessToken(userDB._id)
 
         await UserRepository.changeAccessTokenByEmail(
           userDB.email,
@@ -102,9 +103,7 @@ export default class AuthController extends BaseController {
 
   public async me({ request, response }: HttpContextContract) {
     try {
-      const accessToken = this.getBearerToken(request)
-
-      const user = await UserRepository.findByAccessToken(accessToken)
+      const user = await this.getUser(request)
 
       return response.json({
         name: user?.name,

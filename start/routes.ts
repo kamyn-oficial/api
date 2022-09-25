@@ -9,6 +9,11 @@ Route.group(() => {
   Route.group(() => {
     Route.get('me', 'AuthController.me')
     Route.put('me', 'AuthController.update')
+
+    Route.get('address', 'AddressController.index')
+    Route.post('address', 'AddressController.create')
+    Route.put('address/:id', 'AddressController.update')
+    Route.delete('address/:id', 'AddressController.delete')
   }).middleware('jwt:accessToken')
 }).prefix('api')
 

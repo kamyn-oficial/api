@@ -1,11 +1,10 @@
-import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-
 import BaseController from './BaseController'
 import UserRepository from 'App/Repositories/UserRepository'
 import JoiValidateService from 'App/Services/JoiValidateService'
 import JoiSchemas from 'App/JoiSchemas'
 
-import type { UpdateUserParams, SearchUserParams } from 'App/Types'
+import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import type { UpdateUserParams } from 'App/Types'
 
 export default class UserController extends BaseController {
   public async index({ request, response }: HttpContextContract) {
@@ -19,16 +18,13 @@ export default class UserController extends BaseController {
         name: userDB.name,
         phone: userDB.phone,
         email: userDB.email,
-        state: userDB.state,
-        city: userDB.city,
-        address: userDB.address,
         accessToken: userDB.accessToken,
         hasPassword: !!userDB.passwordHash,
         isAdm: userDB.isAdm,
         emailVerifiedAt: userDB.emailVerifiedAt
       }
 
-      return response.json({ user })
+      return response.json(user)
     } catch (error) {
       return this.responseSomethingWrong(response, error)
     }
@@ -50,7 +46,6 @@ export default class UserController extends BaseController {
 
       return response.json({ user })
     } catch (error) {
-      console.log('erro no view')
       return this.responseSomethingWrong(response, error)
     }
   }

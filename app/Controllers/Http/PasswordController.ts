@@ -1,4 +1,4 @@
-import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Hash from '@ioc:Adonis/Core/Hash'
 
 import BaseController from './BaseController'
 import JoiValidateService from 'App/Services/JoiValidateService'
@@ -6,64 +6,39 @@ import MailService from 'App/Services/MailService'
 import JwtService from 'App/Services/JwtService'
 import JoiSchemas from 'App/JoiSchemas'
 import UserRepository from 'App/Repositories/UserRepository'
-import Hash from '@ioc:Adonis/Core/Hash'
+
+import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 export default class PasswordController extends BaseController {
-  public async add({ request, response }: HttpContextContract) {
-    try {
-      const accessToken = this.getBearerToken(request)
-      const { password } = request.only(['password'])
-
-      const errors = JoiValidateService.validate(JoiSchemas.password, password)
-      if (errors.length) return this.responseRequestError(response, errors)
-
-      const userDB = await UserRepository.findByAccessToken(accessToken)
-      if (!userDB) return response.safeStatus(404)
-      if (userDB.passwordHash) return response.safeStatus(409)
-
-      const passwordHash = await Hash.make(password)
-
-      await UserRepository.changePasswordHashByAccessToken(
-        accessToken,
-        passwordHash
-      )
-
-      return response.safeStatus(200)
-    } catch (error) {
-      return this.responseSomethingWrong(response, error)
-    }
-  }
-
   public async change({ request, response }: HttpContextContract) {
     try {
       const accessToken = this.getBearerToken(request)
-      const { oldPassword, password } = request.only([
-        'oldPassword',
-        'password'
+
+      const { password, newPassword } = request.only([
+        'password',
+        'newPassword'
       ])
 
-      const errors = JoiValidateService.validate(JoiSchemas.password, password)
+      const errors = JoiValidateService.validate(
+        JoiSchemas.password,
+        newPassword
+      )
       if (errors.length) return this.responseRequestError(response, errors)
 
       const userDB = await UserRepository.findByAccessToken(accessToken)
       if (!userDB) return response.safeStatus(404)
-      if (!userDB.passwordHash) return this.responseCreatePassword(response)
 
-      const isValidPassword = await Hash.verify(
-        userDB.passwordHash,
-        oldPassword
-      )
+      const isValidPassword = await Hash.verify(userDB.passwordHash, password)
       if (!isValidPassword)
         return response.status(401).json({
-          errors: [{ field: 'oldPassword', message: 'Senha incorreta' }]
+          errors: [{ field: 'password', message: 'Senha incorreta' }]
         })
 
-      const passwordHash = await Hash.make(password)
+      const newPasswordHash = await Hash.make(newPassword)
 
-      await UserRepository.changePasswordHashByAccessToken(
-        accessToken,
-        passwordHash
-      )
+      await UserRepository.updateById(userDB._id, {
+        passwordHash: newPasswordHash
+      })
 
       return response.safeStatus(200)
     } catch (error) {
