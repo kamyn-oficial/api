@@ -10,6 +10,10 @@ import UserRepository from 'App/Repositories/UserRepository'
 import Hash from '@ioc:Adonis/Core/Hash'
 
 export default class AuthController extends BaseController {
+  public ping({ response }: HttpContextContract) {
+    return response.status(200)
+  }
+
   public async register({ request, response }: HttpContextContract) {
     try {
       const data: RegisterParams = request.only([
