@@ -1,5 +1,5 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { RegisterParams } from 'App/Types'
+import { RegisterParams, UpdateUserParams } from 'App/Types'
 
 import BaseController from './BaseController'
 import JoiValidateService from 'App/Services/JoiValidateService'
@@ -19,11 +19,8 @@ export default class AuthController extends BaseController {
       const data: RegisterParams = request.only([
         'name',
         'email',
-        'password',
         'phone',
-        'state',
-        'city',
-        'address'
+        'password'
       ])
 
       const errors = JoiValidateService.validate(JoiSchemas.register, data)
@@ -42,10 +39,7 @@ export default class AuthController extends BaseController {
       const user = {
         name: data.name,
         email: data.email,
-        phone: data.phone,
-        state: data.state,
-        city: data.city,
-        address: data.address
+        phone: data.phone
       }
 
       return response.status(201).json(user)
@@ -85,9 +79,6 @@ export default class AuthController extends BaseController {
         name: userDB.name,
         email: userDB.email,
         phone: userDB.phone,
-        state: userDB.state,
-        city: userDB.city,
-        address: userDB.address,
         accessToken: userDB.accessToken
       }
 
@@ -119,12 +110,28 @@ export default class AuthController extends BaseController {
         name: user?.name,
         email: user?.email,
         phone: user?.phone,
-        state: user?.state,
-        city: user?.city,
-        address: user?.address,
         accessToken: user?.accessToken,
         emailVerifiedAt: user?.emailVerifiedAt
       })
+    } catch (error) {
+      return this.responseSomethingWrong(response, error)
+    }
+  }
+
+  public async update({ request, response }: HttpContextContract) {
+    try {
+      const accessToken = this.getBearerToken(request)
+      const data: UpdateUserParams = request.only(['name', 'phone'])
+
+      const errors = JoiValidateService.validate(JoiSchemas.updateUser, data)
+      if (errors.length) return this.responseRequestError(response, errors)
+
+      const userDB = await UserRepository.updateByAccessToken(accessToken, data)
+      if (!userDB) return response.safeStatus(404)
+
+      await UserRepository.updateByAccessToken(accessToken, data)
+
+      return response.safeStatus(200)
     } catch (error) {
       return this.responseSomethingWrong(response, error)
     }

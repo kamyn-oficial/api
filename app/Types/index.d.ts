@@ -22,19 +22,13 @@ export interface JoiError {
 export interface RegisterParams {
   name: string
   email: string
-  password: string
   phone?: string
-  state?: string
-  city?: string
-  address?: string
+  password: string
 }
 
 export interface UpdateUserParams {
   name: string
   phone: string
-  state: string
-  city: string
-  address: string
 }
 
 export interface SearchUserParams {

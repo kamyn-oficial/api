@@ -8,6 +8,7 @@ Route.group(() => {
 
   Route.group(() => {
     Route.get('me', 'AuthController.me')
+    Route.put('me', 'AuthController.update')
   }).middleware('jwt:accessToken')
 }).prefix('api')
 

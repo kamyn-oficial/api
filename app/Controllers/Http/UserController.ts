@@ -34,30 +34,6 @@ export default class UserController extends BaseController {
     }
   }
 
-  public async search({ request, response }: HttpContextContract) {
-    try {
-      const accessToken = this.getBearerToken(request)
-
-      const userDB = await UserRepository.findByAccessToken(accessToken)
-      if (!userDB) return response.safeStatus(404)
-      if (!userDB.isAdm) return response.safeStatus(403)
-
-      const data: SearchUserParams = request.only([
-        'city',
-        'state',
-        'email',
-        'email',
-        'name'
-      ])
-
-      const users = await UserRepository.search(data)
-
-      return response.json({ users })
-    } catch (error) {
-      return this.responseSomethingWrong(response, error)
-    }
-  }
-
   public async view({ request, response }: HttpContextContract) {
     try {
       const accessToken = this.getBearerToken(request)
@@ -82,13 +58,7 @@ export default class UserController extends BaseController {
   public async update({ request, response }: HttpContextContract) {
     try {
       const accessToken = this.getBearerToken(request)
-      const data: UpdateUserParams = request.only([
-        'name',
-        'phone',
-        'state',
-        'city',
-        'address'
-      ])
+      const data: UpdateUserParams = request.only(['name', 'phone'])
 
       const errors = JoiValidateService.validate(JoiSchemas.updateUser, data)
       if (errors.length) return this.responseRequestError(response, errors)
