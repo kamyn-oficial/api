@@ -131,6 +131,12 @@ class JoiSchemas {
 
   public get updateAddress() {
     return Joi.object<UpdateAddressParams>({
+      name: Joi.string().required(),
+      receiver: Joi.string().required(),
+      neighborhood: Joi.string().required(),
+      number: Joi.number().required(),
+      complement: Joi.string(),
+      reference: Joi.string(),
       state: this.state.required(),
       city: this.city.required(),
       street: this.street.required(),

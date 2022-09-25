@@ -29,9 +29,15 @@ export interface UpdateUserParams {
 }
 
 export interface AddressSchema {
+  name: string
+  receiver: string
+  neighborhood: string
   state: string
   city: string
   street: string
+  number: number
+  complement?: string
+  reference?: string
   zipcode: string
   userId?: string
   isDefault?: boolean

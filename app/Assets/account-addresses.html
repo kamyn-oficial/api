@@ -26,6 +26,8 @@
       href="https://fonts.googleapis.com/css2?family=Open%20Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet"
     />
+    <link href="js/vendor-special/toastify.min.css" rel="stylesheet" />
+    <script src="js/vendor-special/states.js"></script>
   </head>
   <body class="has-smround-btns has-loader-bg equal-height has-sm-container">
     <!--header-->
@@ -416,7 +418,9 @@
         <div class="container">
           <ul class="breadcrumbs">
             <li><a href="index.html">Início</a></li>
-            <li><span>Meus endereços</span></li>
+            <li>
+              <span>Meus endereços </span>
+            </li>
           </ul>
         </div>
       </div>
@@ -440,8 +444,28 @@
               </div>
             </div>
             <div class="col-md-14 aside">
-              <h1 class="mb-3">Meus Endereços</h1>
-              <div class="row">
+              <h1 class="mb-3">
+                Meus Endereços
+
+                <a
+                  href="#"
+                  class="link-icn js-show-form"
+                  data-form="#updateAddress"
+                >
+                  <svg
+                    fill="#282828"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 50 50"
+                    width="32px"
+                    height="32px"
+                  >
+                    <path
+                      d="M 25 2 C 12.309295 2 2 12.309295 2 25 C 2 37.690705 12.309295 48 25 48 C 37.690705 48 48 37.690705 48 25 C 48 12.309295 37.690705 2 25 2 z M 25 4 C 36.609824 4 46 13.390176 46 25 C 46 36.609824 36.609824 46 25 46 C 13.390176 46 4 36.609824 4 25 C 4 13.390176 13.390176 4 25 4 z M 24 13 L 24 24 L 13 24 L 13 26 L 24 26 L 24 37 L 26 37 L 26 26 L 37 26 L 37 24 L 26 24 L 26 13 L 24 13 z"
+                    />
+                  </svg>
+                </a>
+              </h1>
+              <div class="row" id="addresses">
                 <div class="col-sm-9">
                   <div class="card">
                     <div class="card-body">
@@ -490,54 +514,153 @@
                 </div>
               </div>
               <div class="card mt-3 d-none" id="updateAddress">
-                <div class="card-body">
-                  <h3>Edit Address</h3>
-                  <label class="text-uppercase">Country:</label>
-                  <div class="form-group select-wrapper">
-                    <select class="form-control">
-                      <option value="United States">United States</option>
-                      <option value="Canada">Canada</option>
-                      <option value="China">China</option>
-                      <option value="India">India</option>
-                      <option value="Italy">Italy</option>
-                      <option value="Mexico">Mexico</option>
-                    </select>
-                  </div>
-                  <label class="text-uppercase">State:</label>
-                  <div class="form-group select-wrapper">
-                    <select class="form-control">
-                      <option value="AL">Alabama</option>
-                      <option value="AK">Alaska</option>
-                      <option value="AZ">Arizona</option>
-                      <option value="AR">Arkansas</option>
-                      <option value="CA">California</option>
-                      <option value="CO">Colorado</option>
-                      <option value="CT">Connecticut</option>
-                      <option value="DE">Delaware</option>
-                      <option value="DC">District Of Columbia</option>
-                      <option value="FL">Florida</option>
-                      <option value="GA">Georgia</option>
-                      <option value="HI">Hawaii</option>
-                      <option value="ID">Idaho</option>
-                      <option value="IL">Illinois</option>
-                      <option value="IN">Indiana</option>
-                      <option value="IA">Iowa</option>
-                      <option value="KS">Kansas</option>
-                      <option value="KY">Kentucky</option>
-                      <option value="LA">Louisiana</option>
-                    </select>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <label class="text-uppercase">City:</label>
+                <div
+                  class="card-body"
+                  style="display: flex; flex-direction: column; gap: 15px"
+                >
+                  <div style="display: flex; flex-direction: row; gap: 20px">
+                    <div style="width: 100%">
+                      <label class="text-uppercase">Nome:</label>
                       <div class="form-group">
-                        <input type="text" class="form-control" />
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="name"
+                          required
+                        />
                       </div>
                     </div>
-                    <div class="col-sm-6">
-                      <label class="text-uppercase">zip/postal code:</label>
+                    <div style="width: 100%">
+                      <label class="text-uppercase">
+                        Nome do destinatário:
+                      </label>
                       <div class="form-group">
-                        <input type="text" class="form-control" />
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="receiver"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div style="display: flex; flex-direction: row; gap: 20px">
+                    <div style="width: 100%">
+                      <label class="text-uppercase">CEP:</label>
+                      <div class="form-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="zipcode"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div style="width: 100%">
+                      <label class="text-uppercase">Número:</label>
+                      <div class="form-group">
+                        <input type="text" class="form-control" name="number" />
+                      </div>
+                    </div>
+                  </div>
+                  <div style="display: flex; flex-direction: row; gap: 20px">
+                    <div style="width: 100%">
+                      <label class="text-uppercase">Estado:</label>
+                      <div class="form-group select-wrapper">
+                        <select class="form-control" name="state" required>
+                          <option value="" hidden></option>
+                          <option value="Acre">Acre</option>
+                          <option value="Alagoas">Alagoas</option>
+                          <option value="Amazonas">Amazonas</option>
+                          <option value="Amapá">Amapá</option>
+                          <option value="Bahia">Bahia</option>
+                          <option value="Ceará">Ceará</option>
+                          <option value="Distrito Federal">
+                            Distrito Federal
+                          </option>
+                          <option value="Espírito Santo">Espírito Santo</option>
+                          <option value="Goiás">Goiás</option>
+                          <option value="Maranhão">Maranhão</option>
+                          <option value="Minas Gerais">Minas Gerais</option>
+                          <option value="Mato Grosso do Sul">
+                            Mato Grosso do Sul
+                          </option>
+                          <option value="Mato Grosso">Mato Grosso</option>
+                          <option value="Pará">Pará</option>
+                          <option value="Paraíba">Paraíba</option>
+                          <option value="Pernambuco">Pernambuco</option>
+                          <option value="Piauí">Piauí</option>
+                          <option value="Paraná">Paraná</option>
+                          <option value="Rio de Janeiro">Rio de Janeiro</option>
+                          <option value="Rio Grande do Norte">
+                            Rio Grande do Norte
+                          </option>
+                          <option value="Rondônia">Rondônia</option>
+                          <option value="Roraima">Roraima</option>
+                          <option value="Rio Grande do Sul">
+                            Rio Grande do Sul
+                          </option>
+                          <option value="Santa Catarina">Santa Catarina</option>
+                          <option value="Sergipe">Sergipe</option>
+                          <option value="São Paulo">São Paulo</option>
+                          <option value="Tocantins">Tocantins</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div style="width: 100%">
+                      <label class="text-uppercase">Cidade:</label>
+                      <div class="form-group select-wrapper">
+                        <select
+                          class="form-control"
+                          name="city"
+                          required
+                        ></select>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="display: flex; flex-direction: row; gap: 20px">
+                    <div style="width: 100%">
+                      <label class="text-uppercase">Bairro:</label>
+                      <div class="form-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="neighborhood"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div style="width: 100%">
+                      <label class="text-uppercase">Rua:</label>
+                      <div class="form-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="street"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div style="display: flex; flex-direction: row; gap: 20px">
+                    <div style="width: 100%">
+                      <label class="text-uppercase">Complemento:</label>
+                      <div class="form-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="complement"
+                        />
+                      </div>
+                    </div>
+                    <div style="width: 100%">
+                      <label class="text-uppercase">Ponto de Referência:</label>
+                      <div class="form-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="reference"
+                        />
                       </div>
                     </div>
                   </div>
@@ -547,7 +670,7 @@
                       name="checkbox1"
                       type="checkbox"
                     />
-                    <label for="formCheckbox1">Set address as default</label>
+                    <label for="formCheckbox1">Usar como padrão</label>
                   </div>
                   <div class="mt-2">
                     <button
@@ -557,7 +680,7 @@
                     >
                       Cancel
                     </button>
-                    <button type="submit" class="btn ml-1">Add Address</button>
+                    <button type="submit" class="btn ml-1">Salvar</button>
                   </div>
                 </div>
               </div>
@@ -816,5 +939,53 @@
     <script src="js/vendor-special/instafeed.min.js"></script>
     <script src="js/vendor/vendor.min.js"></script>
     <script src="js/app-html.js"></script>
+    <script src="js/vendor-special/axios.min.js"></script>
+    <script src="js/vendor-special/toastify.min.js"></script>
+    <script>
+      function fetchAddresses() {
+        http_setup.get('address').then(({ data }) => {
+          document.getElementById('addresses').innerHTML = data
+            .map(
+              address => `
+            <div class="col-sm-9">
+              <div class="card">
+                <div class="card-body">
+                  <h3>${address.name} ${
+                address.isDefault ? '(Padrão)' : ''
+              }</h3>
+                  <p>
+                    ${address.street} - ${address.number} - ${
+                address.neighborhood
+              }
+                  </p>
+                  <div class="mt-2 clearfix">
+                    <a
+                      href="#"
+                      class="link-icn js-show-form"
+                      data-form="#updateAddress"
+                      ><i class="icon-pencil"></i>Editar</a>
+                    ${
+                      address.isDefault
+                        ? ''
+                        : '<a href="#" class="link-icn ml-1 float-right"><i class="icon-cross"></i>Definir como padrão</a>'
+                    }
+                    ${
+                      address.isDefault
+                        ? ''
+                        : '<a href="#" class="link-icn ml-1 float-right"><i class="icon-cross"></i>Deletar</a>'
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+          `
+            )
+            .toString()
+        })
+      }
+      setTimeout(() => {
+        fetchAddresses()
+      }, 500)
+    </script>
   </body>
 </html>

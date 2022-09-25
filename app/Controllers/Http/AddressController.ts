@@ -25,9 +25,15 @@ export default class AddressController extends BaseController {
       const userId = await this.getUserId(request)
 
       const data: UpdateAddressParams = request.only([
+        'name',
+        'receiver',
+        'neighborhood',
         'state',
         'city',
         'street',
+        'number',
+        'complement',
+        'reference',
         'zipcode',
         'isDefault'
       ])
@@ -51,9 +57,15 @@ export default class AddressController extends BaseController {
       const id = decodeURI(request.params().id)
 
       const data: UpdateAddressParams = request.only([
+        'name',
+        'receiver',
+        'neighborhood',
         'state',
         'city',
         'street',
+        'number',
+        'complement',
+        'reference',
         'zipcode',
         'isDefault'
       ])
