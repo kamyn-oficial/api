@@ -12,19 +12,15 @@ class JwtService {
     expireInDays
   }: {
     expireInDays: number
-  }): Promise<[string, number]> {
+  }): Promise<string> {
     return new Promise((resolve, reject) => {
-      const oneDayInSeconds = 86400
-      const expInTimestamp =
-        new Date().getTime() + expireInDays * (oneDayInSeconds * 1000)
-
       jwt.sign(
         {},
         this.JWT_KEY,
         { expiresIn: `${expireInDays}d` },
         (err, token) => {
           if (err) reject(err)
-          else resolve([token as string, expInTimestamp])
+          else resolve(String(token))
         }
       )
     })
@@ -50,7 +46,8 @@ class JwtService {
     })
   }
 
-  public tokenIsExpired(tokenExp: number): boolean {
+  public async tokenIsExpired(token: string): Promise<boolean> {
+    const tokenExp = await this.tokenExpiration(token)
     const currentTimestamp = new Date().getTime() / 1000
     const isExpired = tokenExp - currentTimestamp < 0
 

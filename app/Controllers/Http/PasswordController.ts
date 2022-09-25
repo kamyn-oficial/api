@@ -77,23 +77,19 @@ export default class PasswordController extends BaseController {
 
       const userDB = await UserRepository.findByEmail(email)
       if (!userDB) return this.responseEmailNotFound(response)
-      if (!userDB.passwordHash) return this.responseCreatePassword(response)
 
-      const isExpired = JwtService.tokenIsExpired(
-        userDB.resetPasswordTokenExp || -1
-      )
+      const isExpired = userDB.resetPasswordToken
+        ? await JwtService.tokenIsExpired(userDB.resetPasswordToken)
+        : true
 
       if (!userDB.resetPasswordToken || isExpired) {
-        const [newResetPasswordToken, newResetPasswordTokenExp] =
-          await JwtService.resetPasswordToken
+        const newResetPasswordToken = await JwtService.resetPasswordToken
 
         userDB.resetPasswordToken = newResetPasswordToken
-        userDB.resetPasswordTokenExp = newResetPasswordTokenExp
 
         await UserRepository.changeResetPasswordTokenByEmail(
           email,
-          newResetPasswordToken,
-          newResetPasswordTokenExp
+          newResetPasswordToken
         )
       }
 

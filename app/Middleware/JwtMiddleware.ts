@@ -29,8 +29,7 @@ class AuthMiddleware {
 
       if (!bearerToken) return this.responseUnauthorized(response, tokenName)
 
-      const bearerTokenExp = await JwtService.tokenExpiration(bearerToken)
-      const bearerTokenHasExpired = JwtService.tokenIsExpired(bearerTokenExp)
+      const bearerTokenHasExpired = await JwtService.tokenIsExpired(bearerToken)
 
       if (bearerTokenHasExpired)
         return this.responseUnauthorized(response, tokenName)

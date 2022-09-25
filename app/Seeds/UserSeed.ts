@@ -25,14 +25,13 @@ class UserSeed {
       Logger.info('user admin created')
 
       const passwordHash = await Hash.make(this.adm.password)
-      const [accessToken, accessTokenExp] = await JwtService.accessToken
+      const accessToken = await JwtService.accessToken
 
       const user: UserSchema = {
         name: this.adm.name,
         email: this.adm.email,
         passwordHash,
         accessToken,
-        accessTokenExp,
         isAdm: true
       }
 

@@ -31,15 +31,8 @@ class UserRepository {
     return UserModel.findOne({ accessToken })
   }
 
-  public changeAccessTokenByEmail(
-    email: string,
-    accessToken: string,
-    accessTokenExp: number
-  ) {
-    return UserModel.findOneAndUpdate(
-      { email },
-      { accessToken, accessTokenExp }
-    )
+  public changeAccessTokenByEmail(email: string, accessToken: string) {
+    return UserModel.findOneAndUpdate({ email }, { accessToken })
   }
 
   public changePasswordHashByAccessToken(
@@ -54,21 +47,16 @@ class UserRepository {
       { resetPasswordToken },
       {
         passwordHash,
-        resetPasswordToken: null,
-        resetPasswordTokenExp: null
+        resetPasswordToken: null
       }
     )
   }
 
   public changeResetPasswordTokenByEmail(
     email: string,
-    resetPasswordToken: string,
-    resetPasswordTokenExp: number
+    resetPasswordToken: string
   ) {
-    return UserModel.findOneAndUpdate(
-      { email },
-      { resetPasswordToken, resetPasswordTokenExp }
-    )
+    return UserModel.findOneAndUpdate({ email }, { resetPasswordToken })
   }
 
   public findByResetPasswordToken(resetPasswordToken: string) {
@@ -91,8 +79,7 @@ class UserRepository {
     return UserModel.findOneAndUpdate(
       { accessToken },
       {
-        accessToken: null,
-        accessTokenExp: null
+        accessToken: null
       }
     )
   }
@@ -102,8 +89,7 @@ class UserRepository {
       { confirmationToken },
       {
         emailVerified: true,
-        confirmationToken: null,
-        confirmationTokenExp: null
+        confirmationToken: null
       }
     )
   }

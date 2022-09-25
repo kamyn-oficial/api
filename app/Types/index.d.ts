@@ -6,13 +6,10 @@ export interface UserSchema {
   state?: string
   city?: string
   address?: string
-  passwordHash?: string
-  accessToken: string | null
-  accessTokenExp: number | null
+  passwordHash: string
+  accessToken?: string | null
   resetPasswordToken?: string | null
-  resetPasswordTokenExp?: number | null
   confirmationToken?: string | null
-  confirmationTokenExp?: number | null
   emailVerifiedAt?: Number
   createdAt?: Number
 }

@@ -23,7 +23,6 @@ export default class UserController extends BaseController {
         city: userDB.city,
         address: userDB.address,
         accessToken: userDB.accessToken,
-        accessTokenExp: userDB.accessTokenExp,
         hasPassword: !!userDB.passwordHash,
         isAdm: userDB.isAdm,
         emailVerifiedAt: userDB.emailVerifiedAt

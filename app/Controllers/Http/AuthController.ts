@@ -32,30 +32,20 @@ export default class AuthController extends BaseController {
       const existEmail = await UserRepository.existByEmail(data.email)
       if (existEmail) return this.responseEmailExist(response)
 
-      const [
-        passwordHash,
-        [accessToken, accessTokenExp],
-        [confirmationToken, confirmationTokenExp]
-      ] = await Promise.all([
-        Hash.make(data.password),
-        JwtService.accessToken,
-        JwtService.confirmEmailToken
-      ])
+      const passwordHash = await Hash.make(data.password)
 
       await UserRepository.create({
         ...data,
-        passwordHash,
-        accessToken,
-        accessTokenExp,
-        confirmationToken,
-        confirmationTokenExp
+        passwordHash
       })
 
       const user = {
         name: data.name,
         email: data.email,
-        accessToken,
-        accessTokenExp
+        phone: data.phone,
+        state: data.state,
+        city: data.city,
+        address: data.address
       }
 
       return response.status(201).json(user)
@@ -71,35 +61,34 @@ export default class AuthController extends BaseController {
       const userDB = await UserRepository.findByEmail(email)
 
       if (!userDB) return this.responseIncorrectEmailOrPassword(response)
-      if (!userDB.passwordHash) return this.responseCreatePassword(response)
 
       const isValidPassword = await Hash.verify(userDB.passwordHash, password)
       if (!isValidPassword)
         return this.responseIncorrectEmailOrPassword(response)
 
-      const tokenExpiration = await JwtService.tokenExpiration(
+      const tokenIsExpired = await JwtService.tokenIsExpired(
         userDB.accessToken || ''
       )
-      const tokenIsExpired = JwtService.tokenIsExpired(tokenExpiration)
 
       if (tokenIsExpired) {
-        const [newAccessToken, newAccessTokenExp] = await JwtService.accessToken
+        const newAccessToken = await JwtService.accessToken
 
         await UserRepository.changeAccessTokenByEmail(
           userDB.email,
-          newAccessToken,
-          newAccessTokenExp
+          newAccessToken
         )
 
         userDB.accessToken = newAccessToken
-        userDB.accessTokenExp = newAccessTokenExp
       }
 
       const user = {
         name: userDB.name,
         email: userDB.email,
-        accessToken: userDB.accessToken,
-        accessTokenExp: userDB.accessTokenExp
+        phone: userDB.phone,
+        state: userDB.state,
+        city: userDB.city,
+        address: userDB.address,
+        accessToken: userDB.accessToken
       }
 
       return response.json(user)
@@ -145,10 +134,7 @@ export default class AuthController extends BaseController {
     try {
       const confirmationToken = decodeURI(request.qs().confirmationToken)
 
-      const tokenExpiration = await JwtService.tokenExpiration(
-        confirmationToken || ''
-      )
-      const tokenIsExpired = JwtService.tokenIsExpired(tokenExpiration)
+      const tokenIsExpired = await JwtService.tokenIsExpired(confirmationToken)
 
       if (tokenIsExpired)
         return response.redirect(`${this.APP_FRONT_URL}?confirm-email=fail`)
@@ -168,22 +154,16 @@ export default class AuthController extends BaseController {
       const userDB = await UserRepository.findByAccessToken(accessToken)
       if (!userDB) return response.safeStatus(404)
 
-      const tokenExpiration = await JwtService.tokenExpiration(
-        accessToken || ''
-      )
-      const tokenIsExpired = JwtService.tokenIsExpired(tokenExpiration)
+      const tokenIsExpired = await JwtService.tokenIsExpired(accessToken)
 
       if (tokenIsExpired) {
-        const [confirmationToken, confirmationTokenExp] =
-          await JwtService.confirmEmailToken
+        const confirmationToken = await JwtService.confirmEmailToken
 
         await UserRepository.updateByAccessToken(accessToken, {
-          confirmationToken,
-          confirmationTokenExp
+          confirmationToken
         })
 
         userDB.confirmationToken = confirmationToken
-        userDB.confirmationTokenExp = confirmationTokenExp
       }
 
       await MailService.sendEmailConfirmation(userDB.email, {

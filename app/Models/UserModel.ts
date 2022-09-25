@@ -27,26 +27,17 @@ const schema = new Schema<UserSchema>({
     type: String
   },
   passwordHash: {
-    type: String
-  },
-  accessToken: {
     type: String,
     required: true
   },
-  accessTokenExp: {
-    type: Number
+  accessToken: {
+    type: String
   },
   resetPasswordToken: {
     type: String
   },
-  resetPasswordTokenExp: {
-    type: Number
-  },
   confirmationToken: {
     type: String
-  },
-  confirmationTokenExp: {
-    type: Number
   },
   emailVerifiedAt: {
     type: Number
