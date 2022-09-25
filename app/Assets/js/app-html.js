@@ -2,6 +2,11 @@
 
 window.THEME = {};
 
+function setInputValue(inputName, value) {
+  const inputs = document.getElementsByName(inputName)
+  if (inputs[0]) inputs[0].value = value
+}
+
 // Youtube API
 function onYouTubeIframeAPIReady() {
 	THEME.Video.loadVideos();

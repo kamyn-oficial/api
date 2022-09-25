@@ -759,13 +759,18 @@
     <script>
       setTimeout(() => {
         http_setup.get('me').then(({ data }) => {
+          data.phone = data.phone || ''
+
+          setInputValue('name', data.name)
+          setInputValue('phone', data.phone)
+
           document.getElementById('personal-data').innerHTML = `
-          <b>Nome:</b> ${data.name || ''}<br />
-          <b>Telefone:</b> ${data.phone || ''}<br />
-          <b>Email:</b> ${data.email || ''}<br />
+          <b>Nome:</b> ${data.name}<br />
+          <b>Telefone:</b> ${data.phone}<br />
+          <b>Email:</b> ${data.email}<br />
         `
         })
-      }, 100)
+      }, 300)
 
       document
         .getElementById('account-details-form')

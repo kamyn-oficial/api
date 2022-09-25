@@ -3,10 +3,9 @@ import { RegisterParams, UpdateUserParams } from 'App/Types'
 
 class JoiSchemas {
   public name = Joi.string()
-    .min(4)
-    .max(40)
+    .max(56)
     .error(err => {
-      err[0].message = 'Nome deve conter no mínimo 4 e no máximo 40 caracteres'
+      err[0].message = 'Nome inválido'
       err[0].path = ['name']
       return err[0]
     })
