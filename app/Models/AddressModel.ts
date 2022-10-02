@@ -27,7 +27,7 @@ const schema = new Schema<AddressSchema>({
     required: true
   },
   number: {
-    type: Number
+    type: String
   },
   complement: {
     type: String
@@ -36,7 +36,7 @@ const schema = new Schema<AddressSchema>({
     type: String
   },
   zipcode: {
-    type: Number,
+    type: String,
     required: true
   },
   userId: {
