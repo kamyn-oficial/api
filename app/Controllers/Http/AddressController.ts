@@ -41,15 +41,21 @@ export default class AddressController extends BaseController {
       const errors = JoiValidateService.validate(JoiSchemas.updateAddress, data)
       if (errors.length) return this.responseRequestError(response, errors)
 
-      if (data.isDefault) await AddressRepository.toggleDefaults(userId)
+      const defaultAddress = await AddressRepository.defaultAddress(userId)
 
-      const defaultAddress = (await AddressRepository.defaultAddress(userId))
-        .length
+      if (data.isDefault)
+        await Promise.all(
+          defaultAddress.map(({ _id }) =>
+            AddressRepository.updateById(_id, { isDefault: false })
+          )
+        )
+
+      const isDefault = !defaultAddress.length || data.isDefault
 
       await AddressRepository.create({
         ...data,
         userId,
-        isDefault: defaultAddress === 0
+        isDefault
       })
 
       return response.safeStatus(200)
@@ -61,6 +67,7 @@ export default class AddressController extends BaseController {
   public async update({ request, response }: HttpContextContract) {
     try {
       const id = decodeURI(request.params().id)
+      const userId = await this.getUserId(request)
 
       const data: UpdateAddressParams = request.only([
         'name',
@@ -79,7 +86,21 @@ export default class AddressController extends BaseController {
       const errors = JoiValidateService.validate(JoiSchemas.updateAddress, data)
       if (errors.length) return this.responseRequestError(response, errors)
 
-      await AddressRepository.updateById(id, data)
+      const defaultAddress = await AddressRepository.defaultAddress(userId)
+
+      if (data.isDefault)
+        await Promise.all(
+          defaultAddress.map(({ _id }) =>
+            AddressRepository.updateById(_id, { isDefault: false })
+          )
+        )
+
+      const isDefault = !defaultAddress.length || data.isDefault
+
+      await AddressRepository.updateById(id, {
+        ...data,
+        isDefault
+      })
 
       return response.safeStatus(200)
     } catch (error) {

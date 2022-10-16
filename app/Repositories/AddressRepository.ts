@@ -6,20 +6,15 @@ class AddressRepository {
     return new AddressModel(schema).save()
   }
 
-  public async toggleDefaults(userId: string) {
-    const values = await AddressModel.find({ userId, isDefault: true })
-    await Promise.all([values.map(value => value.update({ isDefault: false }))])
-  }
-
   public defaultAddress(userId: string) {
     return AddressModel.find({ userId, isDefault: true })
   }
 
-  public findByUserId(id: string) {
-    return AddressModel.find({ userId: id })
+  public findByUserId(userId: string) {
+    return AddressModel.find({ userId })
   }
 
-  public updateById(id: string, schema: UpdateAddressParams) {
+  public updateById(id: string, schema: Partial<UpdateAddressParams>) {
     return AddressModel.findByIdAndUpdate(id, schema)
   }
 

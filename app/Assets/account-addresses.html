@@ -906,19 +906,34 @@
       var editingID = ''
       var quantity = 0
       const addBtn = $('#add-btn')[0]
-      const form = $('#updateAddress')[0]
+      const form = document.getElementById('updateAddress')
 
       function closeForm() {
         const el = $('.js-close-form')[0]
         if (el) el.click()
       }
 
-      function clearFields() {
+      function showForm() {
+        const el = $('.js-show-form')[0]
+        if (el) el.click()
+      }
+
+      function setFormValue(address) {
         const data = new FormData(form)
-        const dto = {}
-        data.forEach((value, key) => {
-          document.getElementsByName(key)[0].value = ''
-        })
+        if (address) {
+          data.forEach((value, key) => {
+            document.getElementsByName(key)[0].value = address[key]
+          })
+          const check = document.getElementsByName('isDefault')[0]
+          if (!check.checked && address.isDefault) check.click()
+          setTimeout(() => updateCities(address.city), 100)
+        } else {
+          data.forEach((value, key) => {
+            document.getElementsByName(key)[0].value = ''
+          })
+          const check = document.getElementsByName('isDefault')[0]
+          if (check.checked) check.click()
+        }
       }
 
       function getFormValue() {
@@ -946,6 +961,17 @@
         }
       }
 
+      async function defineDefault(address) {
+        await http_setup.put(`address/${address._id}`, {
+          ...address,
+          isDefault: true
+        })
+        Toastify({
+          text: 'Endereço atualizado com sucesso!'
+        }).showToast()
+        fetchAddresses()
+      }
+
       async function handleSubmit(e) {
         e.preventDefault()
 
@@ -969,12 +995,12 @@
 
       addBtn.addEventListener('click', () => {
         editingID = ''
-        if (quantity < 1) {
+        if (quantity <= 1) {
           const check = $('#form-is-default')[0]
           check.disabled = true
           check.checked = true
         }
-        clearFields()
+        setFormValue()
       })
 
       form.addEventListener('submit', handleSubmit)
@@ -998,16 +1024,15 @@
                   </p>
                   <div class="mt-2 clearfix">
                     <a
-                      data-id="${address.id}"
-                      id="edit-btn"
+                      data-id="${address._id}"
                       href="#"
-                      class="link-icn js-show-form"
+                      class="link-icn js-show-form edit-btn"
                       data-form="#updateAddress"
                       ><i class="icon-pencil"></i>Editar</a>
                     ${
                       address.isDefault
                         ? ''
-                        : '<a href="#" class="link-icn ml-1 float-right"><i class="icon-cross"></i>Definir como padrão</a>'
+                        : `<a data-id="${address._id}" href="#" class="link-icn ml-1 float-right define-default-btn"><i class="icon-cross"></i>Definir como padrão</a>`
                     }
                     ${
                       address.isDefault
@@ -1022,21 +1047,39 @@
             )
             .toString()
 
+          const getAddress = id => data.find(({ _id }) => _id === id)
+
           $('.delete-btn').on('click', async ({ target }) => {
-            const address = data.find(
-              ({ _id }) => String(_id) === String(target.dataset.id)
-            )
+            const address = getAddress(target.dataset.id)
             const yes = await confirm(
               `Deseja deletar o endereço "${address.name}"?`
             )
             if (yes) deleteAddress(address._id)
           })
+
+          $('.edit-btn').on('click', async ({ target }) => {
+            const address = getAddress(target.dataset.id)
+            showForm()
+            editingID = target.dataset.id
+            if (quantity <= 1) {
+              const check = $('#form-is-default')[0]
+              check.disabled = true
+              check.checked = true
+            }
+            setFormValue(address)
+          })
+
+          $('.define-default-btn').on('click', async ({ target }) => {
+            const address = getAddress(target.dataset.id)
+            const yes = await confirm(
+              `Deseja definir o endereço "${address.name}" como padrão?`
+            )
+            if (yes) defineDefault(address)
+          })
         })
         closeForm()
       }
-      setTimeout(() => {
-        fetchAddresses()
-      }, 500)
+      setTimeout(() => fetchAddresses(), 500)
     </script>
   </body>
 </html>
