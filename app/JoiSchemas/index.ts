@@ -66,7 +66,7 @@ class JoiSchemas {
     .min(6)
     .max(64)
     .error(err => {
-      err[0].message = 'Rua inválida'
+      err[0].message = 'Tamanho da rua inválido'
       err[0].path = ['street']
       return err[0]
     })

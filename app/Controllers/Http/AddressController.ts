@@ -41,9 +41,15 @@ export default class AddressController extends BaseController {
       const errors = JoiValidateService.validate(JoiSchemas.updateAddress, data)
       if (errors.length) return this.responseRequestError(response, errors)
 
+      if (data.isDefault) await AddressRepository.toggleDefaults(userId)
+
+      const defaultAddress = (await AddressRepository.defaultAddress(userId))
+        .length
+
       await AddressRepository.create({
         ...data,
-        userId
+        userId,
+        isDefault: defaultAddress === 0
       })
 
       return response.safeStatus(200)

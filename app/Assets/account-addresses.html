@@ -517,6 +517,7 @@
                           type="number"
                           class="form-control"
                           name="number"
+                          required
                         />
                       </div>
                     </div>
@@ -608,6 +609,7 @@
                           type="text"
                           class="form-control"
                           name="complement"
+                          required
                         />
                       </div>
                     </div>
@@ -618,17 +620,18 @@
                           type="text"
                           class="form-control"
                           name="reference"
+                          required
                         />
                       </div>
                     </div>
                   </div>
                   <div class="clearfix">
                     <input
-                      id="formisDefault"
+                      id="form-is-default"
                       name="isDefault"
                       type="checkbox"
                     />
-                    <label for="formisDefault">Usar como padrão</label>
+                    <label for="form-is-default">Usar como padrão</label>
                   </div>
                   <div class="mt-2">
                     <button
@@ -636,7 +639,7 @@
                       class="btn btn--alt js-close-form"
                       data-form="#updateAddress"
                     >
-                      Cancel
+                      Cancelar
                     </button>
                     <button type="submit" class="btn ml-1">Salvar</button>
                   </div>
@@ -901,8 +904,14 @@
     <script src="js/vendor-special/toastify.min.js"></script>
     <script>
       var editingID = ''
-      const addBtn = document.getElementById('add-btn')
-      const form = document.getElementById('updateAddress')
+      var quantity = 0
+      const addBtn = $('#add-btn')[0]
+      const form = $('#updateAddress')[0]
+
+      function closeForm() {
+        const el = $('.js-close-form')[0]
+        if (el) el.click()
+      }
 
       function clearFields() {
         const data = new FormData(form)
@@ -922,25 +931,13 @@
         return dto
       }
 
-      async function handleSubmit(e) {
+      async function deleteAddress(id) {
         try {
-          e.preventDefault()
-
-          const dto = getFormValue()
-
-          if (editingID) {
-            await http_setup.put(`address/${editingID}`, dto)
-            Toastify({
-              text: 'Endereço atualizado com sucesso!'
-            }).showToast()
-          } else {
-            await http_setup.post('address', dto)
-            Toastify({
-              text: 'Endereço adicionado com sucesso!'
-            }).showToast()
-          }
-
-          editingID = ''
+          await http_setup.delete(`address/${id}`)
+          Toastify({
+            text: 'Endereço deletado com sucesso!'
+          }).showToast()
+          fetchAddresses()
         } catch (e) {
           console.error(e)
           Toastify({
@@ -949,8 +946,34 @@
         }
       }
 
+      async function handleSubmit(e) {
+        e.preventDefault()
+
+        const dto = getFormValue()
+
+        if (editingID) {
+          await http_setup.put(`address/${editingID}`, dto)
+          Toastify({
+            text: 'Endereço atualizado com sucesso!'
+          }).showToast()
+        } else {
+          await http_setup.post('address', dto)
+          Toastify({
+            text: 'Endereço adicionado com sucesso!'
+          }).showToast()
+        }
+
+        editingID = ''
+        fetchAddresses()
+      }
+
       addBtn.addEventListener('click', () => {
         editingID = ''
+        if (quantity < 1) {
+          const check = $('#form-is-default')[0]
+          check.disabled = true
+          check.checked = true
+        }
         clearFields()
       })
 
@@ -958,7 +981,8 @@
 
       function fetchAddresses() {
         http_setup.get('address').then(({ data }) => {
-          document.getElementById('addresses').innerHTML = data
+          quantity = data.length
+          $('#addresses')[0].innerHTML = data
             .map(
               address => `
             <div class="col-sm-9">
@@ -974,6 +998,8 @@
                   </p>
                   <div class="mt-2 clearfix">
                     <a
+                      data-id="${address.id}"
+                      id="edit-btn"
                       href="#"
                       class="link-icn js-show-form"
                       data-form="#updateAddress"
@@ -986,7 +1012,7 @@
                     ${
                       address.isDefault
                         ? ''
-                        : '<a href="#" class="link-icn ml-1 float-right"><i class="icon-cross"></i>Deletar</a>'
+                        : `<a data-id="${address._id}" href="#" class="link-icn ml-1 float-right delete-btn"><i class="icon-cross"></i>Deletar</a>`
                     }
                   </div>
                 </div>
@@ -995,7 +1021,18 @@
           `
             )
             .toString()
+
+          $('.delete-btn').on('click', async ({ target }) => {
+            const address = data.find(
+              ({ _id }) => String(_id) === String(target.dataset.id)
+            )
+            const yes = await confirm(
+              `Deseja deletar o endereço "${address.name}"?`
+            )
+            if (yes) deleteAddress(address._id)
+          })
         })
+        closeForm()
       }
       setTimeout(() => {
         fetchAddresses()
