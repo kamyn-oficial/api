@@ -7591,3 +7591,10 @@ if (cartIcon) {
 	$window.on('load', THEME.documentLoad.init);
 	$window.on('resize', THEME.documentResize.init);
 })(jQuery);
+
+if (localStorage.getItem('accessToken')) document.getElementsByClassName('not-logged-links')[0].style.display = 'none'
+else document.getElementsByClassName('logged-links')[0].style.display = 'none'
+
+$('.logout-btn').on('click', () => {
+  localStorage.removeItem('accessToken')
+})
