@@ -95,7 +95,7 @@ export default class AuthController extends BaseController {
 
       if (accessToken) await UserRepository.logout(accessToken)
 
-      return response.safeStatus(200)
+      return response.redirect('/')
     } catch (error) {
       return this.responseSomethingWrong(response, error)
     }
