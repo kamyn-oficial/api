@@ -1,37 +1,43 @@
+import Hash from '@ioc:Adonis/Core/Hash'
+
 import BaseController from './BaseController'
 import UserRepository from 'App/Repositories/UserRepository'
 import JoiValidateService from 'App/Services/JoiValidateService'
 import JoiSchemas from 'App/JoiSchemas'
 
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import type { UpdateUserParams } from 'App/Types'
+import type { CreateUserParams, UpdateUserParams } from 'App/Types'
 
 export default class UserController extends BaseController {
   public async index({ request, response }: HttpContextContract) {
     try {
-      const page = Number(decodeURI(request.params().page || 1))
-      const pagination = await UserRepository.getAll(page)
+      const params = request.only(['page', 'per_page'])
+      const page = Number(params.page || 1)
+      const per_page = Number(params.per_page || 15)
+      const pagination = await UserRepository.getAll(page, per_page)
       return response.json(pagination)
     } catch (error) {
       return this.responseSomethingWrong(response, error)
     }
   }
 
-  public async view({ request, response }: HttpContextContract) {
+  public async store({ request, response }: HttpContextContract) {
     try {
-      const accessToken = this.getBearerToken(request)
+      const data: CreateUserParams = request.only(['name', 'email', 'password', 'phone', 'isAdm'])
 
-      const userDB = await UserRepository.findByAccessToken(accessToken)
-      if (!userDB) return response.safeStatus(404)
-      if (!userDB.isAdm) return response.safeStatus(403)
+      const errors = JoiValidateService.validate(JoiSchemas.createUser, data)
+      if (errors.length) return this.responseRequestError(response, errors)
 
-      const userId = decodeURI(request.params().id || '')
-      if (!userId) return response.safeStatus(406)
+      const passwordHash = await Hash.make(data.password)
 
-      const user = await UserRepository.findById(userId)
-      if (!user) return response.safeStatus(404)
+      const dto = {
+        ...data,
+        passwordHash
+      }
 
-      return response.json({ user })
+      await UserRepository.create(dto)
+
+      return response.safeStatus(200)
     } catch (error) {
       return this.responseSomethingWrong(response, error)
     }
@@ -39,16 +45,21 @@ export default class UserController extends BaseController {
 
   public async update({ request, response }: HttpContextContract) {
     try {
-      const accessToken = this.getBearerToken(request)
-      const data: UpdateUserParams = request.only(['name', 'phone'])
+      const id = decodeURI(request.params().id)
+      const data: UpdateUserParams = request.only(['name', 'email', 'password', 'phone', 'isAdm'])
 
       const errors = JoiValidateService.validate(JoiSchemas.updateUser, data)
       if (errors.length) return this.responseRequestError(response, errors)
 
-      const userDB = await UserRepository.updateByAccessToken(accessToken, data)
-      if (!userDB) return response.safeStatus(404)
+      const passwordHash = await Hash.make(data.password)
 
-      await UserRepository.updateByAccessToken(accessToken, data)
+      const dto = {
+        ...data,
+        passwordHash
+      }
+
+      const userDB = await UserRepository.updateById(id, dto)
+      if (!userDB) return response.safeStatus(404)
 
       return response.safeStatus(200)
     } catch (error) {
@@ -58,18 +69,10 @@ export default class UserController extends BaseController {
 
   public async delete({ request, response }: HttpContextContract) {
     try {
-      const accessToken = this.getBearerToken(request)
+      const id = decodeURI(request.params().id)
 
-      const userDB = await UserRepository.findByAccessToken(accessToken)
+      const userDB = await UserRepository.deleteById(id)
       if (!userDB) return response.safeStatus(404)
-      if (!userDB.isAdm) return response.safeStatus(403)
-
-      const userId = decodeURI(request.params().userId || '')
-
-      const userToDelete = await UserRepository.findById(userId)
-      if (!userToDelete) return response.safeStatus(406)
-
-      await UserRepository.deleteById(userId)
 
       return response.safeStatus(200)
     } catch (error) {

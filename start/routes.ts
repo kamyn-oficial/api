@@ -7,10 +7,15 @@ Route.group(() => {
   Route.get('logout', 'AuthController.logout')
 
   Route.group(() => {
+    Route.group(() => {
+      Route.get('user', 'UserController.index')
+      Route.post('user', 'UserController.store')
+      Route.put('user/:id', 'UserController.update')
+      Route.delete('user/:id', 'UserController.delete')
+    }).middleware('permission:isAdm')
+
     Route.get('me', 'AuthController.me')
     Route.put('me', 'AuthController.update')
-
-    Route.get('users', 'UserController.index')
 
     Route.get('address', 'AddressController.index')
     Route.post('address', 'AddressController.create')

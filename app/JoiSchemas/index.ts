@@ -1,6 +1,7 @@
 import Joi from 'joi'
 import {
   RegisterParams,
+  CreateUserParams,
   UpdateUserParams,
   UpdateAddressParams
 } from 'App/Types'
@@ -122,11 +123,18 @@ class JoiSchemas {
     })
   }
 
-  public get updateUser() {
-    return Joi.object<UpdateUserParams>({
-      name: this.name,
-      phone: this.phone
+  public get createUser() {
+    return Joi.object<CreateUserParams>({
+      name: this.name.required(),
+      email: this.email.required(),
+      password: this.password.required(),
+      phone: this.phone,
+      isAdm: Joi.boolean(),
     })
+  }
+
+  public get updateUser() {
+    return this.createUser
   }
 
   public get updateAddress() {

@@ -39,5 +39,6 @@ Server.middleware.register([() => import('@ioc:Adonis/Core/BodyParser')])
 |
 */
 Server.middleware.registerNamed({
-  jwt: () => import('App/Middleware/JwtMiddleware')
+  jwt: () => import('App/Middleware/JwtMiddleware'),
+  permission: () => import('App/Middleware/PermissionMiddleware')
 })

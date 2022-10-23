@@ -23,10 +23,15 @@ export interface RegisterParams {
   password: string
 }
 
-export interface UpdateUserParams {
+export interface CreateUserParams {
   name: string
-  phone: string
+  email: string
+  password: string
+  phone?: string
+  isAdm?: boolean
 }
+
+export interface UpdateUserParams extends CreateUserParams { }
 
 export interface AddressSchema {
   name: string

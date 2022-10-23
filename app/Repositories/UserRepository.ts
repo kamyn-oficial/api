@@ -6,21 +6,36 @@ class UserRepository {
     return new UserModel({ ...schema, createdAt: new Date().getTime() }).save()
   }
 
-  public async getAll(page = 1) {
-    const PAGE_SIZE = 2;                   // Similar to 'limit'
-    const skip = (page - 1) * PAGE_SIZE;    // For page 1, the skip is: (1 - 1) * 20 => 0 * 20 = 0
-    const data = await UserModel.find().skip(skip).limit(PAGE_SIZE)
+  public readonly selectFields = [
+    '_id',
+    'name',
+    'email',
+    'password',
+    'accessTokenExp',
+    'isAdm',
+    'emailVerified',
+    'createdAt'
+  ]
+
+  public async getAll(current_page = 1, per_page = 15) {
+    const skip = (current_page - 1) * per_page;
+    const data = await UserModel.find().select(this.selectFields).skip(skip).limit(per_page)
     const total = await UserModel.countDocuments()
     return {
       data,
-      current_page: 1,
-      per_page: 0,
+      current_page,
+      per_page,
       total,
     }
   }
 
   public existByEmail(email: string) {
     return UserModel.exists({ email })
+  }
+
+  public async isAdm(id: string) {
+    const user = await UserModel.findById(id)
+    return !!user?.isAdm
   }
 
   public findByEmail(email: string) {
