@@ -8,7 +8,7 @@ import JoiSchemas from 'App/JoiSchemas'
 import UserRepository from 'App/Repositories/UserRepository'
 
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import type { RegisterParams, UpdateUserParams } from 'App/Types'
+import type { RegisterParams, UpdateMeUserParams } from 'App/Types'
 
 export default class AuthController extends BaseController {
   public ping({ response }: HttpContextContract) {
@@ -120,9 +120,9 @@ export default class AuthController extends BaseController {
   public async update({ request, response }: HttpContextContract) {
     try {
       const accessToken = this.getBearerToken(request)
-      const data: UpdateUserParams = request.only(['name', 'phone'])
+      const data: UpdateMeUserParams = request.only(['name', 'phone'])
 
-      const errors = JoiValidateService.validate(JoiSchemas.updateUser, data)
+      const errors = JoiValidateService.validate(JoiSchemas.updateMeUser, data)
       if (errors.length) return this.responseRequestError(response, errors)
 
       const userDB = await UserRepository.updateByAccessToken(accessToken, data)

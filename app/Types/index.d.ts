@@ -23,6 +23,11 @@ export interface RegisterParams {
   password: string
 }
 
+export interface UpdateMeUserParams {
+  name: string
+  phone: string
+}
+
 export interface CreateUserParams {
   name: string
   email: string
