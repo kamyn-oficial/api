@@ -6,6 +6,19 @@ class UserRepository {
     return new UserModel({ ...schema, createdAt: new Date().getTime() }).save()
   }
 
+  public async getAll(page = 1) {
+    const PAGE_SIZE = 2;                   // Similar to 'limit'
+    const skip = (page - 1) * PAGE_SIZE;    // For page 1, the skip is: (1 - 1) * 20 => 0 * 20 = 0
+    const data = await UserModel.find().skip(skip).limit(PAGE_SIZE)
+    const total = await UserModel.countDocuments()
+    return {
+      data,
+      current_page: 1,
+      per_page: 0,
+      total,
+    }
+  }
+
   public existByEmail(email: string) {
     return UserModel.exists({ email })
   }

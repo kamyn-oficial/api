@@ -9,22 +9,9 @@ import type { UpdateUserParams } from 'App/Types'
 export default class UserController extends BaseController {
   public async index({ request, response }: HttpContextContract) {
     try {
-      const accessToken = this.getBearerToken(request)
-
-      const userDB = await UserRepository.findByAccessToken(accessToken)
-      if (!userDB) return response.safeStatus(404)
-
-      const user: any = {
-        name: userDB.name,
-        phone: userDB.phone,
-        email: userDB.email,
-        accessToken: userDB.accessToken,
-        hasPassword: !!userDB.passwordHash,
-        isAdm: userDB.isAdm,
-        emailVerifiedAt: userDB.emailVerifiedAt
-      }
-
-      return response.json(user)
+      const page = Number(decodeURI(request.params().page || 1))
+      const pagination = await UserRepository.getAll(page)
+      return response.json(pagination)
     } catch (error) {
       return this.responseSomethingWrong(response, error)
     }
