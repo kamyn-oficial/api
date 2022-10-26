@@ -20,4 +20,3 @@ jobs:
         script: |
           cd api
           git pull
-          npm run production
