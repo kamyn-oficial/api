@@ -20,3 +20,5 @@ jobs:
         script: |
           cd api
           git pull
+          export NVM_DIR=~/.nvm
+          source ~/.nvm/nvm.sh
