@@ -24,4 +24,8 @@ Route.group(() => {
   }).middleware('jwt:accessToken')
 }).prefix('api')
 
+Route.get('/adm', ({ response }) => {
+  return response.redirect('https://adm-six.vercel.app/')
+})
+
 Route.any('*', ({ response }) => response.redirect('/404.html'))
