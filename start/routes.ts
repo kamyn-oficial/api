@@ -5,6 +5,8 @@ Route.group(() => {
   Route.post('register', 'AuthController.register')
   Route.post('login', 'AuthController.login')
   Route.get('logout', 'AuthController.logout')
+  Route.get('products', 'ProductController.index')
+  Route.get('product/:id', 'ProductController.show')
 
   Route.group(() => {
     Route.group(() => {
@@ -21,6 +23,10 @@ Route.group(() => {
     Route.post('address', 'AddressController.create')
     Route.put('address/:id', 'AddressController.update')
     Route.delete('address/:id', 'AddressController.delete')
+
+    Route.post('product', 'ProductController.create')
+    Route.put('product/:id', 'ProductController.update')
+    Route.delete('product/:id', 'ProductController.delete')
   }).middleware('jwt:accessToken')
 }).prefix('api')
 

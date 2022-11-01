@@ -3,7 +3,8 @@ import {
   RegisterParams,
   CreateUserParams,
   UpdateAddressParams,
-  UpdateMeUserParams
+  UpdateMeUserParams,
+  UpdateProductParams
 } from 'App/Types'
 
 class JoiSchemas {
@@ -92,28 +93,6 @@ class JoiSchemas {
     return err[0]
   })
 
-  public category = Joi.string()
-    .valid(
-      'sopas e caldos',
-      'salgados',
-      'bolos',
-      'doces',
-      'sorvetes',
-      'congelados',
-      'verduras e legumes',
-      'refeições',
-      'lanches',
-      'saladas',
-      'sobremesas',
-      'frutas',
-      'bebidas'
-    )
-    .error(err => {
-      err[0].message = 'Categoria inválida'
-      err[0].path = ['category']
-      return err[0]
-    })
-
   public get register() {
     return Joi.object<RegisterParams>({
       name: this.name.required(),
@@ -157,6 +136,20 @@ class JoiSchemas {
       street: this.street.required(),
       zipcode: this.zipcode.required(),
       isDefault: Joi.boolean()
+    })
+  }
+
+  public get updateProduct() {
+    return Joi.object<UpdateProductParams>({
+      name: Joi.string().required(),
+      description: this.description.required(),
+      price: this.price.required(),
+      categories: Joi.array().items(Joi.string()).required(),
+      colors: Joi.array().items(Joi.string()).required(),
+      photos: Joi.array().items(Joi.string()).required(),
+      sizes: Joi.array().items(Joi.string()).required(),
+      promotion: Joi.number(),
+      quantity: Joi.number().required()
     })
   }
 }

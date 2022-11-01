@@ -1,0 +1,48 @@
+import ProductModel from 'App/Models/ProductModel'
+import type { ProductSchema } from 'App/Types'
+
+class UserRepository {
+  public create(schema: ProductSchema) {
+    return new ProductModel({ ...schema, createdAt: new Date().getTime() }).save()
+  }
+
+  public readonly selectFields = [
+    '_id',
+    'name',
+    'price',
+    'promotion',
+    'description',
+    'quantity',
+    'categories',
+    'photos',
+    'colors',
+    'sizes',
+    'createdAt'
+  ]
+
+  public async getAll(current_page = 1, per_page = 15) {
+    const skip = (current_page - 1) * per_page;
+    const data = await ProductModel.find().select(this.selectFields).skip(skip).limit(per_page)
+    const total = await ProductModel.countDocuments()
+    return {
+      data,
+      current_page,
+      per_page,
+      total,
+    }
+  }
+
+  public findById(id: string) {
+    return ProductModel.findById(id)
+  }
+
+  public updateById(id: string, data: Partial<ProductSchema>) {
+    return ProductModel.findByIdAndUpdate(id, data)
+  }
+
+  public deleteById(id: string) {
+    return ProductModel.findByIdAndDelete(id)
+  }
+}
+
+export default new UserRepository()

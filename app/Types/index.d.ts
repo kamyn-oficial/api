@@ -11,6 +11,19 @@ export interface UserSchema {
   createdAt?: Number
 }
 
+export interface ProductSchema {
+  name: string
+  price: number
+  promotion?: number
+  description: string
+  quantity: number
+  categories: string[]
+  photos: string[]
+  colors: string[]
+  sizes: string[]
+  createdAt?: Number
+}
+
 export interface JoiError {
   field: string | undefined
   message: string
@@ -54,3 +67,5 @@ export interface AddressSchema {
 }
 
 export type UpdateAddressParams = Omit<AddressSchema, 'userId'>
+
+export type UpdateProductParams = ProductSchema
