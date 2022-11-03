@@ -30,7 +30,7 @@ Route.group(() => {
   }).middleware('jwt:accessToken')
 }).prefix('api')
 
-Route.get('/adm', ({ response }) => {
+Route.get('/admin', ({ response }) => {
   return response.redirect('https://adm-six.vercel.app/')
 })
 
