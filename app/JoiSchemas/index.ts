@@ -5,7 +5,8 @@ import {
   UpdateAddressParams,
   UpdateMeUserParams,
   UpdateProductParams,
-  UpdateCategoryParams
+  UpdateCategoryParams,
+  UpdateSizeParams
 } from 'App/Types'
 
 class JoiSchemas {
