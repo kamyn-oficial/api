@@ -10,23 +10,47 @@ Route.group(() => {
 
   Route.group(() => {
     Route.group(() => {
-      Route.get('user', 'UserController.index')
-      Route.post('user', 'UserController.store')
-      Route.put('user/:id', 'UserController.update')
-      Route.delete('user/:id', 'UserController.delete')
+      Route.group(() => {
+        Route.post('/', 'ProductController.store')
+        Route.put('/:id', 'ProductController.update')
+        Route.delete('/:id', 'ProductController.delete')
+      }).prefix('product')
+
+      Route.group(() => {
+        Route.get('/', 'CategoryController.index')
+        Route.get('/:id', 'CategoryController.show')
+        Route.post('/', 'CategoryController.store')
+        Route.put('/:id', 'CategoryController.update')
+        Route.delete('/:id', 'CategoryController.delete')
+      }).prefix('category')
+
+      Route.group(() => {
+        Route.get('/', 'SizeController.index')
+        Route.get('/:id', 'SizeController.show')
+        Route.post('/', 'SizeController.create')
+        Route.put('/:id', 'SizeController.update')
+        Route.delete('/:id', 'SizeController.delete')
+      }).prefix('size')
+
+      Route.group(() => {
+        Route.get('/', 'UserController.index')
+        Route.post('/', 'UserController.store')
+        Route.put('/:id', 'UserController.update')
+        Route.delete('/:id', 'UserController.delete')
+      }).prefix('user')
     }).middleware('permission:isAdm')
 
-    Route.get('me', 'AuthController.me')
-    Route.put('me', 'AuthController.update')
+    Route.group(() => {
+      Route.get('/', 'AuthController.me')
+      Route.put('/', 'AuthController.update')
+    }).prefix('me')
 
-    Route.get('address', 'AddressController.index')
-    Route.post('address', 'AddressController.create')
-    Route.put('address/:id', 'AddressController.update')
-    Route.delete('address/:id', 'AddressController.delete')
-
-    Route.post('product', 'ProductController.create')
-    Route.put('product/:id', 'ProductController.update')
-    Route.delete('product/:id', 'ProductController.delete')
+    Route.group(() => {
+      Route.get('/', 'AddressController.index')
+      Route.post('/', 'AddressController.store')
+      Route.put('/:id', 'AddressController.update')
+      Route.delete('/:id', 'AddressController.delete')
+    }).prefix('address')
   }).middleware('jwt:accessToken')
 }).prefix('api')
 

@@ -1,9 +1,12 @@
 import ProductModel from 'App/Models/ProductModel'
 import type { ProductSchema } from 'App/Types'
 
-class UserRepository {
+class ProductRepository {
   public create(schema: ProductSchema) {
-    return new ProductModel({ ...schema, createdAt: new Date().getTime() }).save()
+    return new ProductModel({
+      ...schema,
+      createdAt: new Date().getTime()
+    }).save()
   }
 
   public readonly selectFields = [
@@ -20,15 +23,18 @@ class UserRepository {
     'createdAt'
   ]
 
-  public async getAll(current_page = 1, per_page = 15) {
-    const skip = (current_page - 1) * per_page;
-    const data = await ProductModel.find().select(this.selectFields).skip(skip).limit(per_page)
+  public async getAll(current_page = 1, per_page = 15, filter: any) {
+    const skip = (current_page - 1) * per_page
+    const data = await ProductModel.find(filter)
+      .select(this.selectFields)
+      .skip(skip)
+      .limit(per_page)
     const total = await ProductModel.countDocuments()
     return {
       data,
       current_page,
       per_page,
-      total,
+      total
     }
   }
 
@@ -45,4 +51,4 @@ class UserRepository {
   }
 }
 
-export default new UserRepository()
+export default new ProductRepository()

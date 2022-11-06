@@ -4,7 +4,8 @@ import {
   CreateUserParams,
   UpdateAddressParams,
   UpdateMeUserParams,
-  UpdateProductParams
+  UpdateProductParams,
+  UpdateCategoryParams
 } from 'App/Types'
 
 class JoiSchemas {
@@ -108,7 +109,7 @@ class JoiSchemas {
       email: this.email.required(),
       password: this.password.required(),
       phone: this.phone,
-      isAdm: Joi.boolean(),
+      isAdm: Joi.boolean()
     })
   }
 
@@ -150,6 +151,18 @@ class JoiSchemas {
       sizes: Joi.array().items(Joi.string()).required(),
       promotion: Joi.number(),
       quantity: Joi.number().required()
+    })
+  }
+
+  public get updateCategory() {
+    return Joi.object<UpdateCategoryParams>({
+      name: Joi.string().required()
+    })
+  }
+
+  public get updateSize() {
+    return Joi.object<UpdateSizeParams>({
+      name: Joi.string().required()
     })
   }
 }

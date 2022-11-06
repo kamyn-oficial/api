@@ -24,6 +24,14 @@ export interface ProductSchema {
   createdAt?: Number
 }
 
+export interface CategorySchema {
+  name: string
+}
+
+export interface SizeSchema {
+  name: string
+}
+
 export interface JoiError {
   field: string | undefined
   message: string
@@ -69,3 +77,7 @@ export interface AddressSchema {
 export type UpdateAddressParams = Omit<AddressSchema, 'userId'>
 
 export type UpdateProductParams = ProductSchema
+
+export type UpdateCategoryParams = CategorySchema
+
+export type UpdateSizeParams = SizeSchema

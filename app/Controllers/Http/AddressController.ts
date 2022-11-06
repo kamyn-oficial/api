@@ -67,7 +67,8 @@ export default class AddressController extends BaseController {
   public async update({ request, response }: HttpContextContract) {
     try {
       const id = decodeURI(request.params().id)
-      const userId = await this.getUserId(request)
+      const user = await this.getUser(request)
+      if (!user) return response.status(404)
 
       const data: UpdateAddressParams = request.only([
         'name',
@@ -86,7 +87,11 @@ export default class AddressController extends BaseController {
       const errors = JoiValidateService.validate(JoiSchemas.updateAddress, data)
       if (errors.length) return this.responseRequestError(response, errors)
 
-      const defaultAddress = await AddressRepository.defaultAddress(userId)
+      const address = await AddressRepository.findById(id)
+      if (!address) return response.status(404)
+      if (address.userId !== user.id && !user.isAdm) return response.status(401)
+
+      const defaultAddress = await AddressRepository.defaultAddress(user.id)
 
       if (data.isDefault)
         await Promise.all(
@@ -111,6 +116,12 @@ export default class AddressController extends BaseController {
   public async delete({ request, response }: HttpContextContract) {
     try {
       const id = decodeURI(request.params().id)
+      const user = await this.getUser(request)
+      if (!user) return response.status(404)
+
+      const address = await AddressRepository.findById(id)
+      if (!address) return response.status(404)
+      if (address.userId !== user.id && !user.isAdm) return response.status(401)
 
       await AddressRepository.deleteById(id)
 

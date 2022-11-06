@@ -22,7 +22,8 @@ const schema = new Schema<ProductSchema>({
     required: true
   },
   categories: {
-    type: Array,
+    type: Schema.Types.ObjectId,
+    ref: 'Category',
     required: true
   },
   photos: {
@@ -34,12 +35,13 @@ const schema = new Schema<ProductSchema>({
     required: true
   },
   sizes: {
-    type: Array,
+    type: Schema.Types.ObjectId,
+    ref: 'Size',
     required: true
   },
   createdAt: {
     type: Number
-  },
+  }
 })
 
 export default model<ProductSchema>('Product', schema)

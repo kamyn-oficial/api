@@ -10,6 +10,10 @@ class AddressRepository {
     return AddressModel.find({ userId, isDefault: true })
   }
 
+  public findById(id: string) {
+    return AddressModel.findById(id)
+  }
+
   public findByUserId(userId: string) {
     return AddressModel.find({ userId })
   }
