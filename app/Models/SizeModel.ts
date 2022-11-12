@@ -5,6 +5,10 @@ const schema = new Schema<SizeSchema>({
   name: {
     type: String,
     required: true
+  },
+  product: {
+    type: Schema.Types.ObjectId,
+    ref: 'Product'
   }
 })
 

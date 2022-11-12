@@ -3,10 +3,7 @@ import type { ProductSchema } from 'App/Types'
 
 class ProductRepository {
   public create(schema: ProductSchema) {
-    return new ProductModel({
-      ...schema,
-      createdAt: new Date().getTime()
-    }).save()
+    return new ProductModel(schema).save()
   }
 
   public readonly selectFields = [
@@ -29,6 +26,8 @@ class ProductRepository {
       .select(this.selectFields)
       .skip(skip)
       .limit(per_page)
+      .populate('categories')
+      .populate('sizes')
     const total = await ProductModel.countDocuments()
     return {
       data,

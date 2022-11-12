@@ -53,8 +53,6 @@ export default class ProductController extends BaseController {
 
       await ProductRepository.create(data)
 
-      console.log('criou')
-
       return response.safeStatus(200)
     } catch (error) {
       return this.responseSomethingWrong(response, error)

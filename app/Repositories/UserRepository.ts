@@ -3,7 +3,7 @@ import type { UserSchema } from 'App/Types'
 
 class UserRepository {
   public create(schema: UserSchema) {
-    return new UserModel({ ...schema, createdAt: new Date().getTime() }).save()
+    return new UserModel(schema).save()
   }
 
   public readonly selectFields = [
@@ -18,14 +18,17 @@ class UserRepository {
   ]
 
   public async getAll(current_page = 1, per_page = 15) {
-    const skip = (current_page - 1) * per_page;
-    const data = await UserModel.find().select(this.selectFields).skip(skip).limit(per_page)
+    const skip = (current_page - 1) * per_page
+    const data = await UserModel.find()
+      .select(this.selectFields)
+      .skip(skip)
+      .limit(per_page)
     const total = await UserModel.countDocuments()
     return {
       data,
       current_page,
       per_page,
-      total,
+      total
     }
   }
 
