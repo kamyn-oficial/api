@@ -28,6 +28,7 @@ class ProductRepository {
       .limit(per_page)
       .populate('categories')
       .populate('sizes')
+      .populate('comments')
     const total = await ProductModel.countDocuments()
     return {
       data,

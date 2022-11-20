@@ -43,6 +43,13 @@ const schema = new Schema<ProductSchema>(
         ref: 'Size',
         required: true
       }
+    ],
+    comments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Comment',
+        required: true
+      }
     ]
   },
   {

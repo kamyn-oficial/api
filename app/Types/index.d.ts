@@ -28,6 +28,16 @@ export interface CategorySchema {
   name: string
 }
 
+export interface CommentSchema {
+  text: string
+  user: UserSchema
+}
+
+export interface CreateCommentParams {
+  text: string
+  productId: string
+}
+
 export interface SizeSchema {
   name: string
 }

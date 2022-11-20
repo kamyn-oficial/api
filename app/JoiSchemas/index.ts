@@ -6,7 +6,8 @@ import {
   UpdateMeUserParams,
   UpdateProductParams,
   UpdateCategoryParams,
-  UpdateSizeParams
+  UpdateSizeParams,
+  CreateCommentParams
 } from 'App/Types'
 
 class JoiSchemas {
@@ -158,6 +159,14 @@ class JoiSchemas {
   public get updateCategory() {
     return Joi.object<UpdateCategoryParams>({
       name: Joi.string().required()
+    })
+  }
+
+  public get createComment() {
+    return Joi.object<CreateCommentParams>({
+      text: Joi.string().required(),
+      productId: Joi.string().required(),
+      userId: Joi.string().required()
     })
   }
 

@@ -51,6 +51,11 @@ Route.group(() => {
       Route.put('/:id', 'AddressController.update')
       Route.delete('/:id', 'AddressController.delete')
     }).prefix('address')
+
+    Route.group(() => {
+      Route.post('/', 'CommentController.store')
+      Route.delete('/:id', 'CommentController.delete')
+    }).prefix('comment')
   }).middleware('jwt:accessToken')
 }).prefix('api')
 
