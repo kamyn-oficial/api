@@ -56,7 +56,6 @@ export default class AuthController extends BaseController {
       const userDB = await UserRepository.findByEmail(email)
 
       if (!userDB) return this.responseIncorrectEmailOrPassword(response)
-      console.log(userDB.passwordHash, password)
       const isValidPassword = await Hash.verify(userDB.passwordHash, password)
       if (!isValidPassword)
         return this.responseIncorrectEmailOrPassword(response)

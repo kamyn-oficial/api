@@ -37,7 +37,6 @@ export interface CreateCommentParams {
   title: string
   text: string
   rate: number
-  userId: string
   productId: string
 }
 
