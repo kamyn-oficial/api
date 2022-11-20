@@ -28,7 +28,6 @@ class ProductRepository {
       .limit(per_page)
       .populate('categories')
       .populate('sizes')
-      .populate('comments')
     const total = await ProductModel.countDocuments()
     return {
       data,
@@ -40,6 +39,9 @@ class ProductRepository {
 
   public findById(id: string) {
     return ProductModel.findById(id)
+      .populate('categories')
+      .populate('sizes')
+      .populate('comments')
   }
 
   public updateById(id: string, data: Partial<ProductSchema>) {
