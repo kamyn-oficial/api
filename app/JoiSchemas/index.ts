@@ -164,7 +164,9 @@ class JoiSchemas {
 
   public get createComment() {
     return Joi.object<CreateCommentParams>({
+      title: Joi.string().required(),
       text: Joi.string().required(),
+      rate: Joi.number().min(1).max(5).required(),
       productId: Joi.string().required(),
       userId: Joi.string().required()
     })

@@ -11,7 +11,9 @@ export default class CommentController extends BaseController {
   public async store({ request, response }: HttpContextContract) {
     try {
       const data: CreateCommentParams = request.only([
+        'title',
         'text',
+        'rate',
         'productId',
         'userId'
       ])
