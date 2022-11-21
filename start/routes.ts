@@ -17,7 +17,6 @@ Route.group(() => {
       }).prefix('product')
 
       Route.group(() => {
-        Route.get('/', 'CategoryController.index')
         Route.get('/:id', 'CategoryController.show')
         Route.post('/', 'CategoryController.store')
         Route.put('/:id', 'CategoryController.update')
@@ -57,6 +56,10 @@ Route.group(() => {
       Route.delete('/:id', 'CommentController.delete')
     }).prefix('comment')
   }).middleware('jwt:accessToken')
+
+  Route.group(() => {
+    Route.get('/', 'CategoryController.index')
+  }).prefix('category')
 }).prefix('api')
 
 Route.get('/admin', ({ response }) => {
