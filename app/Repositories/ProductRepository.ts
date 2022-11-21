@@ -1,4 +1,7 @@
 import ProductModel from 'App/Models/ProductModel'
+import CategoryModel from 'App/Models/CategoryModel'
+import CommentModel from 'App/Models/CommentModel'
+import SizeModel from 'App/Models/SizeModel'
 import type { ProductSchema } from 'App/Types'
 
 class ProductRepository {
@@ -22,13 +25,22 @@ class ProductRepository {
 
   public async getAll(current_page = 1, per_page = 15, filter: any) {
     const skip = (current_page - 1) * per_page
-    const data = await ProductModel.find(filter)
+
+    let [data, total] = await Promise.all([ProductModel.find(filter)
       .select(this.selectFields)
       .skip(skip)
       .limit(per_page)
-      .populate('categories')
-      .populate('sizes')
-    const total = await ProductModel.countDocuments()
+      .populate({ path: 'sizes', model: SizeModel })
+      .populate({ path: 'categories', model: CategoryModel })
+      .populate({ path: 'comments', model: CommentModel }), ProductModel.countDocuments()])
+
+    data = data.map((item: any) => {
+      return {
+        ...item._doc,
+        rating: item.comments.length > 0 ? item.comments.reduce((a: any, b: any) => a + b.rating, 0) / item.comments.length : 0
+      }
+    })
+
     return {
       data,
       current_page,
@@ -39,9 +51,9 @@ class ProductRepository {
 
   public findById(id: string) {
     return ProductModel.findById(id)
-      .populate('categories')
-      .populate('sizes')
-      .populate('comments')
+      .populate({ path: 'sizes', model: SizeModel })
+      .populate({ path: 'categories', model: CategoryModel })
+      .populate({ path: 'comments', model: CommentModel }), ProductModel.countDocuments()])
   }
 
   public updateById(id: string, data: Partial<ProductSchema>) {
