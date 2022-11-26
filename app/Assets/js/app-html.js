@@ -703,14 +703,34 @@ if (cartIcon) {
           $.extend(this.options, options);
           this._handlers(this);
         },
+        updateFavorites: function updateFavorites() {
+          const favorites = JSON.parse(localStorage.getItem('favorites') || '[]')
+          $('.wishlist-qty').text(favorites.length)
+        },
+        toggleToFavorites: function toggleToFavorites(product) {
+          const favorites = JSON.parse(localStorage.getItem('favorites') || '[]')
+          const index = favorites.findIndex(({ _id }) => _id === product._id)
+          if (index > -1) {
+            favorites.splice(index, 1)
+          } else {
+            favorites.push(product)
+          }
+          localStorage.setItem('favorites', JSON.stringify(favorites))
+          this.updateFavorites()
+        },
         _handlers: function _handlers(that) {
+          that.updateFavorites()
           $(document).on('click', '.js-add-wishlist', function (e) {
             $(this).closest('.prd, .prd-block_info').addClass('prd--in-wishlist');
+            const product_data = $(this).data('product');
+            that.toggleToFavorites(product_data)
             e.preventDefault();
           });
           $(document).on('click', '.js-remove-wishlist', function (e) {
             var $product = $(this).closest('.prd, .prd-block_info'),
               $grid = $('.prd-grid--wishlist');
+            const product_data = $(this).data('product');
+            that.toggleToFavorites(product_data)
             if ($grid.length) {
               $grid.addClass('disable-actions');
               anime({
@@ -3563,11 +3583,33 @@ if (cartIcon) {
             'margin-bottom': h + 20 + 'px'
           });
         },
+        updateCart: function updateCart() {
+          const cart = JSON.parse(localStorage.getItem('cart') || '[]')
+          const total = cart.reduce((total, { promotion, price, count }) => {
+            const discount = promotion ? price * (promotion / 100) : 0
+            return total + (price - discount) * count
+          }, 0)
+          $('.minicart-qty').text(cart.length)
+          $('.minicart-total').text(formatBRL(total))
+        },
+        addToCart: function addToCart(product) {
+          const cart = JSON.parse(localStorage.getItem('cart') || '[]')
+          if (cart.find(({ _id }) => _id === product._id)) {
+            cart.find(({ _id }) => _id === product._id).count += 1
+          }
+          else {
+            cart.push({ ...product, count: 1 })
+          }
+          localStorage.setItem('cart', JSON.stringify(cart))
+          this.updateCart()
+        },
         _handlers: function _handlers() {
           var that = this,
             $popup = $(that.defaults.popup);
+          that.updateCart()
           $(document).on('click', that.defaults.button, function (e) {
             var product_data = $(this).data('product');
+            that.addToCart(product_data)
             if (!$popup.hasClass('closed')) {
               that.close();
               setTimeout(function () {
@@ -4129,13 +4171,19 @@ if (cartIcon) {
         },
         init: function init(options) {
           $.extend(this.defaults, options);
+          const favorites = JSON.parse(localStorage.getItem('favorites') || '[]')
           http_setup.get('products?page=1&per_page=8').then(({ data }) => {
             const products = data.data.map(i => {
               const created = new Date(i.createdAt).getTime();
               const now = new Date().getTime() + 1000 * 60 * 60 * 24 * 7;
               const isNew = now > created
+              i.path = i.photos[0] || 'images/skins/fashion/products/product-03-1.jpg'
+              i.url = `product.html?id=${i._id}`
+              i.aspect_ratio = 0.778
+              const isFavorite = favorites.findIndex(({ _id }) => _id === i._id) > -1
+              i.rating = Math.round(i.rating)
               return `
-              <div class="prd prd--style2 prd-labels--max prd-labels-shadow prd-w-lg">
+              <div class="prd prd--style2 prd-labels--max prd-labels-shadow prd-w-lg ${isFavorite ? 'prd--in-wishlist' : ''}">
               <div class="prd-inside">
                 <div class="prd-img-area">
                   <a
@@ -4161,11 +4209,13 @@ if (cartIcon) {
                       href="#"
                       class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
                       title="Adicionar aos favoritos"
+                      data-product='${JSON.stringify(i)}'
                       ><i class="icon-heart-stroke"></i></a
                     ><a
                       href="#"
                       class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
                       title="Remover dos favoritos"
+                      data-product='${JSON.stringify(i)}'
                       ><i class="icon-heart-hover"></i
                     ></a>
                   </div>
@@ -4173,11 +4223,7 @@ if (cartIcon) {
                 <div class="prd-info">
                   <div class="prd-info-wrap">
                     <div class="prd-rating justify-content-center">
-                      <i class="icon-star-fill fill"></i
-                      ><i class="icon-star-fill fill"></i
-                      ><i class="icon-star-fill fill"></i
-                      ><i class="icon-star-fill fill"></i
-                      ><i class="icon-star-fill fill"></i>
+                      ${new Array(5).fill().map((_, index) => `<i class="icon-star-fill ${index + 1 <= i.rating ? 'fill' : ''}"></i>`).join('')}
                     </div>
                     <div class="prd-tag">
                     ${i.categories.map(c => `<a href="category.html?id=${c._id}">${c.name}</a>`).join('')}
@@ -4196,7 +4242,7 @@ if (cartIcon) {
                         <form action="#">
                           <button
                             class="btn js-prd-addtocart"
-                            data-product='{"name": "${i.name}", "path":"${i.photos[0] || 'images/skins/fashion/products/product-03-1.jpg'}", "url":"product.html?id=${i._id}", "aspect_ratio":0.778}'
+                            data-product='${JSON.stringify(i)}'
                           >
                             Adicionar ao carrinho
                           </button>
@@ -4209,7 +4255,7 @@ if (cartIcon) {
             </div>
               `
             }).join(' ')
-            $('[data-grid-tab-content]').append(products)
+            $('[data-grid-tab-content]').not('.js-filter-col').append(products)
           })
         },
         open: function open(sectionID, button) {
