@@ -26,18 +26,25 @@ class ProductRepository {
   public async getAll(current_page = 1, per_page = 15, filter: any) {
     const skip = (current_page - 1) * per_page
 
-    let [data, total] = await Promise.all([ProductModel.find(filter)
-      .select(this.selectFields)
-      .skip(skip)
-      .limit(per_page)
-      .populate({ path: 'sizes', model: SizeModel })
-      .populate({ path: 'categories', model: CategoryModel })
-      .populate({ path: 'comments', model: CommentModel }), ProductModel.countDocuments()])
+    let [data, total] = await Promise.all([
+      ProductModel.find(filter)
+        .select(this.selectFields)
+        .skip(skip)
+        .limit(per_page)
+        .populate({ path: 'sizes', model: SizeModel })
+        .populate({ path: 'categories', model: CategoryModel })
+        .populate({ path: 'comments', model: CommentModel }),
+      ProductModel.countDocuments()
+    ])
 
     data = data.map((item: any) => {
       return {
         ...item._doc,
-        rating: item.comments.length > 0 ? item.comments.reduce((a: any, b: any) => a + b.rating, 0) / item.comments.length : 0
+        rating:
+          item.comments.length > 0
+            ? item.comments.reduce((a: any, b: any) => a + b.rating, 0) /
+            item.comments.length
+            : 0
       }
     })
 
@@ -53,7 +60,7 @@ class ProductRepository {
     return ProductModel.findById(id)
       .populate({ path: 'sizes', model: SizeModel })
       .populate({ path: 'categories', model: CategoryModel })
-      .populate({ path: 'comments', model: CommentModel }), ProductModel.countDocuments()])
+      .populate({ path: 'comments', model: CommentModel })
   }
 
   public updateById(id: string, data: Partial<ProductSchema>) {

@@ -25,7 +25,7 @@ export default class CommentController extends BaseController {
 
       await CommentRepository.create({
         ...data,
-        userId: user._id
+        user: user._id
       })
 
       return response.safeStatus(200)
