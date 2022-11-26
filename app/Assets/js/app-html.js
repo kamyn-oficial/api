@@ -39,6 +39,25 @@ if (cartIcon) {
   var random = function random(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
   };
+  function updateCart() {
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]')
+    const total = cart.reduce((total, { promotion, price, count }) => {
+      const discount = promotion ? price * (promotion / 100) : 0
+      return total + (price - discount) * count
+    }, 0)
+    $('.minicart-qty').text(cart.length)
+    $('.minicart-total').text(formatBRL(total))
+  }
+  function addToCart(product) {
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]')
+    if (cart.find(({ _id }) => _id === product._id)) {
+      cart.find(({ _id }) => _id === product._id).count += 1
+    } else {
+      cart.push({ ...product, count: 1 })
+    }
+    localStorage.setItem('cart', JSON.stringify(cart))
+    this.updateCart()
+  }
   THEME.Video = function () {
     var mobileBreikpoint = 575;
     var iosMobileAutoplay = true;
@@ -3337,6 +3356,7 @@ if (cartIcon) {
       this.loaderHorizontalSm();
       this.loaderCategory();
       this.loaderTab();
+      updateCart()
     },
     infoModals: function infoModals() {
       $('.modal-info-link').fancybox({
@@ -3583,33 +3603,12 @@ if (cartIcon) {
             'margin-bottom': h + 20 + 'px'
           });
         },
-        updateCart: function updateCart() {
-          const cart = JSON.parse(localStorage.getItem('cart') || '[]')
-          const total = cart.reduce((total, { promotion, price, count }) => {
-            const discount = promotion ? price * (promotion / 100) : 0
-            return total + (price - discount) * count
-          }, 0)
-          $('.minicart-qty').text(cart.length)
-          $('.minicart-total').text(formatBRL(total))
-        },
-        addToCart: function addToCart(product) {
-          const cart = JSON.parse(localStorage.getItem('cart') || '[]')
-          if (cart.find(({ _id }) => _id === product._id)) {
-            cart.find(({ _id }) => _id === product._id).count += 1
-          }
-          else {
-            cart.push({ ...product, count: 1 })
-          }
-          localStorage.setItem('cart', JSON.stringify(cart))
-          this.updateCart()
-        },
         _handlers: function _handlers() {
           var that = this,
             $popup = $(that.defaults.popup);
-          that.updateCart()
           $(document).on('click', that.defaults.button, function (e) {
             var product_data = $(this).data('product');
-            that.addToCart(product_data)
+            addToCart(product_data)
             if (!$popup.hasClass('closed')) {
               that.close();
               setTimeout(function () {
@@ -7624,6 +7623,13 @@ if (cartIcon) {
   };
   THEME.documentLoad = {
     init: function init() {
+      if (localStorage.getItem('accessToken')) $('.not-logged-links').hide()
+      else $('.logged-links').hide()
+
+      $('.logout-btn').on('click', () => {
+        localStorage.removeItem('accessToken')
+      })
+
       $body.addClass('documentLoad');
       w = window.innerWidth || $window.width();
       h = window.innerHeight || $window.height();
@@ -7732,9 +7738,3 @@ if (cartIcon) {
   $window.on('resize', THEME.documentResize.init);
 })(jQuery);
 
-if (localStorage.getItem('accessToken')) document.getElementsByClassName('not-logged-links')[0].style.display = 'none'
-else document.getElementsByClassName('logged-links')[0].style.display = 'none'
-
-$('.logout-btn').on('click', () => {
-  localStorage.removeItem('accessToken')
-})
