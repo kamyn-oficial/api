@@ -716,8 +716,7 @@
         $('.cart-table-prd').remove()
         const products = cart
           .map(i => {
-            const image =
-              i.photos[0] || 'images/skins/fashion/products/product-03-1.jpg'
+            const image = i.photos[0]
             const price = i.promotion
               ? i.price - i.price * (i.promotion / 100)
               : i.price
@@ -728,6 +727,7 @@
                       ><img
                         class="lazyload fade-up"
                         src="${image}"
+                        data-src="images/skins/fashion/products/product-04-1.jpg"
                         alt=""
                     /></a>
                   </div>
@@ -737,7 +737,7 @@
                         <div class="price-new">${formatBRL(price)}</div>
                       </div>
                       <h2 class="cart-table-prd-name">
-                        <a href="product.html">${i.name}</a>
+                        <a href="product.html?_id=${i._id}">${i.name}</a>
                       </h2>
                     </div>
                     <div class="cart-table-prd-qty">
