@@ -36,14 +36,10 @@ class JoiSchemas {
       return err[0]
     })
 
-  public password = Joi.string()
-    .min(6)
-    .max(64)
-    .error(err => {
-      err[0].message = 'Senha deve ter no mínimo 6 caracteres'
-      err[0].path = ['password']
-      return err[0]
-    })
+  public password = Joi.string().error(err => {
+    err[0].path = ['password']
+    return err[0]
+  })
 
   public state = Joi.string()
     .max(64)

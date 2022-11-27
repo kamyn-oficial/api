@@ -56,7 +56,7 @@ if (cartIcon) {
       cart.push({ ...product, count: 1 })
     }
     localStorage.setItem('cart', JSON.stringify(cart))
-    this.updateCart()
+    updateCart()
   }
   THEME.Video = function () {
     var mobileBreikpoint = 575;
@@ -4234,7 +4234,7 @@ if (cartIcon) {
                   <div class="prd-hovers">
                     <div class="prd-price">
                       ${i.promotion ? `<div class="price-old">${formatBRL(i.price)}</div>` : ''}
-                      <div class="price-new">${formatBRL(i.price - (i.price * (i.promotion / 100)))}</div>
+                      <div class="price-new">${formatBRL(i.promotion ? i.price - (i.price * (i.promotion / 100)) : i.price)}</div>
                     </div>
                     <div class="prd-action">
                       <div class="prd-action-left">
