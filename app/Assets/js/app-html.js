@@ -5231,7 +5231,7 @@ if (cartIcon) {
           that._stockDown(downinterval, stockleft, stockmin);
         }
       };
-      THEME.progressbar.init();
+      // THEME.progressbar.init();
     },
     stickyAddToCart: function stickyAddToCart() {
       THEME.stickyaddtocart = {

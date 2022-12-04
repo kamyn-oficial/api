@@ -49,14 +49,9 @@
               <!-- /Menu Toggle -->
             </div>
             <div class="col-auto hdr-logo">
-              <a href="index.html" class="logo"
-                ><img
-                  srcset="
-                    images/skins/fashion/logo.png   1x,
-                    images/skins/fashion/logo2x.png 2x
-                  "
-                  alt="Logo"
-              /></a>
+              <a href="index.html" class="logo">
+                <img src="images/logo.png" alt="Logo" />
+              </a>
             </div>
             <!--navigation-->
             <div class="hdr-nav hide-mobile nav-holder-s"></div>
@@ -257,10 +252,8 @@
                       class="dropdn-link js-dropdn-link minicart-link"
                     >
                       <i class="icon-basket"></i>
-                      <span class="minicart-qty">3</span>
-                      <span class="minicart-total hide-mobile"
-                        >R$ 12.000,00</span
-                      >
+                      <span class="minicart-qty"></span>
+                      <span class="minicart-total hide-mobile"></span>
                     </a>
                   </div>
                 </div>
@@ -374,13 +367,6 @@
                     </li>
                   </ul>
                 </li>
-                <li>
-                  <a href="#buynow" target="_blank"
-                    >Buy Theme<span class="menu-label menu-label--color3"
-                      >Hurry Up!</span
-                    ><span class="arrow"><i class="icon-angle-right"></i></span
-                  ></a>
-                </li>
               </ul>
             </div>
           </div>
@@ -413,9 +399,8 @@
       <div class="holder breadcrumbs-wrap mt-0">
         <div class="container">
           <ul class="breadcrumbs">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="category.html">Women</a></li>
-            <li><span>Leather Pegged Pants</span></li>
+            <li><a href="index.html">Início</a></li>
+            <li><a id="product-name"></a></li>
           </ul>
         </div>
       </div>
@@ -426,23 +411,12 @@
               <div class="js-prd-d-holder">
                 <div class="prd-block_title-wrap">
                   <div
-                    class="prd-block_reviews"
+                    class="prd-block_reviews rating-js"
                     data-toggle="tooltip"
                     data-placement="top"
-                    title="Scroll To Reviews"
-                  >
-                    <i class="icon-star-fill fill"></i
-                    ><i class="icon-star-fill fill"></i
-                    ><i class="icon-star-fill fill"></i
-                    ><i class="icon-star-fill fill"></i
-                    ><i class="icon-star"></i>
-                    <span class="reviews-link"
-                      ><a href="#" class="js-reviews-link">
-                        (17 reviews)</a
-                      ></span
-                    >
-                  </div>
-                  <h1 class="prd-block_title">Leather Pegged Pants</h1>
+                    title="Ver comentários"
+                  ></div>
+                  <h1 class="prd-block_title"></h1>
                 </div>
               </div>
             </div>
@@ -711,56 +685,23 @@
                   class="prd-block_info-top prd-block_info_item order-0 order-md-2"
                 >
                   <div class="prd-block_price prd-block_price--style2">
-                    <div class="prd-block_price--actual">$180.00</div>
-                    <div class="prd-block_price-old-wrap">
-                      <span class="prd-block_price--old">$210.00</span>
-                      <span class="prd-block_price--text"
-                        >You Save: $131.99 (28%)</span
-                      >
-                    </div>
-                  </div>
-                  <div class="prd-block_viewed-wrap d-none d-md-flex">
-                    <div class="prd-block_viewed">
-                      <i class="icon-time"></i>
-                      <span
-                        >This product was viewed 13 times within last hour</span
-                      >
-                    </div>
+                    <div class="prd-block_price--actual"></div>
+                    <div class="prd-block_price-old-wrap"></div>
                   </div>
                 </div>
                 <div class="prd-block_description prd-block_info_item">
-                  <h3>Short description</h3>
-                  <p>
-                    Model is 5'9" wearing Size XS TallAnd without further ado,
-                    we give you our finest Shopify Theme FOXic! It is a subtle,
-                    complex and yet an extremely easy to use template for
-                    anyone, who wants to create own website in ANY area of
-                    expertise.
-                  </p>
+                  <h3>Descrição</h3>
+                  <p class="description-js"></p>
                   <div class="mt-1"></div>
-                  <div class="row vert-margin-less">
-                    <div class="col-sm">
-                      <ul class="list-marker">
-                        <li>100% Polyester</li>
-                        <li>Lining:100% Viscose</li>
-                      </ul>
-                    </div>
-                    <div class="col-sm">
-                      <ul class="list-marker">
-                        <li>Do not dry clean</li>
-                        <li>Only non-chlorine</li>
-                      </ul>
-                    </div>
-                  </div>
                 </div>
                 <div
                   class="prd-progress prd-block_info_item"
                   data-left-in-stock=""
                 >
                   <div class="prd-progress-text">
-                    Hurry Up! Left
-                    <span class="prd-progress-text-left js-stock-left">26</span>
-                    in stock
+                    Aproveite!
+                    <span class="prd-progress-text-left js-stock-left"></span>
+                    no estoque
                   </div>
                   <div class="prd-progress-text-null"></div>
                   <div class="prd-progress-bar-wrap progress">
@@ -789,24 +730,6 @@
                   </div>
                 </div>
                 <div
-                  class="prd-block_order-info prd-block_info_item"
-                  data-order-time=""
-                  data-locale="en"
-                >
-                  <i class="icon-box-2"></i>
-                  <div>
-                    ouder in the next
-                    <span
-                      class="prd-block_order-info-time countdownCircleTimer"
-                      data-time="8:00:00, 15:30:00, 23:59:59"
-                      ><span><span>04</span>:</span><span><span>46</span>:</span
-                      ><span><span>24</span></span></span
-                    >
-                    to get it by
-                    <span data-date="">Tuesday, September 08, 2020</span>
-                  </div>
-                </div>
-                <div
                   class="prd-block_info_item prd-block_info-when-arrives d-none"
                   data-when-arrives
                 >
@@ -829,133 +752,42 @@
                 <div class="prd-block_info-box prd-block_info_item">
                   <div class="two-column">
                     <p>
-                      Availability:
-                      <span class="prd-in-stock" data-stock-status=""
-                        >In stock</span
-                      >
+                      Disponibilidade:
+                      <span class="prd-in-stock" data-stock-status=""></span>
                     </p>
                     <p class="prd-taxes">
-                      Tax Info:
-                      <span>Tax included.</span>
+                      Impostos:
+                      <span>Inclusos</span>
                     </p>
-                    <p>
-                      Collection:
-                      <span>
-                        <a
-                          href="collections.html"
-                          data-toggle="tooltip"
-                          data-placement="top"
-                          data-original-title="View all"
-                          >Women</a
-                        ></span
-                      >
-                    </p>
-                    <p>Sku: <span data-sku="">FOXic-45812</span></p>
-                    <p>Vendor: <span>Banita</span></p>
-                    <p>Barcode: <span>314363563</span></p>
+                    <p class="product-id">ID: <span></span></p>
                   </div>
                 </div>
                 <div class="order-0 order-md-100">
                   <form method="post" action="#">
                     <div class="prd-block_options">
                       <div class="prd-color swatches">
-                        <div class="option-label">Color:</div>
+                        <div class="option-label">Cor:</div>
                         <select
                           class="form-control hidden single-option-selector-modalQuickView"
                           id="SingleOptionSelector-0"
                           data-index="option1"
-                        >
-                          <option value="Beige" selected="selected">
-                            Beige
-                          </option>
-                          <option value="Black">Black</option>
-                          <option value="Red">Red</option>
-                        </select>
+                        ></select>
                         <ul
                           class="images-list js-size-list"
                           data-select-id="SingleOptionSelector-0"
-                        >
-                          <li class="active">
-                            <a
-                              href="#"
-                              data-value="Beige"
-                              data-toggle="tooltip"
-                              data-placement="top"
-                              data-original-title="Beige"
-                              ><span
-                                class="image-container image-container--product"
-                                ><img
-                                  src="images/skins/fashion/product-page/product-01.jpg"
-                                  alt="" /></span
-                            ></a>
-                          </li>
-
-                          <li></li>
-                          <li>
-                            <a
-                              href="#"
-                              data-value="Black"
-                              data-toggle="tooltip"
-                              data-placement="top"
-                              data-original-title="Black"
-                              ><span
-                                class="image-container image-container--product"
-                                ><img
-                                  src="images/skins/fashion/product-page/product-04.jpg"
-                                  alt="" /></span
-                            ></a>
-                          </li>
-
-                          <li></li>
-                          <li>
-                            <a
-                              href="#"
-                              data-value="Red"
-                              data-toggle="tooltip"
-                              data-placement="top"
-                              data-original-title="Red"
-                              ><span
-                                class="image-container image-container--product"
-                                ><img
-                                  src="images/skins/fashion/product-page/product-07.jpg"
-                                  alt="" /></span
-                            ></a>
-                          </li>
-                        </ul>
+                        ></ul>
                       </div>
                       <div class="prd-size swatches">
-                        <div class="option-label">Size:</div>
+                        <div class="option-label">Tamanho:</div>
                         <select
                           class="form-control hidden single-option-selector-modalQuickView"
                           id="SingleOptionSelector-1"
                           data-index="option2"
-                        >
-                          <option value="Small" selected="selected">
-                            Small
-                          </option>
-                          <option value="Medium">Medium</option>
-                          <option value="Large">Large</option>
-                        </select>
+                        ></select>
                         <ul
                           class="size-list js-size-list"
                           data-select-id="SingleOptionSelector-1"
-                        >
-                          <li class="active">
-                            <a href="#" data-value="Small"
-                              ><span class="value">Small</span></a
-                            >
-                          </li>
-                          <li>
-                            <a href="#" data-value="Medium"
-                              ><span class="value">Medium</span></a
-                            >
-                          </li>
-                          <li>
-                            <a href="#" data-value="Large"
-                              ><span class="value">Large</span></a
-                            >
-                          </li>
-                        </ul>
+                        ></ul>
                       </div>
                     </div>
                     <div class="prd-block_actions prd-block_actions--wishlist">
@@ -985,39 +817,18 @@
                         <a
                           href="#"
                           class="btn-add-to-wishlist ml-auto btn-add-to-wishlist--add js-add-wishlist"
-                          title="Add To Wishlist"
+                          title="Adicionar aos favoritos"
                           ><i class="icon-heart-stroke"></i
                         ></a>
                         <a
                           href="#"
                           class="btn-add-to-wishlist ml-auto btn-add-to-wishlist--off js-remove-wishlist"
-                          title="Remove From Wishlist"
+                          title="Remover dos favoritos"
                           ><i class="icon-heart-hover"></i
                         ></a>
                       </div>
                     </div>
                   </form>
-                  <div
-                    class="prd-block_agreement prd-block_info_item order-0 order-md-100 text-right"
-                    data-agree
-                  >
-                    <input
-                      id="agreementCheckboxProductPage"
-                      class="js-agreement-checkbox"
-                      data-button=".shopify-payment-agree"
-                      name="agreementCheckboxProductPage"
-                      type="checkbox"
-                    />
-                    <label for="agreementCheckboxProductPage"
-                      ><a
-                        href="#"
-                        data-fancybox
-                        class="modal-info-link"
-                        data-src="#agreementInfo"
-                        >I agree to the terms of service</a
-                      ></label
-                    >
-                  </div>
                 </div>
                 <div class="prd-block_info_item">
                   <ul class="prd-block_links list-unstyled">
@@ -1239,21 +1050,6 @@ Hi! I need next info about the "Oversize Cotton Dress":</textarea
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="holder prd-block_links-wrap-bg d-none d-md-block">
-        <div
-          class="prd-block_links-wrap prd-block_info_item container mt-2 mt-md-5 py-1"
-        >
-          <div class="prd-block_link">
-            <span><i class="icon-call-center"></i>24/7 Support</span>
-          </div>
-          <div class="prd-block_link">
-            <span>Use promocode FOXIC to get 15% discount!</span>
-          </div>
-          <div class="prd-block_link">
-            <span><i class="icon-delivery-truck"></i> Fast Shipping</span>
           </div>
         </div>
       </div>
@@ -2963,15 +2759,12 @@ Hi! I need next info about the "Oversize Cotton Dress":</textarea
             </div>
             <div class="col-auto popup-addedtocart_actions">
               <span>Você pode continuar</span>
-              <a
-                href="#"
-                class="btn btn--grey btn--sm js-open-drop"
-                data-panel="#dropdnMinicart"
+              <a href="cart.html" class="btn btn--grey btn--sm"
                 ><i class="icon-basket"></i><span>Ver carrinho</span></a
               >
               <span>ou</span>
               <a href="checkout.html" class="btn btn--invert btn--sm"
-                ><i class="icon-envelope-1"></i><span>Check out</span></a
+                ><i class="icon-envelope-1"></i><span>Pagar</span></a
               >
             </div>
           </div>
@@ -3064,5 +2857,106 @@ Hi! I need next info about the "Oversize Cotton Dress":</textarea
     <script src="js/vendor-special/instafeed.min.js"></script>
     <script src="js/vendor/vendor.min.js"></script>
     <script src="js/app-html.js"></script>
+    <script>
+      const params = new URLSearchParams(location.search)
+      const id = params.get('id') || params.get('_id')
+      if (!id) window.location.href = 'index.html'
+      http_setup.get(`product/${id}`).then(({ data }) => {
+        $('#product-name').append(data.name)
+        $('#product-name').attr('href', `product.html?id=${data._id}`)
+        $('.rating-js').append(`
+          ${new Array(5)
+            .fill()
+            .map(
+              (_, index) =>
+                `<i class="icon-star-fill ${
+                  index + 1 <= data.rating ? 'fill' : ''
+                }"></i>`
+            )
+            .join('')}
+          <span class="reviews-link">
+            <a href="#" class="js-reviews-link">
+              (${data.comments.length} comentários)
+            </a>
+          </span>
+        `)
+        $('.prd-block_title').append(data.name)
+        const discount = data.price * (data.promotion / 100)
+        $('.prd-block_price--actual').append(
+          formatBRL(data.promotion ? data.price - discount : data.price)
+        )
+        if (data.promotion) {
+          $('.prd-block_price-old-wrap').append(`
+            <span class="prd-block_price--old">${formatBRL(data.price)}</span>
+            <span class="prd-block_price--text">
+              Você economiza: ${formatBRL(discount)} (${data.promotion}%)
+            </span>
+          `)
+        }
+        $('.description-js').append(data.description)
+        $('.js-stock-left').append(data.quantity)
+        $('.prd-in-stock').append(data.quantity > 0 ? 'Em estoque' : 'Esgotado')
+        $('.product-id').append(data._id)
+        $('#SingleOptionSelector-0').append(
+          data.colors
+            .map(
+              color => `
+          <option value="${color}">
+            ${color}
+          </option>
+        `
+            )
+            .join('')
+        )
+        $('.images-list').append(
+          data.colors
+            .map(
+              (color, i) => `
+            ${i > 0 ? '<li></li>' : ''}
+            <li>
+              <a
+                href="#"
+                data-value="${color}"
+                data-toggle="tooltip"
+                data-placement="top"
+                data-original-title="${color}"
+                >
+                  <span
+                    class="image-container image-container--product"
+                  >
+                    <div style="border-radius: 4px;width: 50px;height: 64px;background: ${color}"></div>
+                  </span>
+                </a>
+            </li>
+        `
+            )
+            .join('')
+        )
+        $('#SingleOptionSelector-1').append(
+          data.sizes
+            .map(
+              size => `
+            <option value="${size._id}">
+              ${size.name}
+            </option>
+          `
+            )
+            .join('')
+        )
+        $('.size-list.js-size-list').append(
+          data.sizes.map(
+            size => `
+            <li>
+              <a href="#" data-value="${size._id}">
+                <span class="value">${size.name}</span>
+              </a>
+            </li>
+            `
+          )
+        )
+        $('.js-prd-addtocart').attr('data-product', JSON.stringify(data))
+        $('.btn-add-to-wishlist').attr('data-product', JSON.stringify(data))
+      })
+    </script>
   </body>
 </html>
