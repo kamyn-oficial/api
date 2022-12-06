@@ -70,6 +70,36 @@ class ProductRepository {
   public deleteById(id: string) {
     return ProductModel.findByIdAndDelete(id)
   }
+
+  public random(limit: number) {
+    return ProductModel.aggregate([
+      { $sample: { size: limit } },
+      {
+        $lookup: {
+          from: 'categories',
+          localField: 'categories',
+          foreignField: '_id',
+          as: 'categories'
+        }
+      },
+      {
+        $lookup: {
+          from: 'sizes',
+          localField: 'sizes',
+          foreignField: '_id',
+          as: 'sizes'
+        }
+      },
+      {
+        $lookup: {
+          from: 'comments',
+          localField: 'comments',
+          foreignField: '_id',
+          as: 'comments'
+        }
+      }
+    ])
+  }
 }
 
 export default new ProductRepository()

@@ -7,6 +7,7 @@ Route.group(() => {
   Route.get('logout', 'AuthController.logout')
   Route.get('products', 'ProductController.index')
   Route.get('product/:id', 'ProductController.show')
+  Route.get('fy', 'ProductController.fy')
 
   Route.group(() => {
     Route.group(() => {

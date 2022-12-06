@@ -34,6 +34,16 @@ export default class ProductController extends BaseController {
     }
   }
 
+  public async fy({ response }: HttpContextContract) {
+    try {
+      const products = await ProductRepository.random(10)
+
+      return response.json(products)
+    } catch (error) {
+      return this.responseSomethingWrong(response, error)
+    }
+  }
+
   public async store({ request, response }: HttpContextContract) {
     try {
       const data: UpdateProductParams = request.only([
