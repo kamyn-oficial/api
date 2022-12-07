@@ -4180,7 +4180,6 @@ if (cartIcon) {
               i.aspect_ratio = 0.778
               const isFavorite = favorites.findIndex(({ _id }) => _id === i._id) > -1
               i.rating = Math.round(i.rating)
-              console.log(i.photos)
               return `
               <div class="prd prd--style2 prd-labels--max prd-labels-shadow prd-w-lg ${isFavorite ? 'prd--in-wishlist' : ''}">
               <div class="prd-inside">
@@ -7609,7 +7608,7 @@ if (cartIcon) {
       THEME.initialization.init();
       THEME.header.init();
       THEME.forms.init();
-      THEME.product.init();
+      if (window.location.pathname !== '/product.html') THEME.product.init();
       if (catalogPage) THEME.catalog.init();
       if (productPage) THEME.productPage.productTitleReposition();
       THEME.initialization.initDelay();
