@@ -4177,10 +4177,10 @@ if (cartIcon) {
               const now = new Date().getTime() + 1000 * 60 * 60 * 24 * 7;
               const isNew = now > created
               i.path = i.photos[0] || 'images/skins/fashion/products/product-03-1.jpg'
-              i.url = `product.html?id=${i._id}`
               i.aspect_ratio = 0.778
               const isFavorite = favorites.findIndex(({ _id }) => _id === i._id) > -1
               i.rating = Math.round(i.rating)
+              console.log(i.photos)
               return `
               <div class="prd prd--style2 prd-labels--max prd-labels-shadow prd-w-lg ${isFavorite ? 'prd--in-wishlist' : ''}">
               <div class="prd-inside">
@@ -4190,17 +4190,14 @@ if (cartIcon) {
                     class="prd-img image-hover-scale image-container"
                   >
                     <img
-                      src="${i.photos[0]}"
-                      data-src="images/skins/fashion/products/product-03-1.jpg"
+                      src="${i.path}"
                       alt=""
                       class="js-prd-img lazyload fade-up"
                     />
                     <div class="foxic-loader"></div>
                     <div class="prd-big-squared-labels">
                       ${isNew ? '<div class="label-new"><span>NOVO</span></div>' : ''}
-                      <div class="label-sale">
-                        ${i.promotion ? `<span>-${i.promotion}% <span class="sale-text">PROMO</span></span>` : ''}
-                      </div>
+                      ${i.promotion ? `<div class="label-sale"><span>-${i.promotion}% <span class="sale-text">PROMO</span></span></div>` : ''}
                     </div>
                   </a>
                   <div class="prd-circle-labels">
@@ -5231,6 +5228,7 @@ if (cartIcon) {
           that._stockDown(downinterval, stockleft, stockmin);
         }
       };
+      // disabled progress bar in product page
       // THEME.progressbar.init();
     },
     stickyAddToCart: function stickyAddToCart() {

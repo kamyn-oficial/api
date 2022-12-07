@@ -30,7 +30,7 @@ const bodyParserConfig: BodyParserConfig = {
   */
   json: {
     encoding: 'utf-8',
-    limit: '1mb',
+    limit: '8mb',
     strict: true,
     types: [
       'application/json',

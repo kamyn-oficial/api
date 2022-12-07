@@ -711,7 +711,8 @@
         if (favorites.length) {
           const products = favorites
             .map(i => {
-              const image = i.photos[0]
+              const image =
+                i.photos[0] || 'images/skins/fashion/products/product-04-1.jpg'
               const price = i.promotion
                 ? i.price - i.price * (i.promotion / 100)
                 : i.price
@@ -728,7 +729,6 @@
                         >
                           <img
                             src="${image}"
-                            data-src="images/skins/fashion/products/product-04-1.jpg"
                             alt=""
                             class="js-prd-img lazyload fade-up"
                           />
