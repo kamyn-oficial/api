@@ -26,6 +26,7 @@
       href="https://fonts.googleapis.com/css2?family=Open%20Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet"
     />
+    <link href="js/vendor-special/toastify.min.css" rel="stylesheet" />
     <script
       type="text/javascript"
       src="js/vendor-special/axios.min.js"
@@ -660,6 +661,51 @@
                       SEDEX leva cerca de 3-5 dias úteis para entrega.<br />
                     </p>
                   </div>
+                  <form
+                    id="addComment"
+                    style="display: none"
+                    class="modal-info-content modal-info-content-lg"
+                  >
+                    <div class="modal-info-heading">
+                      <div class="mb-1"><i class="icon-pencil"></i></div>
+                      <h2>Enviar avaliação</h2>
+                    </div>
+                    <span>Estrelas</span>
+                    <div class="form-group select-wrapper select-wrapper-sm">
+                      <select
+                        class="form-control form-control--sm"
+                        name="rate"
+                        required
+                      >
+                        <option value="" hidden></option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                      </select>
+                    </div>
+                    <span>Título</span>
+                    <div class="form-group">
+                      <input
+                        class="form-control form-control--sm"
+                        name="title"
+                        required
+                      />
+                    </div>
+                    <span>Comentário</span>
+                    <div class="form-group">
+                      <textarea
+                        class="form-control textarea--height-170"
+                        name="text"
+                        required
+                      ></textarea>
+                    </div>
+                    <br />
+                    <div style="display: flex; justify-content: center">
+                      <button class="btn">Enviar</button>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
@@ -681,183 +727,18 @@
                 <div class="row align-items-center">
                   <div class="col"><h2>Avaliações</h2></div>
                   <div class="col-18 col-md-auto mb-3 mb-md-0">
-                    <a href="#" class="review-write-link"
-                      ><i class="icon-pencil"></i>Enviar avaliação</a
+                    <a
+                      class="review-write-link"
+                      href="#"
+                      data-fancybox
+                      data-src="#addComment"
                     >
+                      <i class="icon-pencil"></i>
+                      Enviar avaliação
+                    </a>
                   </div>
                 </div>
-                <div id="productReviewsBottom">
-                  <div class="review-item">
-                    <div class="review-item_rating">
-                      <i class="icon-star-fill fill"></i
-                      ><i class="icon-star-fill fill"></i
-                      ><i class="icon-star-fill fill"></i
-                      ><i class="icon-star-fill fill"></i
-                      ><i class="icon-star-fill fill"></i>
-                    </div>
-                    <div class="review-item_top row align-items-center">
-                      <div class="col">
-                        <h5 class="review-item_author">
-                          Jaden Ngo on May 25, 2018
-                        </h5>
-                      </div>
-                      <div class="col-auto">
-                        <a href="#" class="review-item_report"
-                          >Report as Inappropriate</a
-                        >
-                      </div>
-                    </div>
-                    <div class="review-item_content">
-                      <h4>Good ball and company</h4>
-                      <p>
-                        I recently bought this ball and this is the first ball
-                        that I actually buy based on quality and material, I
-                        always been playing my friend ball and one of them
-                        recommended me this, read some review online and decided
-                        to buy it, the ball feel sticky at first but quality is
-                        nice and the hand wrote letter was awesome because it
-                        shows how much season creator actually care about their
-                        customers.
-                      </p>
-                    </div>
-                  </div>
-                  <div class="review-item">
-                    <div class="review-item_rating">
-                      <i class="icon-star-fill fill"></i
-                      ><i class="icon-star-fill fill"></i
-                      ><i class="icon-star-fill fill"></i
-                      ><i class="icon-star-fill fill"></i
-                      ><i class="icon-star-fill fill"></i>
-                    </div>
-                    <div class="review-item_top row align-items-center">
-                      <div class="col">
-                        <h5 class="review-item_author">
-                          Jaden Ngo on May 25, 2018
-                        </h5>
-                      </div>
-                      <div class="col-auto">
-                        <a href="#" class="review-item_report"
-                          >Report as Inappropriate</a
-                        >
-                      </div>
-                    </div>
-                    <div class="review-item_content">
-                      <h4>Good ball and company</h4>
-                      <p>
-                        I recently bought this ball and this is the first ball
-                        that I actually buy based on quality and material, I
-                        always been playing my friend ball and one of them
-                        recommended me this, read some review online and decided
-                        to buy it, the ball feel sticky at first but quality is
-                        nice and the hand wrote letter was awesome because it
-                        shows how much season creator actually care about their
-                        customers.
-                      </p>
-                    </div>
-                  </div>
-                  <div class="review-item">
-                    <div class="review-item_rating">
-                      <i class="icon-star-fill fill"></i
-                      ><i class="icon-star-fill fill"></i
-                      ><i class="icon-star-fill fill"></i
-                      ><i class="icon-star-fill fill"></i
-                      ><i class="icon-star-fill fill"></i>
-                    </div>
-                    <div class="review-item_top row align-items-center">
-                      <div class="col">
-                        <h5 class="review-item_author">
-                          Jaden Ngo on May 25, 2018
-                        </h5>
-                      </div>
-                      <div class="col-auto">
-                        <a href="#" class="review-item_report"
-                          >Report as Inappropriate</a
-                        >
-                      </div>
-                    </div>
-                    <div class="review-item_content">
-                      <h4>Good ball and company</h4>
-                      <p>
-                        I recently bought this ball and this is the first ball
-                        that I actually buy based on quality and material, I
-                        always been playing my friend ball and one of them
-                        recommended me this, read some review online and decided
-                        to buy it, the ball feel sticky at first but quality is
-                        nice and the hand wrote letter was awesome because it
-                        shows how much season creator actually care about their
-                        customers.
-                      </p>
-                    </div>
-                  </div>
-                  <div class="review-item">
-                    <div class="review-item_rating">
-                      <i class="icon-star-fill fill"></i
-                      ><i class="icon-star-fill fill"></i
-                      ><i class="icon-star-fill fill"></i
-                      ><i class="icon-star-fill fill"></i
-                      ><i class="icon-star-fill fill"></i>
-                    </div>
-                    <div class="review-item_top row align-items-center">
-                      <div class="col">
-                        <h5 class="review-item_author">
-                          Jaden Ngo on May 25, 2018
-                        </h5>
-                      </div>
-                      <div class="col-auto">
-                        <a href="#" class="review-item_report"
-                          >Report as Inappropriate</a
-                        >
-                      </div>
-                    </div>
-                    <div class="review-item_content">
-                      <h4>Good ball and company</h4>
-                      <p>
-                        I recently bought this ball and this is the first ball
-                        that I actually buy based on quality and material, I
-                        always been playing my friend ball and one of them
-                        recommended me this, read some review online and decided
-                        to buy it, the ball feel sticky at first but quality is
-                        nice and the hand wrote letter was awesome because it
-                        shows how much season creator actually care about their
-                        customers.
-                      </p>
-                    </div>
-                  </div>
-                  <div class="review-item">
-                    <div class="review-item_rating">
-                      <i class="icon-star-fill fill"></i
-                      ><i class="icon-star-fill fill"></i
-                      ><i class="icon-star-fill fill"></i
-                      ><i class="icon-star-fill fill"></i
-                      ><i class="icon-star-fill fill"></i>
-                    </div>
-                    <div class="review-item_top row align-items-center">
-                      <div class="col">
-                        <h5 class="review-item_author">
-                          Jaden Ngo on May 25, 2018
-                        </h5>
-                      </div>
-                      <div class="col-auto">
-                        <a href="#" class="review-item_report"
-                          >Report as Inappropriate</a
-                        >
-                      </div>
-                    </div>
-                    <div class="review-item_content">
-                      <h4>Good ball and company</h4>
-                      <p>
-                        I recently bought this ball and this is the first ball
-                        that I actually buy based on quality and material, I
-                        always been playing my friend ball and one of them
-                        recommended me this, read some review online and decided
-                        to buy it, the ball feel sticky at first but quality is
-                        nice and the hand wrote letter was awesome because it
-                        shows how much season creator actually care about their
-                        customers.
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                <div id="productReviewsBottom"></div>
               </div>
             </div>
           </div>
@@ -1296,14 +1177,17 @@
     <script src="js/vendor-special/instafeed.min.js"></script>
     <script src="js/vendor/vendor.min.js"></script>
     <script src="js/app-html.js"></script>
+    <script src="js/vendor-special/toastify.min.js"></script>
     <script>
       const params = new URLSearchParams(location.search)
       const id = params.get('id') || params.get('_id')
       if (!id) window.location.href = 'index.html'
-      http_setup.get(`product/${id}`).then(({ data }) => {
-        $('#product-name').append(data.name)
-        $('#product-name').attr('href', `product.html?id=${data._id}`)
-        $('.rating-js').append(`
+      http_setup
+        .get(`product/${id}`)
+        .then(({ data }) => {
+          $('#product-name').append(data.name)
+          $('#product-name').attr('href', `product.html?id=${data._id}`)
+          $('.rating-js').append(`
           ${new Array(5)
             .fill()
             .map(
@@ -1319,104 +1203,111 @@
             </a>
           </span>
         `)
-        $('.prd-block_title').append(data.name)
-        const discount = data.price * (data.promotion / 100)
-        $('.prd-block_price--actual').append(
-          formatBRL(data.promotion ? data.price - discount : data.price)
-        )
-        if (data.promotion) {
-          $('.prd-block_price-old-wrap').append(`
+          $('.prd-block_title').append(data.name)
+          const discount = data.price * (data.promotion / 100)
+          $('.prd-block_price--actual').append(
+            formatBRL(data.promotion ? data.price - discount : data.price)
+          )
+          if (data.promotion) {
+            $('.prd-block_price-old-wrap').append(`
             <span class="prd-block_price--old">${formatBRL(data.price)}</span>
             <span class="prd-block_price--text">
               Você economiza: ${formatBRL(discount)} (${data.promotion}%)
             </span>
           `)
-        }
-        $('.description-js').append(data.description)
-        $('.js-stock-left').append(data.quantity)
-        $('.prd-in-stock').append(data.quantity > 0 ? 'Em estoque' : 'Esgotado')
-        $('.product-id').append(data._id)
-        $('#SingleOptionSelector-0').append(
-          data.colors
-            .map(
-              color => `
+          }
+          $('.description-js').append(data.description)
+          $('.js-stock-left').append(data.quantity)
+          $('.prd-in-stock').append(
+            data.quantity > 0 ? 'Em estoque' : 'Esgotado'
+          )
+          $('.product-id').append(data._id)
+          $('#SingleOptionSelector-0').append(
+            data.colors
+              .map(
+                color => `
           <option value="${color}">
             ${color}
           </option>
         `
-            )
-            .join('')
-        )
-        $('.images-list').append(
-          data.colors
-            .map(
-              (color, i) => `
-            ${i > 0 ? '<li></li>' : ''}
-            <li>
-              <a
-                href="#"
-                data-value="${color}"
-                data-toggle="tooltip"
-                data-placement="top"
-                data-original-title="${color}"
-                >
-                  <span
-                    class="image-container image-container--product"
-                  >
-                    <div style="border-radius: 4px;width: 50px;height: 64px;background: ${color}"></div>
-                  </span>
-                </a>
-            </li>
-        `
-            )
-            .join('')
-        )
-        $('#SingleOptionSelector-1').append(
-          data.sizes
-            .map(
-              size => `
+              )
+              .join('')
+          )
+          $('.images-list').append(
+            data.colors
+              .map(
+                (color, index) => `
+                ${index > 0 ? '<li></li>' : ''}
+                <li>
+                  <a
+                    href="#"
+                    data-value="${color}"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    data-original-title="${color}"
+                    >
+                      <span
+                        class="image-container image-container--product"
+                      >
+                        <div style="border-radius: 4px;width: 50px;height: 64px;background: ${color}"></div>
+                      </span>
+                    </a>
+                </li>
+              `
+              )
+              .join('')
+          )
+          $('#SingleOptionSelector-1').append(
+            data.sizes
+              .map(
+                size => `
             <option value="${size._id}">
               ${size.name}
             </option>
           `
-            )
-            .join('')
-        )
-        $('.size-list.js-size-list').append(
-          data.sizes.map(
-            size => `
+              )
+              .join('')
+          )
+          $('.size-list.js-size-list').append(
+            data.sizes.map(
+              size => `
             <li>
               <a href="#" data-value="${size._id}">
                 <span class="value">${size.name}</span>
               </a>
             </li>
             `
-          )
-        )
-        $('.js-prd-addtocart').attr('data-product', JSON.stringify(data))
-        $('.btn-add-to-wishlist').attr('data-product', JSON.stringify(data))
-        $('.tags-list').append(
-          data.categories
-            .map(
-              c => `<li><a href="category.html?id=${c._id}">${c.name}</a></li>`
             )
-            .join('')
-        )
-        const favorites = JSON.parse(localStorage.getItem('favorites') || '[]')
-        http_setup.get('fy').then(({ data }) => {
-          const products = data
-            .map(i => {
-              const created = new Date(i.createdAt).getTime()
-              const now = new Date().getTime() + 1000 * 60 * 60 * 24 * 7
-              const isNew = now > created
-              i.path =
-                i.photos[0] || 'images/skins/fashion/products/product-03-1.jpg'
-              i.url = `product.html?id=${i._id}`
-              i.aspect_ratio = 0.778
-              const isFavorite =
-                favorites.findIndex(({ _id }) => _id === i._id) > -1
-              i.rating = Math.round(i.rating)
-              return `
+          )
+          $('.js-prd-addtocart').attr('data-product', JSON.stringify(data))
+          $('.btn-add-to-wishlist').attr('data-product', JSON.stringify(data))
+          $('.tags-list').append(
+            data.categories
+              .map(
+                c =>
+                  `<li><a href="category.html?id=${c._id}">${c.name}</a></li>`
+              )
+              .join('')
+          )
+          const favorites = JSON.parse(
+            localStorage.getItem('favorites') || '[]'
+          )
+          http_setup.get('fy').then(({ data }) => {
+            $('#fy').append(
+              data
+                .map(i => {
+                  const created = new Date(i.createdAt).getTime()
+                  const now = new Date().getTime() + 1000 * 60 * 60 * 24 * 7
+                  const isNew = now > created
+                  i.path =
+                    i.photos[0] ||
+                    'images/skins/fashion/products/product-03-1.jpg'
+                  i.url = `product.html?id=${i._id}`
+                  i.aspect_ratio = 0.778
+                  const isFavorite =
+                    favorites.findIndex(({ _id }) => _id === i._id) > -1
+                  i.rating = Math.round(i.rating)
+                  return `
               <div class="prd prd--style2 prd-labels--max prd-labels-shadow prd-w-lg ${
                 isFavorite ? 'prd--in-wishlist' : ''
               }">
@@ -1515,14 +1406,14 @@
               </div>
             </div>
               `
-            })
-            .join(' ')
-          $('#fy').append(products)
-        })
-        $('.js-product-main-carousel').append(
-          data.photos
-            .map(
-              p => `
+                })
+                .join(' ')
+            )
+          })
+          $('.js-product-main-carousel').append(
+            data.photos
+              .map(
+                p => `
               <div data-value="Beige">
                 <span class="prd-img">
                   <img
@@ -1533,13 +1424,13 @@
                   />
                 </span>
               </div>`
-            )
-            .join('')
-        )
-        $('.js-product-previews-carousel').append(
-          data.photos
-            .map(
-              p => `
+              )
+              .join('')
+          )
+          $('.js-product-previews-carousel').append(
+            data.photos
+              .map(
+                p => `
                 <a href="#" data-value="">
                   <span class="prd-img">
                     <img
@@ -1550,10 +1441,56 @@
                   </span>
                 </a>
               `
-            )
-            .join('')
-        )
-        THEME.product.init()
+              )
+              .join('')
+          )
+          $('#productReviewsBottom').append(
+            data.comments.map(c => {
+              return `
+              <div class="review-item">
+                <div class="review-item_rating">
+                  ${new Array(5)
+                    .fill()
+                    .map(
+                      (_, ci) =>
+                        `<i class="icon-star${
+                          ci + 1 <= c.rate ? '-fill fill' : ''
+                        }"></i>`
+                    )
+                    .join('')}
+                </div>
+                <div class="review-item_top row align-items-center">
+                  <div class="col">
+                    <h5 class="review-item_author">
+                      ${c.user.name}
+                    </h5>
+                  </div>
+                </div>
+                <div class="review-item_content">
+                  <h4>${c.title}</h4>
+                  <p>
+                    ${c.text}
+                  </p>
+                </div>
+              </div>
+            `
+            })
+          )
+        })
+        .finally(() => {
+          THEME.product.init()
+          setTimeout(THEME.documentLoad.init, 500)
+        })
+
+      $('#addComment').on('submit', async e => {
+        e.preventDefault()
+        const formData = new FormData(e.target)
+        formData.set('product', id)
+        await http_setup.post('/comment', formData)
+        Toastify({
+          text: 'Comentário enviado com sucesso!'
+        }).showToast()
+        $.fancybox.close()
       })
     </script>
   </body>

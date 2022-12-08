@@ -26,6 +26,12 @@ export default class BaseController {
     return response.status(400).json({ errors })
   }
 
+  protected responseNeedAuth(response: ResponseContract) {
+    return response
+      .status(401)
+      .json({ errors: [{ message: 'Você precisa criar uma conta!' }] })
+  }
+
   protected responseIncorrectEmailOrPassword(response: ResponseContract) {
     return response
       .status(403)

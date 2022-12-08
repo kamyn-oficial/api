@@ -37,7 +37,7 @@ export interface CreateCommentParams {
   title: string
   text: string
   rate: number
-  productId: string
+  product: string
 }
 
 export interface SizeSchema {

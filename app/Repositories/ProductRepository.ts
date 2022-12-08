@@ -1,6 +1,7 @@
 import ProductModel from 'App/Models/ProductModel'
 import CategoryModel from 'App/Models/CategoryModel'
 import CommentModel from 'App/Models/CommentModel'
+import UserModel from 'App/Models/UserModel'
 import SizeModel from 'App/Models/SizeModel'
 import type { ProductSchema } from 'App/Types'
 
@@ -42,7 +43,7 @@ class ProductRepository {
         ...item._doc,
         rating:
           item.comments.length > 0
-            ? item.comments.reduce((a: any, b: any) => a + b.rating, 0) /
+            ? item.comments.reduce((a: any, b: any) => a + b.rate, 0) /
             item.comments.length
             : 0
       }
@@ -56,11 +57,42 @@ class ProductRepository {
     }
   }
 
-  public findById(id: string) {
-    return ProductModel.findById(id)
+  public async findById(id: string) {
+    const data: any = await ProductModel.findById(id)
       .populate({ path: 'sizes', model: SizeModel })
       .populate({ path: 'categories', model: CategoryModel })
-      .populate({ path: 'comments', model: CommentModel })
+      .populate({
+        path: 'comments',
+        model: CommentModel,
+        populate: {
+          path: 'user',
+          model: UserModel
+        }
+      })
+
+    let rating = 0
+
+    if (data) {
+      rating =
+        data.comments.length > 0
+          ? data.comments.reduce((a: any, b: any) => a + b.rate, 0) /
+          data.comments.length
+          : 0
+    }
+
+    return {
+      ...data._doc,
+      rating
+    }
+  }
+
+  public async addComment(productId: string, commentId: string) {
+    const data: any = await ProductModel.findById(productId).populate({
+      path: 'comments',
+      model: CommentModel
+    })
+    data.comments.push(commentId)
+    return data.save()
   }
 
   public updateById(id: string, data: Partial<ProductSchema>) {

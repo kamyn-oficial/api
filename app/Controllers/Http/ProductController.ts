@@ -6,6 +6,7 @@ import JoiValidateService from 'App/Services/JoiValidateService'
 import JoiSchemas from 'App/JoiSchemas'
 
 import type { UpdateProductParams } from 'App/Types'
+import CommentRepository from 'App/Repositories/CommentRepository'
 
 export default class ProductController extends BaseController {
   public async index({ request, response }: HttpContextContract) {
@@ -100,6 +101,7 @@ export default class ProductController extends BaseController {
     try {
       const id = decodeURI(request.params().id)
 
+      await CommentRepository.deleteByProductId(id)
       await ProductRepository.deleteById(id)
 
       return response.safeStatus(200)

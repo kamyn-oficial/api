@@ -9,6 +9,10 @@ class CategoryRepository {
   public deleteById(id: string) {
     return CommentModel.findByIdAndDelete(id)
   }
+
+  public deleteByProductId(product: string) {
+    return CommentModel.deleteMany({ product })
+  }
 }
 
 export default new CategoryRepository()

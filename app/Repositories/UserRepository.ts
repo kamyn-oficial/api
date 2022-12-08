@@ -32,6 +32,12 @@ class UserRepository {
     }
   }
 
+  public async addComment(userId: string, commentId: string) {
+    const data: any = await UserModel.findById(userId)
+    data.comments.push(commentId)
+    return data.save()
+  }
+
   public existByEmail(email: string) {
     return UserModel.exists({ email })
   }

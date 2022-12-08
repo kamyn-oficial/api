@@ -33,7 +33,14 @@ const schema = new Schema<UserSchema>(
     },
     emailVerifiedAt: {
       type: Number
-    }
+    },
+    comments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Comment',
+        required: true
+      }
+    ]
   },
   {
     timestamps: true

@@ -7731,7 +7731,7 @@ if (cartIcon) {
   setVH();
   THEME.beforeReady.init();
   THEME.documentReady.init();
-  $window.on('load', THEME.documentLoad.init);
+  if (window.location.pathname !== '/product.html') $window.on('load', THEME.documentLoad.init);
   $window.on('resize', THEME.documentResize.init);
 })(jQuery);
 
