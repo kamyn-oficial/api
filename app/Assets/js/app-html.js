@@ -4181,73 +4181,108 @@ if (cartIcon) {
               const isFavorite = favorites.findIndex(({ _id }) => _id === i._id) > -1
               i.rating = Math.round(i.rating)
               return `
-              <div class="prd prd--style2 prd-labels--max prd-labels-shadow prd-w-lg ${isFavorite ? 'prd--in-wishlist' : ''}">
-              <div class="prd-inside">
-                <div class="prd-img-area">
-                  <a
-                    href="product.html?id=${i._id}"
-                    class="prd-img image-hover-scale image-container"
-                  >
-                    <img
-                      src="${i.path}"
-                      alt=""
-                      class="js-prd-img lazyload fade-up"
-                    />
-                    <div class="foxic-loader"></div>
-                    <div class="prd-big-squared-labels">
-                      ${isNew ? '<div class="label-new"><span>NOVO</span></div>' : ''}
-                      ${i.promotion ? `<div class="label-sale"><span>-${i.promotion}% <span class="sale-text">PROMO</span></span></div>` : ''}
-                    </div>
-                  </a>
-                  <div class="prd-circle-labels">
-                    <a
-                      href="#"
-                      class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                      title="Adicionar aos favoritos"
-                      data-product='${JSON.stringify(i)}'
-                      ><i class="icon-heart-stroke"></i></a
-                    ><a
-                      href="#"
-                      class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                      title="Remover dos favoritos"
-                      data-product='${JSON.stringify(i)}'
-                      ><i class="icon-heart-hover"></i
-                    ></a>
-                  </div>
-                </div>
-                <div class="prd-info">
-                  <div class="prd-info-wrap">
-                    <div class="prd-rating justify-content-center">
-                      ${new Array(5).fill().map((_, index) => `<i class="icon-star-fill ${index + 1 <= i.rating ? 'fill' : ''}"></i>`).join('')}
-                    </div>
-                    <div class="prd-tag">
-                    ${i.categories.map(c => `<a href="category.html?id=${c._id}">${c.name}</a>`).join('')}
-                    </div>
-                    <h2 class="prd-title">
-                      <a href="product.html?id=${i._id}">${i.name}</a>
-                    </h2>
-                  </div>
-                  <div class="prd-hovers">
-                    <div class="prd-price">
-                      ${i.promotion ? `<div class="price-old">${formatBRL(i.price)}</div>` : ''}
-                      <div class="price-new">${formatBRL(i.promotion ? i.price - (i.price * (i.promotion / 100)) : i.price)}</div>
-                    </div>
-                    <div class="prd-action">
-                      <div class="prd-action-left">
-                        <form action="#">
-                          <button
-                            class="btn js-prd-addtocart"
+                <div class="prd prd--style2 prd-labels--max prd-labels-shadow prd-w-lg ${isFavorite ? 'prd--in-wishlist' : ''}">
+                    <div class="prd-inside">
+                      <div class="prd-img-area">
+                        <a
+                          href="product.html?id=${i._id}"
+                          class="prd-img image-hover-scale image-container"
+                        >
+                          <img
+                            src="${i.path}"
+                            alt=""
+                            class="js-prd-img lazyload fade-up"
+                          />
+                          <div class="foxic-loader"></div>
+                          <div class="prd-big-squared-labels">
+                            ${isNew ? '<div class="label-new"><span>NOVO</span></div>' : ''}
+                            ${i.promotion ? `<div class="label-sale"><span>-${i.promotion}% <span class="sale-text">PROMO</span></span></div>` : ''}
+                          </div>
+                        </a>
+                        <div class="prd-circle-labels">
+                          <a
+                            href="#"
+                            class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
+                            title="Adicionar aos favoritos"
                             data-product='${JSON.stringify(i)}'
-                          >
-                            Adicionar ao carrinho
-                          </button>
-                        </form>
+                            ><i class="icon-heart-stroke"></i></a
+                          ><a
+                            href="#"
+                            class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
+                            title="Remover dos favoritos"
+                            data-product='${JSON.stringify(i)}'
+                            ><i class="icon-heart-hover"></i
+                          ></a>
+                        </div>
+                      </div>
+                      <div class="prd-info">
+                        <div class="prd-info-wrap">
+                          <div class="prd-info-top">
+                            <div class="prd-rating">
+                              ${new Array(5).fill().map((_, index) => `<i class="icon-star-fill ${index + 1 <= i.rating ? 'fill' : ''}"></i>`).join('')}
+                            </div>
+                          </div>
+                          <div class="prd-rating justify-content-center">
+                            ${new Array(5).fill().map((_, index) => `<i class="icon-star-fill ${index + 1 <= i.rating ? 'fill' : ''}"></i>`).join('')}
+                          </div>
+                          <div class="prd-tag">
+                            ${i.categories.map(c => `<a href="category.html?id=${c._id}">${c.name}</a>`).join('')}
+                          </div>
+                          <h2 class="prd-title">
+                            <a href="product.html?id=${i._id}">${i.name}</a>
+                          </h2>
+                          <div class="prd-description">
+                            ${i.description}
+                          </div>
+                          <div class="prd-action">
+                            <form action="#">
+                              <button
+                                class="btn js-prd-addtocart"
+                                data-product='${JSON.stringify(i)}'
+                              >
+                                Adicionar ao carrinho
+                              </button>
+                            </form>
+                          </div>
+                        </div>
+                        <div class="prd-hovers">
+                          <div class="prd-circle-labels">
+                            <div>
+                              <a
+                                href="#"
+                                class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
+                                title="Adicionar aos favoritos"
+                                data-product='${JSON.stringify(i)}'
+                                ><i class="icon-heart-stroke"></i></a
+                              ><a
+                                href="#"
+                                class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
+                                title="Remover dos favoritos"
+                                data-product='${JSON.stringify(i)}'
+                                ><i class="icon-heart-hover"></i
+                            ></a>
+                            </div>
+                          </div>
+                          <div class="prd-price">
+                            ${i.promotion ? `<div class="price-old">${formatBRL(i.price)}</div>` : ''}
+                            <div class="price-new">${formatBRL(i.promotion ? i.price - (i.price * (i.promotion / 100)) : i.price)}</div>
+                          </div>
+                          <div class="prd-action">
+                            <div class="prd-action-left">
+                              <form action="#">
+                                <button
+                                  class="btn js-prd-addtocart"
+                                  data-product='${JSON.stringify(i)}'
+                                >
+                                  Adicionar ao carrinho
+                                </button>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
               `
             }).join(' ')
             $('[data-grid-tab-content]').not('.js-filter-col').append(products)
@@ -7608,7 +7643,7 @@ if (cartIcon) {
       THEME.initialization.init();
       THEME.header.init();
       THEME.forms.init();
-      if (window.location.pathname !== '/product.html') THEME.product.init();
+      if (!['/product.html', '/category.html'].includes(window.location.pathname)) THEME.product.init();
       if (catalogPage) THEME.catalog.init();
       if (productPage) THEME.productPage.productTitleReposition();
       THEME.initialization.initDelay();
@@ -7731,7 +7766,7 @@ if (cartIcon) {
   setVH();
   THEME.beforeReady.init();
   THEME.documentReady.init();
-  if (window.location.pathname !== '/product.html') $window.on('load', THEME.documentLoad.init);
+  if (!['/product.html', '/category.html'].includes(window.location.pathname)) $window.on('load', THEME.documentLoad.init);
   $window.on('resize', THEME.documentResize.init);
 })(jQuery);
 

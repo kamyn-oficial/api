@@ -1185,12 +1185,10 @@
       const params = new URLSearchParams(location.search)
       const id = params.get('id') || params.get('_id')
       if (!id) window.location.href = 'index.html'
-      http_setup
-        .get(`product/${id}`)
-        .then(({ data }) => {
-          $('#product-name').append(data.name)
-          $('#product-name').attr('href', `product.html?id=${data._id}`)
-          $('.rating-js').append(`
+      http_setup.get(`product/${id}`).then(({ data }) => {
+        $('#product-name').append(data.name)
+        $('#product-name').attr('href', `product.html?id=${data._id}`)
+        $('.rating-js').append(`
           ${new Array(5)
             .fill()
             .map(
@@ -1206,40 +1204,38 @@
             </a>
           </span>
         `)
-          $('.prd-block_title').append(data.name)
-          const discount = data.price * (data.promotion / 100)
-          $('.prd-block_price--actual').append(
-            formatBRL(data.promotion ? data.price - discount : data.price)
-          )
-          if (data.promotion) {
-            $('.prd-block_price-old-wrap').append(`
+        $('.prd-block_title').append(data.name)
+        const discount = data.price * (data.promotion / 100)
+        $('.prd-block_price--actual').append(
+          formatBRL(data.promotion ? data.price - discount : data.price)
+        )
+        if (data.promotion) {
+          $('.prd-block_price-old-wrap').append(`
             <span class="prd-block_price--old">${formatBRL(data.price)}</span>
             <span class="prd-block_price--text">
               Você economiza: ${formatBRL(discount)} (${data.promotion}%)
             </span>
           `)
-          }
-          $('.description-js').append(data.description)
-          $('.js-stock-left').append(data.quantity)
-          $('.prd-in-stock').append(
-            data.quantity > 0 ? 'Em estoque' : 'Esgotado'
-          )
-          $('.product-id').append(data._id)
-          $('#SingleOptionSelector-0').append(
-            data.colors
-              .map(
-                color => `
+        }
+        $('.description-js').append(data.description)
+        $('.js-stock-left').append(data.quantity)
+        $('.prd-in-stock').append(data.quantity > 0 ? 'Em estoque' : 'Esgotado')
+        $('.product-id').append(data._id)
+        $('#SingleOptionSelector-0').append(
+          data.colors
+            .map(
+              color => `
           <option value="${color}">
             ${color}
           </option>
         `
-              )
-              .join('')
-          )
-          $('.images-list').append(
-            data.colors
-              .map(
-                (color, index) => `
+            )
+            .join('')
+        )
+        $('.images-list').append(
+          data.colors
+            .map(
+              (color, index) => `
                 ${index > 0 ? '<li></li>' : ''}
                 <li>
                   <a
@@ -1257,45 +1253,44 @@
                     </a>
                 </li>
               `
-              )
-              .join('')
-          )
-          $('#SingleOptionSelector-1').append(
-            data.sizes
-              .map(
-                size => `
+            )
+            .join('')
+        )
+        $('#SingleOptionSelector-1').append(
+          data.sizes
+            .map(
+              size => `
             <option value="${size._id}">
               ${size.name}
             </option>
           `
-              )
-              .join('')
-          )
-          $('.size-list.js-size-list').append(
-            data.sizes.map(
-              size => `
+            )
+            .join('')
+        )
+        $('.size-list.js-size-list').append(
+          data.sizes.map(
+            size => `
             <li>
               <a href="#" data-value="${size._id}">
                 <span class="value">${size.name}</span>
               </a>
             </li>
             `
+          )
+        )
+        $('.js-prd-addtocart').attr('data-product', JSON.stringify(data))
+        $('.btn-add-to-wishlist').attr('data-product', JSON.stringify(data))
+        $('.tags-list').append(
+          data.categories
+            .map(
+              c => `<li><a href="category.html?id=${c._id}">${c.name}</a></li>`
             )
-          )
-          $('.js-prd-addtocart').attr('data-product', JSON.stringify(data))
-          $('.btn-add-to-wishlist').attr('data-product', JSON.stringify(data))
-          $('.tags-list').append(
-            data.categories
-              .map(
-                c =>
-                  `<li><a href="category.html?id=${c._id}">${c.name}</a></li>`
-              )
-              .join('')
-          )
-          const favorites = JSON.parse(
-            localStorage.getItem('favorites') || '[]'
-          )
-          http_setup.get('fy').then(({ data }) => {
+            .join('')
+        )
+        const favorites = JSON.parse(localStorage.getItem('favorites') || '[]')
+        http_setup
+          .get('fy')
+          .then(({ data }) => {
             $('#fy').append(
               data
                 .map(i => {
@@ -1413,10 +1408,14 @@
                 .join(' ')
             )
           })
-          $('.js-product-main-carousel').append(
-            data.photos
-              .map(
-                p => `
+          .finally(() => {
+            THEME.product.init()
+            THEME.documentLoad.init()
+          })
+        $('.js-product-main-carousel').append(
+          data.photos
+            .map(
+              p => `
               <div data-value="Beige">
                 <span class="prd-img">
                   <img
@@ -1427,13 +1426,13 @@
                   />
                 </span>
               </div>`
-              )
-              .join('')
-          )
-          $('.js-product-previews-carousel').append(
-            data.photos
-              .map(
-                p => `
+            )
+            .join('')
+        )
+        $('.js-product-previews-carousel').append(
+          data.photos
+            .map(
+              p => `
                 <a href="#" data-value="">
                   <span class="prd-img">
                     <img
@@ -1444,12 +1443,12 @@
                   </span>
                 </a>
               `
-              )
-              .join('')
-          )
-          $('#productReviewsBottom').append(
-            data.comments.map(c => {
-              return `
+            )
+            .join('')
+        )
+        $('#productReviewsBottom').append(
+          data.comments.map(c => {
+            return `
               <div class="review-item">
                 <div class="review-item_rating">
                   ${new Array(5)
@@ -1477,13 +1476,9 @@
                 </div>
               </div>
             `
-            })
-          )
-        })
-        .finally(() => {
-          THEME.product.init()
-          setTimeout(THEME.documentLoad.init, 500)
-        })
+          })
+        )
+      })
 
       $('#addComment').on('submit', async e => {
         e.preventDefault()
