@@ -28,7 +28,23 @@ class ProductRepository {
     const skip = (current_page - 1) * per_page
 
     let [data, total] = await Promise.all([
-      ProductModel.find(filter)
+      ProductModel.find({
+        ...(filter.categories && {
+          categories: { $in: filter.categories.split(',') }
+        }),
+        ...(filter.sizes && {
+          sizes: { $in: filter.sizes.split(',') }
+        }),
+        ...(filter.price && {
+          price: {
+            $gte: filter.price.split(',')[0],
+            $lte: filter.price.split(',')[1]
+          }
+        }),
+        ...(filter.name && {
+          name: { $regex: filter.name, $options: 'i' }
+        })
+      })
         .select(this.selectFields)
         .skip(skip)
         .limit(per_page)

@@ -50,12 +50,7 @@
             </div>
             <div class="col-auto hdr-logo">
               <a href="index.html" class="logo"
-                ><img
-                  srcset="
-                    images/skins/fashion/logo.png   1x,
-                    images/skins/fashion/logo2x.png 2x
-                  "
-                  alt="Logo"
+                ><img src="images/logo.png" alt="Logo"
               /></a>
             </div>
             <!--navigation-->
@@ -74,7 +69,7 @@
                       <div class="container">
                         <form
                           method="get"
-                          action="#"
+                          action="/category.html?search="
                           class="search search-off-popular"
                         >
                           <input
@@ -205,7 +200,7 @@
                         <div class="container">
                           <form
                             method="get"
-                            action="#"
+                            action="/category.html?search="
                             class="search search-off-popular"
                           >
                             <input
@@ -423,23 +418,13 @@
           <!-- Two columns -->
           <!-- Page Title -->
           <div class="page-title text-center">
-            <h1>search-text</h1>
+            <h1 class="search-text"></h1>
           </div>
           <!-- /Page Title -->
           <!-- Filter Row -->
           <div class="filter-row">
             <div class="row">
               <div class="items-count">35 item(s)</div>
-              <div class="select-wrap d-none d-md-flex">
-                <div class="select-label">Ordem:</div>
-                <div class="select-wrapper select-wrapper-xxs">
-                  <select class="form-control input-sm">
-                    <option value="featured">Novos</option>
-                    <option value="rating">Avaliação</option>
-                    <option value="price">Preço</option>
-                  </select>
-                </div>
-              </div>
               <div class="viewmode-wrap">
                 <div class="view-mode">
                   <span class="js-gridview"><i class="icon-grid"></i></span>
@@ -462,11 +447,7 @@
                   </div>
                   <div class="sidebar-block_content">
                     <div class="selected-filters-wrap">
-                      <ul class="selected-filters">
-                        <li><a href="#">Grey</a></li>
-                        <li><a href="#">Men</a></li>
-                        <li><a href="#">Above $200</a></li>
-                      </ul>
+                      <ul class="selected-filters"></ul>
                       <div class="d-flex flex-wrap align-items-center">
                         <a href="#" class="clear-filters">
                           <span>Limpar</span>
@@ -474,7 +455,7 @@
                         <div
                           class="selected-filters-count ml-auto d-none d-lg-block"
                         >
-                          Selecionado <span>6 items</span>
+                          Selecionado <span class="filter-qty">0 item(s)</span>
                         </div>
                       </div>
                     </div>
@@ -496,151 +477,7 @@
                     <span class="toggle-arrow"><span></span><span></span></span>
                   </div>
                   <div class="sidebar-block_content">
-                    <ul class="category-list">
-                      <li class="active">
-                        <a href="category.html" title="T-Shirts" class="open"
-                          >T-Shirts</a
-                        >
-                      </li>
-                      <li>
-                        <a href="category.html" title="Medical" class="open"
-                          >Medical</a
-                        >
-                      </li>
-                      <li>
-                        <a href="category.html" title="FoodMarket" class="open"
-                          >FoodMarket</a
-                        >
-                      </li>
-                      <li>
-                        <a href="category.html" title="Bikes" class="open"
-                          >Bikes&nbsp;<span>(12)</span></a
-                        >
-                      </li>
-                      <li>
-                        <a href="category.html" title="Cosmetics" class="open"
-                          >Cosmetics&nbsp;<span>(16)</span></a
-                        >
-                      </li>
-                      <li>
-                        <a href="category.html" title="Fishing" class="open"
-                          >Fishing&nbsp;<span>(20)</span></a
-                        >
-                      </li>
-                      <li>
-                        <a href="category.html" title="Electronics" class="open"
-                          >Electronics&nbsp;<span>(15)</span></a
-                        >
-                      </li>
-                      <li>
-                        <a href="category.html" title="Games" class="open"
-                          >Games&nbsp;<span>(14)</span></a
-                        >
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="sidebar-block filter-group-block collapsed">
-                  <div class="sidebar-block_title">
-                    <span>Cores</span>
-                    <span class="toggle-arrow"><span></span><span></span></span>
-                  </div>
-                  <div class="sidebar-block_content">
-                    <ul class="color-list two-column">
-                      <li class="active">
-                        <a href="#" data-tooltip="Dark Red" title="Dark Red"
-                          ><span class="value"
-                            ><img
-                              src="images/colorswatch/color-red.png"
-                              alt="" /></span
-                          ><span class="colorname">Red (87)</span></a
-                        >
-                      </li>
-                      <li>
-                        <a href="#" data-tooltip="Pink" title="Pink"
-                          ><span class="value"
-                            ><img
-                              src="images/colorswatch/color-pink.png"
-                              alt="" /></span
-                          ><span class="colorname">Pink (95)</span></a
-                        >
-                      </li>
-                      <li>
-                        <a href="#" data-tooltip="Violet" title="Violet"
-                          ><span class="value"
-                            ><img
-                              src="images/colorswatch/color-violet.png"
-                              alt="" /></span
-                          ><span class="colorname">Violet (18)</span></a
-                        >
-                      </li>
-                      <li>
-                        <a href="#" data-tooltip="Blue" title="Blue"
-                          ><span class="value"
-                            ><img
-                              src="images/colorswatch/color-blue.png"
-                              alt="" /></span
-                          ><span class="colorname">Blue (78)</span></a
-                        >
-                      </li>
-                      <li>
-                        <a href="#" data-tooltip="Marine" title="Marine"
-                          ><span class="value"
-                            ><img
-                              src="images/colorswatch/color-marine.png"
-                              alt="" /></span
-                          ><span class="colorname">Marine (45)</span></a
-                        >
-                      </li>
-                      <li>
-                        <a href="#" data-tooltip="Orange" title="Orange"
-                          ><span class="value"
-                            ><img
-                              src="images/colorswatch/color-orange.png"
-                              alt="" /></span
-                          ><span class="colorname">ouange (96)</span></a
-                        >
-                      </li>
-                      <li>
-                        <a href="#" data-tooltip="Yellow" title="Yellow"
-                          ><span class="value"
-                            ><img
-                              src="images/colorswatch/color-yellow.png"
-                              alt="" /></span
-                          ><span class="colorname">Yellow (55)</span></a
-                        >
-                      </li>
-                      <li>
-                        <a
-                          href="#"
-                          data-tooltip="Dark Yellow"
-                          title="Dark Yellow"
-                          ><span class="value"
-                            ><img
-                              src="images/colorswatch/color-darkyellow.png"
-                              alt="" /></span
-                          ><span class="colorname">Dark Yellow (2)</span></a
-                        >
-                      </li>
-                      <li>
-                        <a href="#" data-tooltip="Black" title="Black"
-                          ><span class="value"
-                            ><img
-                              src="images/colorswatch/color-black.png"
-                              alt="" /></span
-                          ><span class="colorname">Black (15)</span></a
-                        >
-                      </li>
-                      <li>
-                        <a href="#" data-tooltip="White" title="White"
-                          ><span class="value"
-                            ><img
-                              src="images/colorswatch/color-white.png"
-                              alt="" /></span
-                          ><span class="colorname">White (58)</span></a
-                        >
-                      </li>
-                    </ul>
+                    <ul class="category-list"></ul>
                   </div>
                 </div>
                 <div class="sidebar-block filter-group-block collapsed">
@@ -719,10 +556,9 @@
                 <div class="circle-loader-wrap">
                   <div class="circle-loader">
                     <a
-                      href="ajax/ajax-product-category.json"
-                      data-total="30"
-                      data-loaded="12"
-                      data-load="6"
+                      data-total="0"
+                      data-loaded="0"
+                      data-load="8"
                       class="lazyload js-circle-loader"
                     >
                       <svg
@@ -765,8 +601,8 @@
                       </svg>
                       <div class="circle-loader-text">Carregar mais</div>
                       <div class="circle-loader-text-alt">
-                        <span class="js-circle-loader-start"></span>&nbsp;out
-                        of&nbsp;<span class="js-circle-loader-end"></span>
+                        <span class="js-circle-loader-start"></span>&nbsp;de
+                        &nbsp;<span class="js-circle-loader-end"></span>
                       </div>
                     </a>
                   </div>
@@ -1224,6 +1060,103 @@
     <script src="js/vendor/vendor.min.js"></script>
     <script src="js/app-html.js"></script>
     <script>
+      const urlParams = new URLSearchParams(window.location.search)
+      const category = urlParams.get('category') || ''
+      const search = urlParams.get('search') || ''
+
+      $('.search-text').text(search)
+
+      $('.js-circle-loader').on('click', function () {
+        const el = document.getElementsByClassName('js-circle-loader')[0]
+        const total = Number(el.getAttribute('data-total'))
+        const loaded = Number(el.getAttribute('data-loaded'))
+        if (loaded === total) {
+          window.THEME.loaderHorizontalSm.close()
+          return
+        }
+        fetchProductsDataTab({
+          per_page: $(this).data('load') * 2,
+          name: search,
+          categories: category
+        })
+        window.THEME.loaderHorizontalSm.close()
+      })
+
+      fetchProductsDataTab({
+        name: search,
+        categories: category
+      })
+
+      function updateFilterQty() {
+        const children = $('.selected-filters').children()
+        const categories = []
+        children.each((i, e) => {
+          const type = $(e).data('type')
+          const id = $(e).data('id')
+          if (type === 'category') categories.push(id)
+        })
+        fetchProductsDataTab({
+          name: search,
+          categories
+        })
+        $('.filter-qty').text(`${children.length} item(s)`)
+      }
+
+      $('.clear-filters').on('click', () => {
+        const children = $('.selected-filters').children()
+        children.each((i, e) => {
+          const id = $(e).data('id')
+          $(`.category-item[data-id="${id}"]`).removeClass('active')
+          $(e).remove()
+        })
+        updateFilterQty()
+      })
+
+      http_setup
+        .get('category?all=true')
+        .then(({ data }) => {
+          $('.category-list').append(
+            data
+              .map(
+                i => `
+              <li class="${
+                category === i._id ? 'active' : ''
+              } category-item" data-id="${i._id}" data-type="category">
+                <a title="${i.name}" class="open">
+                  ${i.name}
+                </a>
+              </li>
+              `
+              )
+              .join('')
+          )
+        })
+        .finally(() => {
+          $('.category-item').on('click', function () {
+            const name = $(this).text()
+            const id = $(this).data('id')
+            const type = $(this).data('type')
+            if ($(this).hasClass('active')) {
+              $(this).removeClass('active')
+              $(`.selected-filters li[data-id="${id}"]`).remove()
+            } else {
+              $(this).addClass('active')
+              $('.selected-filters').append(`
+                <li class="category-item" data-id="${id}" data-type="${type}"><a>${name}</a></li>
+              `)
+              $(`.selected-filters li[data-id="${id}"]`).on(
+                'click',
+                function () {
+                  $(this).remove()
+                  $(`.category-item[data-id="${id}"]`).removeClass('active')
+                  updateFilterQty()
+                }
+              )
+            }
+            updateFilterQty()
+          })
+        })
+
       const favorites = JSON.parse(localStorage.getItem('favorites') || '[]')
       http_setup
         .get('fy')

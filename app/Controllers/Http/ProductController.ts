@@ -11,11 +11,27 @@ import CommentRepository from 'App/Repositories/CommentRepository'
 export default class ProductController extends BaseController {
   public async index({ request, response }: HttpContextContract) {
     try {
-      const params = request.only(['page', 'per_page', 'name'])
+      const params = request.only([
+        'page',
+        'per_page',
+        'name',
+        'categories',
+        'colors',
+        'sizes',
+        'price'
+      ])
       const page = Number(params.page || 1)
       const perPage = Number(params.per_page || 15)
-      const filter = { name: params.name }
-      if (!filter.name) delete filter.name
+      const filter = {
+        name: params.name,
+        categories: params.categories,
+        colors: params.colors,
+        sizes: params.sizes,
+        price: params.price
+      }
+      Object.entries(filter).forEach(([key, value]) => {
+        if (!value) delete filter[key as keyof typeof filter]
+      })
       const pagination = await ProductRepository.getAll(page, perPage, filter)
       return response.json(pagination)
     } catch (error) {
