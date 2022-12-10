@@ -13,7 +13,6 @@ class UserRepository {
     'password',
     'accessTokenExp',
     'isAdm',
-    'emailVerified',
     'createdAt'
   ]
 
@@ -101,16 +100,6 @@ class UserRepository {
       { accessToken },
       {
         accessToken: undefined
-      }
-    )
-  }
-
-  public confirmEmail(confirmationToken: string) {
-    return UserModel.findOneAndUpdate(
-      { confirmationToken },
-      {
-        emailVerified: true,
-        confirmationToken: undefined
       }
     )
   }

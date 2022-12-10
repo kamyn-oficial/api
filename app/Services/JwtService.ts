@@ -34,12 +34,8 @@ class JwtService {
     return this.createToken({ userId, expireInDays: 5 })
   }
 
-  public get resetPasswordToken() {
-    return this.createToken({ expireInDays: 1 })
-  }
-
-  public get confirmEmailToken() {
-    return this.createToken({ expireInDays: 3 })
+  public resetPasswordToken(userId: string) {
+    return this.createToken({ userId, expireInDays: 1 })
   }
 
   public payload(token: string): Promise<JwtPayload> {

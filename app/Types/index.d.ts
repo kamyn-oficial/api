@@ -7,7 +7,6 @@ export interface UserSchema {
   accessToken?: string
   resetPasswordToken?: string
   confirmationToken?: string
-  emailVerifiedAt?: Number
   createdAt?: Number
 }
 

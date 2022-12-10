@@ -31,9 +31,6 @@ const schema = new Schema<UserSchema>(
     confirmationToken: {
       type: String
     },
-    emailVerifiedAt: {
-      type: Number
-    },
     comments: [
       {
         type: Schema.Types.ObjectId,

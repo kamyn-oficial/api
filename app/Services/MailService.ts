@@ -28,7 +28,7 @@ class MailService {
 
     this.transporter.use('compile', inLineCss())
 
-    this.from = `Ecommerce <${Env.get('SMTP_USER')}>`
+    this.from = `Kamyn <${Env.get('SMTP_USER')}>`
 
     this.assetsPath = join(__filename, '..', '..', 'Assets')
   }
@@ -41,27 +41,6 @@ class MailService {
 
     await this.transporter.sendMail({
       subject: 'Redefinir Senha',
-      from: this.from,
-      to,
-      html,
-      attachments: [
-        {
-          filename: 'logo.png',
-          path: `${this.assetsPath}/logo.png`,
-          cid: 'logo.png'
-        }
-      ]
-    })
-  }
-
-  public async sendEmailConfirmation(
-    to: string,
-    state: { name: string; redirectLink: string }
-  ) {
-    const html = await renderView('confirmEmail', state)
-
-    await this.transporter.sendMail({
-      subject: 'Confirmar Email',
       from: this.from,
       to,
       html,

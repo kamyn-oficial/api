@@ -3,6 +3,8 @@ import Route from '@ioc:Adonis/Core/Route'
 Route.group(() => {
   Route.get('ping', 'AuthController.ping')
   Route.post('register', 'AuthController.register')
+  Route.post('forgot-password', 'AuthController.forgotPassword')
+  Route.post('reset-password', 'AuthController.resetPassword')
   Route.post('login', 'AuthController.login')
   Route.get('logout', 'AuthController.logout')
   Route.get('products', 'ProductController.index')

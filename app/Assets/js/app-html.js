@@ -4,9 +4,9 @@ function formatBRL(number) {
   return number.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
-function fetchProductsDataTab({ per_page, categories, name }) {
+function fetchProductsDataTab({ per_page = 8, categories = '', name = '' } = {}) {
   const favorites = JSON.parse(localStorage.getItem('favorites') || '[]')
-  http_setup.get(`products?page=1&per_page=${per_page || 8}&categories=${categories}&name=${name}`).then(({ data }) => {
+  http_setup.get(`products?page=1&per_page=${per_page}&categories=${categories}&name=${name}`).then(({ data }) => {
     const products = data.data.map(i => {
       const created = new Date(i.createdAt).getTime();
       const now = new Date().getTime() + 1000 * 60 * 60 * 24 * 7;

@@ -109,8 +109,7 @@ export default class AuthController extends BaseController {
         name: user?.name,
         email: user?.email,
         phone: user?.phone,
-        accessToken: user?.accessToken,
-        emailVerifiedAt: user?.emailVerifiedAt
+        accessToken: user?.accessToken
       })
     } catch (error) {
       return this.responseSomethingWrong(response, error)
@@ -136,45 +135,47 @@ export default class AuthController extends BaseController {
     }
   }
 
-  public async confirmEmail({ request, response }: HttpContextContract) {
+  public async forgotPassword({ request, response }: HttpContextContract) {
     try {
-      const confirmationToken = decodeURI(request.qs().confirmationToken)
+      const { email } = request.only(['email'])
 
-      const tokenIsExpired = await JwtService.tokenIsExpired(confirmationToken)
+      const userDB = await UserRepository.findByEmail(email)
+      if (!userDB?._id) return response.safeStatus(200)
 
-      if (tokenIsExpired)
-        return response.redirect(`${this.APP_FRONT_URL}?confirm-email=fail`)
+      const token = await JwtService.resetPasswordToken(userDB._id)
 
-      await UserRepository.confirmEmail(confirmationToken)
+      await UserRepository.updateById(userDB._id, {
+        resetPasswordToken: token,
+        accessToken: ''
+      })
 
-      return response.redirect(`${this.APP_FRONT_URL}?confirm-email=success`)
+      await MailService.sendEmailForgotPassword(email, {
+        name: userDB.name,
+        redirectLink: `${process.env.APP_URL}/reset-password?token=${token}`
+      })
+
+      return response.safeStatus(200)
     } catch (error) {
       return this.responseSomethingWrong(response, error)
     }
   }
 
-  public async sendConfirmEmail({ request, response }: HttpContextContract) {
+  public async resetPassword({ request, response }: HttpContextContract) {
     try {
-      const accessToken = this.getBearerToken(request)
+      const { token, newPassword } = request.only(['token', 'newPassword'])
 
-      const userDB = await UserRepository.findByAccessToken(accessToken)
-      if (!userDB) return response.safeStatus(404)
+      const tokenIsExpired = await JwtService.tokenIsExpired(token)
+      if (tokenIsExpired) return response.safeStatus(498)
 
-      const tokenIsExpired = await JwtService.tokenIsExpired(accessToken)
+      const userDB = await UserRepository.findByResetPasswordToken(token)
+      if (!userDB?._id) return response.safeStatus(400)
 
-      if (tokenIsExpired) {
-        const confirmationToken = await JwtService.confirmEmailToken
+      const passwordHash = await Hash.make(newPassword)
 
-        await UserRepository.updateByAccessToken(accessToken, {
-          confirmationToken
-        })
-
-        userDB.confirmationToken = confirmationToken
-      }
-
-      await MailService.sendEmailConfirmation(userDB.email, {
-        name: userDB.name,
-        redirectLink: `${this.APP_API_URL}/confirm-email?confirmationToken=${userDB.confirmationToken}`
+      await UserRepository.updateById(userDB._id, {
+        resetPasswordToken: '',
+        accessToken: '',
+        passwordHash
       })
 
       return response.safeStatus(200)
