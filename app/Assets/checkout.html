@@ -489,6 +489,7 @@
                   <h3>Comentário</h3>
                   <textarea
                     class="form-control form-control--sm textarea--height-200"
+                    placeholder="Comentário sobre o pedido, ex. Notas especiais para entrega."
                   ></textarea>
                 </div>
               </div>
@@ -507,7 +508,7 @@
                       checked="checked"
                     />
                     <label for="formcheckoutRadio1">
-                      Correios R$ 32,00 (3-5 days)
+                      Correios R$ 32,00 (14-20 dias)
                     </label>
                   </div>
                   <div class="clearfix">
@@ -519,7 +520,20 @@
                       class="radio"
                     />
                     <label for="formcheckoutRadio2">
-                      Transportadora R$ 24,57 (1-2 days)
+                      Transportadora GFL R$ 29,57 (12-20 dias)
+                    </label>
+                  </div>
+                  <div class="clearfix">
+                    <input
+                      id="formcheckoutRadio1"
+                      value=""
+                      name="radio1"
+                      type="radio"
+                      class="radio"
+                      checked="checked"
+                    />
+                    <label for="formcheckoutRadio1">
+                      SEDEX R$ 56,34 (10-14 dias)
                     </label>
                   </div>
                 </div>
@@ -632,7 +646,9 @@
                   <div class="cart-table-prd-image text-center">Imagem</div>
                   <div class="cart-table-prd-content-wrap">
                     <div class="cart-table-prd-info">Nome</div>
-                    <div class="cart-table-prd-qty">Quantidade</div>
+                    <div class="cart-table-prd-qty" style="max-width: 106px">
+                      Quantidade
+                    </div>
                     <div class="cart-table-prd-price">Preço</div>
                   </div>
                 </div>
