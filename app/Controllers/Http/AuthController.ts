@@ -140,7 +140,7 @@ export default class AuthController extends BaseController {
       const { email } = request.only(['email'])
 
       const userDB = await UserRepository.findByEmail(email)
-      if (!userDB?._id) return response.safeStatus(200)
+      if (!userDB?._id) return response.safeStatus(404)
 
       const token = await JwtService.resetPasswordToken(userDB._id)
 
@@ -151,7 +151,7 @@ export default class AuthController extends BaseController {
 
       await MailService.sendEmailForgotPassword(email, {
         name: userDB.name,
-        redirectLink: `${process.env.APP_URL}/reset-password?token=${token}`
+        redirectLink: `${process.env.APP_FRONT_URL}/account-reset.html?token=${token}`
       })
 
       return response.safeStatus(200)

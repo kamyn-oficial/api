@@ -418,7 +418,7 @@
         <div class="container">
           <ul class="breadcrumbs">
             <li><a href="index.html">Início</a></li>
-            <li><span>Recuperar senha</span></li>
+            <li><span>Resetar senha</span></li>
           </ul>
         </div>
       </div>
@@ -426,19 +426,19 @@
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-md-18 col-lg-12">
-              <h2 class="text-center">Recuperar Senha</h2>
+              <h2 class="text-center">Retar Senha</h2>
               <div class="form-wrapper">
-                <p>
-                  Para recuperar sua senha, digite seu email abaixo, você receberá
-                  um link para criar uma nova senha.
+                <p style="">
+                  Digite sua nova senha e clique em enviar para redefinir sua
+                  senha.
                 </p>
                 <form id="form">
                   <div class="form-group">
                     <input
-                      name="email"
-                      type="text"
+                      name="newPassword"
+                      type="password"
                       class="form-control"
-                      placeholder="E-mail"
+                      placeholder="Nova senha"
                       required
                     />
                   </div>
@@ -705,19 +705,28 @@
     <script src="js/app-html.js"></script>
     <script src="js/vendor-special/toastify.min.js"></script>
     <script>
+      const urlParams = new URLSearchParams(window.location.search)
+      const token = urlParams.get('token')
+
+      if (!token) {
+        window.location.assign(window.location.origin)
+      }
+
       document
         .getElementById('form')
         .addEventListener('submit', async e => {
           e.preventDefault()
           const data = new FormData(e.target)
-          const dto = {}
+          const dto = {
+            token
+          }
           data.forEach((value, key) => (dto[key] = value))
 
           try {
-            const { data } = await http_setup.post('forgot-password', dto)
+            const { data } = await http_setup.post('reset-password', dto)
 
             Toastify({
-              text: 'Foi enviado um email para você!'
+              text: 'Senha resetada com sucesso!'
             }).showToast()
 
             setTimeout(() => {

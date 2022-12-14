@@ -14,13 +14,9 @@ class MailService {
     this.transporter = createTransport({
       host: Env.get('SMTP_HOST'),
       port: Env.get('SMTP_PORT'),
-      secure: false,
       auth: {
         user: Env.get('SMTP_USER'),
         pass: Env.get('SMTP_PASSWORD')
-      },
-      tls: {
-        rejectUnauthorized: false
       }
     })
 
@@ -47,7 +43,7 @@ class MailService {
       attachments: [
         {
           filename: 'logo.png',
-          path: `${this.assetsPath}/logo.png`,
+          path: `${this.assetsPath}/images/logo.png`,
           cid: 'logo.png'
         }
       ]
