@@ -675,11 +675,6 @@
             }).showToast()
           } catch (e) {
             console.error(e)
-            e.response.data.errors.forEach(error => {
-              Toastify({
-                text: error.message
-              }).showToast()
-            })
           }
         })
     </script>

@@ -615,15 +615,11 @@
             }).showToast()
 
             setTimeout(() => {
-              window.location.assign(window.location.origin)
+              window.location.assign(`${window.location.origin}/account-login.html`)
             }, 1500)
           } catch (e) {
             console.error(e)
-            e.response.data.errors.forEach(error => {
-              Toastify({
-                text: error.message
-              }).showToast()
-            })
+
           }
         })
     </script>

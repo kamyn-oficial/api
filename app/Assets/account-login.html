@@ -637,7 +637,7 @@
     <script>
       document
         .getElementById('form-login')
-        .addEventListener('submit', async e => {
+        .onsubmit = async e => {
           e.preventDefault()
           const data = new FormData(e.target)
           const dto = {}
@@ -663,13 +663,9 @@
             }, 1500)
           } catch (e) {
             console.error(e)
-            e.response.data.errors.forEach(error => {
-              Toastify({
-                text: error.message
-              }).showToast()
-            })
+
           }
-        })
+        }
     </script>
   </body>
 </html>
