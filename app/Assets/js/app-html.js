@@ -61,7 +61,7 @@ function fetchProductsDataTab({ per_page = 8, categories = '', sizes = '', price
                     ${new Array(5).fill().map((_, index) => `<i class="icon-star-fill ${index + 1 <= i.rating ? 'fill' : ''}"></i>`).join('')}
                   </div>
                   <div class="prd-tag">
-                    ${i.categories.map(c => `<a href="category.html?id=${c._id}">${c.name}</a>`).join('')}
+                    ${i.categories.map((c, index) => `<a href="category.html?category=${c._id}">${index > 0 ? ' - ' : ''}${c.name}</a>`).join('')}
                   </div>
                   <h2 class="prd-title">
                     <a href="product.html?id=${i._id}">${i.name}</a>

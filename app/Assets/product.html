@@ -548,6 +548,10 @@
                 <div class="prd-block_info-box prd-block_info_item">
                   <div class="two-column">
                     <p>
+                      Categoria(s):
+                      <span class="product-categories"></span>
+                    </p>
+                    <p>
                       Disponibilidade:
                       <span class="prd-in-stock" data-stock-status=""></span>
                     </p>
@@ -555,7 +559,7 @@
                       Impostos:
                       <span>Inclusos</span>
                     </p>
-                    <p class="product-id">ID: <span></span></p>
+                    <p>ID: <span class="product-id"></span></p>
                   </div>
                 </div>
                 <div class="order-0 order-md-100">
@@ -1186,9 +1190,9 @@
       const id = params.get('id') || params.get('_id')
       if (!id) window.location.href = 'index.html'
       http_setup.get(`product/${id}`).then(({ data }) => {
-        $('#product-name').append(data.name)
+        $('#product-name').html(data.name)
         $('#product-name').attr('href', `product.html?id=${data._id}`)
-        $('.rating-js').append(`
+        $('.rating-js').html(`
           ${new Array(5)
             .fill()
             .map(
@@ -1204,24 +1208,27 @@
             </a>
           </span>
         `)
-        $('.prd-block_title').append(data.name)
+        $('.prd-block_title').html(data.name)
         const discount = data.price * (data.promotion / 100)
-        $('.prd-block_price--actual').append(
+        $('.prd-block_price--actual').html(
           formatBRL(data.promotion ? data.price - discount : data.price)
         )
         if (data.promotion) {
-          $('.prd-block_price-old-wrap').append(`
+          $('.prd-block_price-old-wrap').html(`
             <span class="prd-block_price--old">${formatBRL(data.price)}</span>
             <span class="prd-block_price--text">
               Você economiza: ${formatBRL(discount)} (${data.promotion}%)
             </span>
           `)
         }
-        $('.description-js').append(data.description)
-        $('.js-stock-left').append(data.quantity)
-        $('.prd-in-stock').append(data.quantity > 0 ? 'Em estoque' : 'Esgotado')
-        $('.product-id').append(data._id)
-        $('#SingleOptionSelector-0').append(
+        $('.description-js').html(data.description)
+        $('.js-stock-left').html(data.quantity)
+        $('.prd-in-stock').html(data.quantity > 0 ? 'Em estoque' : 'Esgotado')
+        $('.product-id').html(data._id)
+        $('.product-categories').html(
+          data.categories.map(category => category.name).join(', ')
+        )
+        $('#SingleOptionSelector-0').html(
           data.colors
             .map(
               color => `
