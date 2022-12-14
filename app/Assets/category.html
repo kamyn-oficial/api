@@ -477,7 +477,7 @@
                     <span class="toggle-arrow"><span></span><span></span></span>
                   </div>
                   <div class="sidebar-block_content">
-                    <ul class="category-list"></ul>
+                    <ul class="category-list category-list-js"></ul>
                   </div>
                 </div>
                 <div class="sidebar-block filter-group-block collapsed">
@@ -486,18 +486,7 @@
                     <span class="toggle-arrow"><span></span><span></span></span>
                   </div>
                   <div class="sidebar-block_content">
-                    <ul
-                      class="category-list two-column size-list"
-                      data-sort='["XXS","XS","S","M","L","XL","XXL","XXXL"]'
-                    >
-                      <li data-value="L" class="active"><a href="#">L</a></li>
-                      <li data-value="XL"><a href="#">XL</a></li>
-                      <li data-value="XXS"><a href="#">XXS</a></li>
-                      <li data-value="XS"><a href="#">XS</a></li>
-                      <li data-value="S"><a href="#">S</a></li>
-                      <li data-value="XXL"><a href="#">XXL</a></li>
-                      <li data-value="XXXL"><a href="#">XXXL</a></li>
-                    </ul>
+                    <ul class="category-list two-column size-list-js"></ul>
                   </div>
                 </div>
                 <div class="sidebar-block filter-group-block collapsed">
@@ -506,10 +495,22 @@
                     <span class="toggle-arrow"><span></span><span></span></span>
                   </div>
                   <div class="sidebar-block_content">
-                    <ul class="category-list">
-                      <li><a href="#">R$ 100 - R$ 200</a></li>
-                      <li class="active"><a href="#">Abaixo R$ 200</a></li>
-                      <li><a href="#">Abaixo R$ 100</a></li>
+                    <ul class="category-list price-list-js">
+                      <li data-type="price" data-value="150,300">
+                        <a href="#">R$ 150 - R$ 300</a>
+                      </li>
+                      <li data-type="price" data-value="100,200">
+                        <a href="#">R$ 100 - R$ 200</a>
+                      </li>
+                      <li data-type="price" data-value="0,300">
+                        <a href="#">Abaixo R$ 300</a>
+                      </li>
+                      <li data-type="price" data-value="0,200">
+                        <a href="#">Abaixo R$ 200</a>
+                      </li>
+                      <li data-type="price" data-value="0,100">
+                        <a href="#">Abaixo R$ 100</a>
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -1061,7 +1062,7 @@
     <script src="js/app-html.js"></script>
     <script>
       const urlParams = new URLSearchParams(window.location.search)
-      const category = urlParams.get('category') || ''
+      const category = urlParams.get('category')?.replace('#', '') || ''
       const search = urlParams.get('search') || ''
 
       $('.search-text').text(search)
@@ -1090,14 +1091,21 @@
       function updateFilterQty() {
         const children = $('.selected-filters').children()
         const categories = []
+        const sizes = []
+        let price = ''
         children.each((i, e) => {
           const type = $(e).data('type')
           const id = $(e).data('id')
+          const value = $(e).data('value')
           if (type === 'category') categories.push(id)
+          if (type === 'size') sizes.push(id)
+          if (type === 'price') price = value
         })
         fetchProductsDataTab({
           name: search,
-          categories
+          categories: categories.toString(),
+          sizes: sizes.toString(),
+          price
         })
         $('.filter-qty').text(`${children.length} item(s)`)
       }
@@ -1112,50 +1120,88 @@
         updateFilterQty()
       })
 
-      http_setup
-        .get('category?all=true')
-        .then(({ data }) => {
-          $('.category-list').append(
-            data
-              .map(
-                i => `
-              <li class="${
-                category === i._id ? 'active' : ''
-              } category-item" data-id="${i._id}" data-type="category">
+      const setCategories = async () => {
+        const { data } = await http_setup.get('category?all=true')
+        $('.category-list-js').append(
+          data
+            .map(
+              i => `
+              <li class="category-item" data-id="${i._id}" data-type="category">
                 <a title="${i.name}" class="open">
                   ${i.name}
                 </a>
               </li>
               `
-              )
-              .join('')
-          )
-        })
-        .finally(() => {
-          $('.category-item').on('click', function () {
-            const name = $(this).text()
-            const id = $(this).data('id')
-            const type = $(this).data('type')
-            if ($(this).hasClass('active')) {
-              $(this).removeClass('active')
-              $(`.selected-filters li[data-id="${id}"]`).remove()
-            } else {
-              $(this).addClass('active')
-              $('.selected-filters').append(`
+            )
+            .join('')
+        )
+      }
+
+      const setSizes = async () => {
+        const { data } = await http_setup.get('size?all=true')
+        $('.size-list-js').append(
+          data
+            .map(
+              i => `
+              <li data-id="${i._id}" data-type="size" data-value="${i._id}" class="category-item">
+                <a href="#" title="${i.name}">${i.name}</a>
+              </li>
+              `
+            )
+            .join('')
+        )
+      }
+
+      Promise.all([setCategories(), setSizes()]).finally(() => {
+        $('.category-item').on('click', function () {
+          const name = $(this).text()
+          const id = $(this).data('id')
+          const type = $(this).data('type')
+          if ($(this).hasClass('active')) {
+            $(this).removeClass('active')
+            $(`.selected-filters li[data-id="${id}"]`).remove()
+          } else {
+            $(this).addClass('active')
+            $('.selected-filters').append(`
                 <li class="category-item" data-id="${id}" data-type="${type}"><a>${name}</a></li>
               `)
-              $(`.selected-filters li[data-id="${id}"]`).on(
-                'click',
-                function () {
-                  $(this).remove()
-                  $(`.category-item[data-id="${id}"]`).removeClass('active')
-                  updateFilterQty()
-                }
-              )
-            }
-            updateFilterQty()
-          })
+            $(`.selected-filters li[data-id="${id}"]`).on('click', function () {
+              $(this).remove()
+              $(`.category-item[data-id="${id}"]`).removeClass('active')
+              updateFilterQty()
+            })
+          }
+          updateFilterQty()
         })
+
+        $('.price-list-js li').on('click', function () {
+          const name = $(this).text()
+          const id = $(this).data('id')
+          const type = $(this).data('type')
+          const value = $(this).data('value')
+          if ($(this).hasClass('active')) {
+            $(this).removeClass('active')
+            $(`.selected-filters li[data-id="${id}"]`).remove()
+          } else {
+            $('.price-list-js li').removeClass('active')
+            $('.selected-filters li[data-type="price"]').remove()
+            $(this).addClass('active')
+            $('.selected-filters').append(`
+                <li class="category-item" data-id="${id}" data-type="${type}" data-value="${value}"><a>${name}</a></li>
+              `)
+            $(`.selected-filters li[data-id="${id}"]`).on('click', function () {
+              $(this).remove()
+              $(`.category-item[data-id="${id}"]`).removeClass('active')
+              updateFilterQty()
+            })
+          }
+          updateFilterQty()
+        })
+
+        if (category) {
+          $(`.category-item[data-id="${category}"]`).trigger('click')
+        }
+      })
 
       const favorites = JSON.parse(localStorage.getItem('favorites') || '[]')
       http_setup

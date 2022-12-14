@@ -27,7 +27,6 @@ Route.group(() => {
       }).prefix('category')
 
       Route.group(() => {
-        Route.get('/', 'SizeController.index')
         Route.get('/:id', 'SizeController.show')
         Route.post('/', 'SizeController.create')
         Route.put('/:id', 'SizeController.update')
@@ -60,9 +59,8 @@ Route.group(() => {
     }).prefix('comment')
   }).middleware('jwt:accessToken')
 
-  Route.group(() => {
-    Route.get('/', 'CategoryController.index')
-  }).prefix('category')
+  Route.get('/category', 'CategoryController.index')
+  Route.get('/size', 'SizeController.index')
 }).prefix('api')
 
 Route.get('/admin', ({ response }) => {
