@@ -2655,7 +2655,7 @@ if (cartIcon) {
             }
             http_setup.get('category?all=true').then(({ data }) => {
               const categories = data.slice(0, 4).map(item => `<li><a href="category.html?category=${item._id}">${item.name}</a></li>`).join('')
-              const categoriesTab = data.slice(0, 6).map(item => `<h2 class="h3-style active"><a href="/category.html?category=${item._id}"><span class="title-tabs-text theme-font">${item.name}</span></a></h2>`).join('')
+              const categoriesTab = data.slice(0, 4).map(item => `<h2 class="h3-style active"><a href="/category.html?category=${item._id}"><span class="title-tabs-text theme-font">${item.name}</span></a></h2>`).join('')
               $(this.defaults.menu).append(categories);
               $('.title-tabs').append(categoriesTab)
             })
