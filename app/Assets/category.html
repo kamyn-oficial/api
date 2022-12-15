@@ -738,7 +738,7 @@
       <div class="footer-bottom footer-bottom--bg">
         <div class="container">
           <div class="footer-copyright text-center">
-            <a href="#">Kamyn</a> ©2022 copyright
+            <a href="/">Kamyn</a> ©2022 copyright
           </div>
         </div>
       </div>
@@ -788,13 +788,7 @@
                 </div>
               </div>
               <div class="btn-wrap">
-                <button
-                  class="btn js-prd-addtocart"
-                  data-fancybox
-                  data-src="#modalCheckOut"
-                >
-                  Adicionar ao carrinho
-                </button>
+                <button class="btn js-prd-buy">Comprar</button>
               </div>
             </div>
           </div>
@@ -908,9 +902,7 @@
                 </div>
               </div>
               <div class="btn-wrap">
-                <button class="btn js-prd-addtocart">
-                  Adicionar ao carrinho
-                </button>
+                <button class="btn js-prd-buy">Comprar</button>
               </div>
             </div>
           </div>
@@ -1162,11 +1154,14 @@
                         .join('')}
                     </div>
                     <div class="prd-tag">
-                    ${i.categories
-                      .map(
-                        c => `<a href="category.html?id=${c._id}">${c.name}</a>`
-                      )
-                      .join('')}
+                      ${i.categories
+                        .map(
+                          (c, index) =>
+                            `<a href="category.html?category=${c._id}">${
+                              index > 0 ? ' - ' : ''
+                            }${c.name}</a>`
+                        )
+                        .join('')}
                     </div>
                     <h2 class="prd-title">
                       <a href="product.html?id=${i._id}">${i.name}</a>
@@ -1187,14 +1182,13 @@
                     </div>
                     <div class="prd-action">
                       <div class="prd-action-left">
-                        <form action="#">
+                        <a href="product.html?id=${i._id}">
                           <button
-                            class="btn js-prd-addtocart"
-                            data-product='${JSON.stringify(i)}'
+                            class="btn"
                           >
-                            Adicionar ao carrinho
+                            Comprar
                           </button>
-                        </form>
+                        </a>
                       </div>
                     </div>
                   </div>

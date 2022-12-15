@@ -70,14 +70,13 @@ function fetchProductsDataTab({ per_page = 8, categories = '', sizes = '', price
                     ${i.description}
                   </div>
                   <div class="prd-action">
-                    <form action="#">
+                    <a href="product.html?id=${i._id}">
                       <button
-                        class="btn js-prd-addtocart"
-                        data-product='${JSON.stringify(i)}'
+                        class="btn"
                       >
-                        Adicionar ao carrinho
+                        Comprar
                       </button>
-                    </form>
+                    </a>
                   </div>
                 </div>
                 <div class="prd-hovers">
@@ -104,14 +103,13 @@ function fetchProductsDataTab({ per_page = 8, categories = '', sizes = '', price
                   </div>
                   <div class="prd-action">
                     <div class="prd-action-left">
-                      <form action="#">
+                      <a href="product.html?id=${i._id}">
                         <button
-                          class="btn js-prd-addtocart"
-                          data-product='${JSON.stringify(i)}'
+                          class="btn"
                         >
-                          Adicionar ao carrinho
+                          Comprar
                         </button>
-                      </form>
+                      </a>
                     </div>
                   </div>
                 </div>
