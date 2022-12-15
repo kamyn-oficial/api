@@ -707,5 +707,10 @@
     <script src="js/vendor-special/instafeed.min.js"></script>
     <script src="js/vendor/vendor.min.js"></script>
     <script src="js/app-html.js"></script>
+    <script>
+      http_setup.get('banner?all=true').then(({ data }) => {
+        console.log(data)
+      })
+    </script>
   </body>
 </html>

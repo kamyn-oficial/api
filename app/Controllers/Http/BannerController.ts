@@ -9,9 +9,13 @@ import type { BannerParams } from 'App/Types'
 export default class BannerController extends BaseController {
   public async index({ request, response }: HttpContextContract) {
     try {
-      const params = request.only(['page', 'per_page'])
+      const params = request.only(['page', 'per_page', 'all'])
       const page = Number(params.page || 1)
       const perPage = Number(params.per_page || 15)
+      if (params.all) {
+        const categories = await BannerRepository.findAll()
+        return response.json(categories)
+      }
       const pagination = await BannerRepository.getAll(page, perPage)
       return response.json(pagination)
     } catch (error) {

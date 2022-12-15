@@ -6,6 +6,10 @@ class BannerRepository {
     return new BannerModel(schema).save()
   }
 
+  public findAll() {
+    return BannerModel.find()
+  }
+
   public async getAll(current_page = 1, per_page = 15) {
     const skip = (current_page - 1) * per_page
     const data = await BannerModel.find().skip(skip).limit(per_page)
