@@ -45,7 +45,7 @@ export default class BannerController extends BaseController {
     } catch (error) {
       return this.responseSomethingWrong(response, error)
     }
-
+  }
 
   public async update({ request, response }: HttpContextContract) {
     try {
