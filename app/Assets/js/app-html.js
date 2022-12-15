@@ -3730,7 +3730,18 @@ if (cartIcon) {
           var that = this,
             $popup = $(that.defaults.popup);
           $(document).on('click', that.defaults.button, function (e) {
+            e.preventDefault();
+            const color = $($('.js-color-list li.active a')[0]).data('value')
+            const size = $($('.js-size-list li.active a')[0]).data('value')
+            if (!size) {
+              Toastify({
+                text: 'Selecione um tamanho'
+              }).showToast()
+              return
+            }
             var product_data = $(this).data('product');
+            product_data.color = color
+            product_data.size = size
             addToCart(product_data)
             if (!$popup.hasClass('closed')) {
               that.close();
@@ -3742,7 +3753,6 @@ if (cartIcon) {
               that.setData(product_data);
               that.open();
             }
-            e.preventDefault();
           });
           $(document).on('click', that.defaults.closePopup, function (e) {
             that.close();

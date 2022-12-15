@@ -573,7 +573,7 @@
                           data-index="option1"
                         ></select>
                         <ul
-                          class="images-list js-size-list"
+                          class="images-list js-color-list"
                           data-select-id="SingleOptionSelector-0"
                         ></ul>
                       </div>
@@ -1239,7 +1239,7 @@
             )
             .join('')
         )
-        $('.images-list').append(
+        $('.images-list.js-color-list').append(
           data.colors
             .map(
               (color, index) => `

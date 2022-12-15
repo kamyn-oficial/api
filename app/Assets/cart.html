@@ -597,6 +597,7 @@
     <script>
       function update() {
         const cart = JSON.parse(localStorage.getItem('cart') || '[]')
+        console.log(cart)
         $('.cart-table-prd').remove()
         const products = cart
           .map(i => {
@@ -608,7 +609,7 @@
             return `
         <div class="cart-table-prd">
                   <div class="cart-table-prd-image">
-                    <a href="product.html" class="prd-img"
+                    <a href="product.html?id=${i._id}" class="prd-img"
                       ><img
                         class="lazyload fade-up"
                         src="${image}"
