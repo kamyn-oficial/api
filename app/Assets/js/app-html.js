@@ -7772,9 +7772,11 @@ if (cartIcon) {
     productPage = $body.hasClass('template-product'),
     catalogPage = $body.hasClass('template-collection');
   setVH();
-  THEME.beforeReady.init();
-  THEME.documentReady.init();
-  if (!['/product.html', '/category.html'].includes(window.location.pathname)) $window.on('load', THEME.documentLoad.init);
-  $window.on('resize', THEME.documentResize.init);
+  if (!['/', '/index.html'].includes(window.location.pathname)) {
+    THEME.beforeReady.init();
+    THEME.documentReady.init()
+    if (!['/product.html', '/category.html'].includes(window.location.pathname)) $window.on('load', THEME.documentLoad.init);
+    $window.on('resize', THEME.documentResize.init);
+  }
 })(jQuery);
 
