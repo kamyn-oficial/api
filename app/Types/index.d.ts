@@ -23,6 +23,14 @@ export interface ProductSchema {
   createdAt?: Number
 }
 
+export interface BannerSchema {
+  photo: string
+  title: string
+  subtitle: string
+  button: string
+  link: string
+}
+
 export interface CategorySchema {
   name: string
 }
@@ -92,3 +100,5 @@ export type UpdateProductParams = ProductSchema
 export type UpdateCategoryParams = CategorySchema
 
 export type UpdateSizeParams = SizeSchema
+
+export type BannerParams = BannerSchema

@@ -7,7 +7,8 @@ import {
   UpdateProductParams,
   UpdateCategoryParams,
   UpdateSizeParams,
-  CreateCommentParams
+  CreateCommentParams,
+  BannerParams
 } from 'App/Types'
 
 class JoiSchemas {
@@ -170,6 +171,16 @@ class JoiSchemas {
   public get updateSize() {
     return Joi.object<UpdateSizeParams>({
       name: Joi.string().required()
+    })
+  }
+
+  public get createOrUpdateBanner() {
+    return Joi.object<BannerParams>({
+      photo: Joi.string().required(),
+      title: Joi.string().required(),
+      subtitle: Joi.string().required(),
+      button: Joi.string().required(),
+      link: Joi.string().required()
     })
   }
 }

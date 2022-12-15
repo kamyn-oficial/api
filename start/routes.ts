@@ -14,6 +14,13 @@ Route.group(() => {
   Route.group(() => {
     Route.group(() => {
       Route.group(() => {
+        Route.get('/', 'BannerController.index')
+        Route.post('/', 'BannerController.store')
+        Route.put('/:id', 'BannerController.update')
+        Route.delete('/:id', 'BannerController.delete')
+      }).prefix('banner')
+
+      Route.group(() => {
         Route.post('/', 'ProductController.store')
         Route.put('/:id', 'ProductController.update')
         Route.delete('/:id', 'ProductController.delete')

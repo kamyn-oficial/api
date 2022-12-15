@@ -1,20 +1,18 @@
-import Hash from '@ioc:Adonis/Core/Hash'
-
 import BaseController from './BaseController'
-import UserRepository from 'App/Repositories/UserRepository'
 import JoiValidateService from 'App/Services/JoiValidateService'
 import JoiSchemas from 'App/JoiSchemas'
+import BannerRepository from 'App/Repositories/BannerRepository'
 
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import type { CreateUserParams, UpdateUserParams } from 'App/Types'
+import type { BannerParams } from 'App/Types'
 
-export default class UserController extends BaseController {
+export default class BannerController extends BaseController {
   public async index({ request, response }: HttpContextContract) {
     try {
       const params = request.only(['page', 'per_page'])
       const page = Number(params.page || 1)
       const perPage = Number(params.per_page || 15)
-      const pagination = await UserRepository.getAll(page, perPage)
+      const pagination = await BannerRepository.getAll(page, perPage)
       return response.json(pagination)
     } catch (error) {
       return this.responseSomethingWrong(response, error)
@@ -23,55 +21,47 @@ export default class UserController extends BaseController {
 
   public async store({ request, response }: HttpContextContract) {
     try {
-      const data: CreateUserParams = request.only([
-        'name',
-        'email',
-        'password',
-        'phone',
-        'isAdm'
+      const data: BannerParams = request.only([
+        'photo',
+        'title',
+        'subtitle',
+        'button',
+        'link'
       ])
 
-      const errors = JoiValidateService.validate(JoiSchemas.createUser, data)
+      const errors = JoiValidateService.validate(
+        JoiSchemas.createOrUpdateBanner,
+        data
+      )
       if (errors.length) return this.responseRequestError(response, errors)
 
-      const passwordHash = await Hash.make(data.password)
-
-      const dto = {
-        ...data,
-        passwordHash
-      }
-
-      await UserRepository.create(dto)
+      await BannerRepository.create(data)
 
       return response.safeStatus(200)
     } catch (error) {
       return this.responseSomethingWrong(response, error)
     }
-  }
+
 
   public async update({ request, response }: HttpContextContract) {
     try {
       const id = decodeURI(request.params().id)
-      const data: UpdateUserParams = request.only([
-        'name',
-        'email',
-        'password',
-        'phone',
-        'isAdm'
+
+      const data: BannerParams = request.only([
+        'photo',
+        'title',
+        'subtitle',
+        'button',
+        'link'
       ])
 
-      const errors = JoiValidateService.validate(JoiSchemas.updateUser, data)
+      const errors = JoiValidateService.validate(
+        JoiSchemas.createOrUpdateBanner,
+        data
+      )
       if (errors.length) return this.responseRequestError(response, errors)
 
-      const passwordHash = await Hash.make(data.password)
-
-      const dto = {
-        ...data,
-        passwordHash
-      }
-
-      const userDB = await UserRepository.updateById(id, dto)
-      if (!userDB) return response.safeStatus(404)
+      await BannerRepository.updateById(id, data)
 
       return response.safeStatus(200)
     } catch (error) {
@@ -83,8 +73,7 @@ export default class UserController extends BaseController {
     try {
       const id = decodeURI(request.params().id)
 
-      const userDB = await UserRepository.deleteById(id)
-      if (!userDB) return response.safeStatus(404)
+      await BannerRepository.deleteById(id)
 
       return response.safeStatus(200)
     } catch (error) {
