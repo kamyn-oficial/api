@@ -8,13 +8,13 @@ Route.group(() => {
   Route.post('login', 'AuthController.login')
   Route.get('logout', 'AuthController.logout')
   Route.get('products', 'ProductController.index')
+  Route.get('banner', 'BannerController.index')
   Route.get('product/:id', 'ProductController.show')
   Route.get('fy', 'ProductController.fy')
 
   Route.group(() => {
     Route.group(() => {
       Route.group(() => {
-        Route.get('/', 'BannerController.index')
         Route.post('/', 'BannerController.store')
         Route.put('/:id', 'BannerController.update')
         Route.delete('/:id', 'BannerController.delete')

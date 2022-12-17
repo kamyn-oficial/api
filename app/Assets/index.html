@@ -676,6 +676,7 @@
         })
         .finally(() => {
           THEME.beforeReady.init()
+          THEME.documentLoad.init()
           THEME.documentReady.init()
           $(window).on('load', THEME.documentLoad.init)
           $(window).on('resize', THEME.documentResize.init)
