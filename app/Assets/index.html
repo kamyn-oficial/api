@@ -300,7 +300,10 @@
     <!--//header-->
     <div class="page-content">
       <!-- Main Slider -->
-      <div class="holder fullwidth full-nopad mt-0">
+      <div
+        id="banner-container"
+        class="holder fullwidth full-nopad mt-0 d-none"
+      >
         <div class="container">
           <div class="bnslider-wrapper">
             <div
@@ -616,6 +619,7 @@
       http_setup
         .get('banner?all=true')
         .then(({ data }) => {
+          if (data.length > 0) $('#banner-container').removeClass('d-none')
           $('#bnslider-001').html(
             data.map(
               b => `
