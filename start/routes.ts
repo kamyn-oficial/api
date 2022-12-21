@@ -8,6 +8,7 @@ Route.group(() => {
   Route.post('login', 'AuthController.login')
   Route.get('logout', 'AuthController.logout')
   Route.get('products', 'ProductController.index')
+  Route.get('comments', 'CommentController.allUserLogged')
   Route.get('banner', 'BannerController.index')
   Route.get('product/:id', 'ProductController.show')
   Route.get('fy', 'ProductController.fy')

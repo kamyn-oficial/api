@@ -10,6 +10,32 @@ import type { CreateCommentParams } from 'App/Types'
 import UserRepository from 'App/Repositories/UserRepository'
 
 export default class CommentController extends BaseController {
+  public async index({ request, response }: HttpContextContract) {
+    try {
+      const params = request.only(['page', 'per_page', 'all'])
+      const page = Number(params.page || 1)
+      const perPage = Number(params.per_page || 15)
+      if (params.all) {
+        const categories = await CommentRepository.findAll()
+        return response.json(categories)
+      }
+      const pagination = await CommentRepository.getAll(page, perPage)
+      return response.json(pagination)
+    } catch (error) {
+      return this.responseSomethingWrong(response, error)
+    }
+  }
+
+  public async allUserLogged({ request, response }: HttpContextContract) {
+    try {
+      const userId = await this.getUserId(request)
+      const categories = await CommentRepository.findAll(userId)
+      return response.json(categories)
+    } catch (error) {
+      return this.responseSomethingWrong(response, error)
+    }
+  }
+
   public async store({ request, response }: HttpContextContract) {
     try {
       const user = await this.getUser(request)

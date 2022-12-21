@@ -7663,8 +7663,12 @@ if (cartIcon) {
   };
   THEME.documentLoad = {
     init: function init() {
-      if (localStorage.getItem('accessToken')) $('.not-logged-links').hide()
-      else $('.logged-links').hide()
+      if (localStorage.getItem('accessToken')) {
+        $('.not-logged-links').hide()
+      }
+      else {
+        $('.logged-links').hide()
+      }
 
       $('.logout-btn').on('click', () => {
         localStorage.removeItem('accessToken')
