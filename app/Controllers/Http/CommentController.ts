@@ -16,8 +16,8 @@ export default class CommentController extends BaseController {
       const page = Number(params.page || 1)
       const perPage = Number(params.per_page || 15)
       if (params.all) {
-        const categories = await CommentRepository.findAll()
-        return response.json(categories)
+        const comments = await CommentRepository.findAll()
+        return response.json(comments)
       }
       const pagination = await CommentRepository.getAll(page, perPage)
       return response.json(pagination)
@@ -29,8 +29,8 @@ export default class CommentController extends BaseController {
   public async allUserLogged({ request, response }: HttpContextContract) {
     try {
       const userId = await this.getUserId(request)
-      const categories = await CommentRepository.findAll(userId)
-      return response.json(categories)
+      const comments = await CommentRepository.findAll(userId)
+      return response.json(comments)
     } catch (error) {
       return this.responseSomethingWrong(response, error)
     }

@@ -3,7 +3,9 @@ import type { CommentSchema } from 'App/Types'
 
 class CategoryRepository {
   public findAll(userId?: string) {
-    return CommentModel.find({ userId })
+    return CommentModel.find(
+      userId ? { user: userId } : (undefined as any)
+    ).populate('product')
   }
 
   public async getAll(current_page = 1, per_page = 15) {
