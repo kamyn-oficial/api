@@ -69,7 +69,15 @@ export default class CommentController extends BaseController {
 
   public async delete({ request, response }: HttpContextContract) {
     try {
+      const user = await this.getUser(request)
+      if (!user) return response.status(401)
+
       const id = decodeURI(request.params().id)
+
+      const comment = await CommentRepository.findById(id)
+      if (!comment) return response.status(404)
+      if (String(comment.user) !== String(user._id) && !user.isAdm)
+        return response.status(401)
 
       await CommentRepository.deleteById(id)
 

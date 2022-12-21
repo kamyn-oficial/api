@@ -47,6 +47,10 @@ Route.group(() => {
         Route.put('/:id', 'UserController.update')
         Route.delete('/:id', 'UserController.delete')
       }).prefix('user')
+
+      Route.group(() => {
+        Route.get('/', 'CommentController.index')
+      }).prefix('comment')
     }).middleware('permission:isAdm')
 
     Route.group(() => {

@@ -623,9 +623,7 @@
                 <td>${i.text}</td>
                 <td style="text-align: start">${new Date(
                   i.createdAt
-                ).toLocaleDateString()} às ${new Date(
-                  i.createdAt
-                ).toLocaleTimeString()}</td>
+                ).toLocaleString()}</td>
                 <td style="text-align: center">
                   <button
                     data-id="${i._id}"
@@ -642,13 +640,16 @@
           )
 
           $('.delete-btn').on('click', function () {
-            const id = $(this).data('id')
-            http_setup.delete(`comment/${id}`).then(() => {
-              Toastify({
-                text: 'Comentário deletado com sucesso'
-              }).showToast()
-              fetchComments()
-            })
+            const isDelete = confirm('Tem certeza que deseja deletar?')
+            if (isDelete) {
+              const id = $(this).data('id')
+              http_setup.delete(`comment/${id}`).then(() => {
+                Toastify({
+                  text: 'Comentário deletado com sucesso'
+                }).showToast()
+                fetchComments()
+              })
+            }
           })
         })
       }

@@ -121,7 +121,8 @@ export default class AddressController extends BaseController {
 
       const address = await AddressRepository.findById(id)
       if (!address) return response.status(404)
-      if (address.userId !== user.id && !user.isAdm) return response.status(401)
+      if (String(address.userId) !== String(user._id) && !user.isAdm)
+        return response.status(401)
 
       await AddressRepository.deleteById(id)
 
