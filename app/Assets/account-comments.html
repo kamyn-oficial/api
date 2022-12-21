@@ -14,10 +14,15 @@
     <!-- Vendor CSS -->
     <link href="css/vendor/bootstrap.min.css" rel="stylesheet" />
     <link href="css/vendor/vendor.min.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
+    />
     <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet" />
     <!-- Custom font -->
     <link href="fonts/icomoon/icons.css" rel="stylesheet" />
+    <link href="js/vendor-special/toastify.min.css" rel="stylesheet" />
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
       rel="stylesheet"
@@ -338,6 +343,7 @@
                       <th scope="col">Título</th>
                       <th scope="col">Texto</th>
                       <th scope="col">Enviado em</th>
+                      <th scope="col"></th>
                     </tr>
                   </thead>
                   <tbody id="table-body"></tbody>
@@ -598,12 +604,14 @@
     <script src="js/vendor-special/instafeed.min.js"></script>
     <script src="js/vendor/vendor.min.js"></script>
     <script src="js/app-html.js"></script>
+    <script src="js/vendor-special/toastify.min.js"></script>
     <script>
-      http_setup.get('comments').then(({ data }) => {
-        $('#table-body').html(
-          data
-            .map(
-              i => `
+      function fetchComments() {
+        http_setup.get('comments').then(({ data }) => {
+          $('#table-body').html(
+            data
+              .map(
+                i => `
               <tr>
                 <td>
                   <a href="product.html?id=${i._id}" class="ml-1">
@@ -616,14 +624,36 @@
                 <td style="text-align: start">${new Date(
                   i.createdAt
                 ).toLocaleDateString()} às ${new Date(
-                i.createdAt
-              ).toLocaleTimeString()}</td>
+                  i.createdAt
+                ).toLocaleTimeString()}</td>
+                <td style="text-align: center">
+                  <button
+                    data-id="${i._id}"
+                    style="padding: 10px"
+                    class="btn delete-btn"
+                  >
+                    <i style="font-size: 20px" class="uil uil-trash-alt"></i>
+                  </button>
+                </td>
               </tr>
           `
-            )
-            .join('')
-        )
-      })
+              )
+              .join('')
+          )
+
+          $('.delete-btn').on('click', function () {
+            const id = $(this).data('id')
+            http_setup.delete(`comment/${id}`).then(() => {
+              Toastify({
+                text: 'Comentário deletado com sucesso'
+              }).showToast()
+              fetchComments()
+            })
+          })
+        })
+      }
+
+      fetchComments()
     </script>
   </body>
 </html>
