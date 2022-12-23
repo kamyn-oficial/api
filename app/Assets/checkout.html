@@ -309,70 +309,8 @@
           <div class="row">
             <div class="col-md-9">
               <div class="card">
-                <div class="card-body">
+                <div class="card-body address-select">
                   <h2>Endereço de entrega</h2>
-                  <div class="row mt-2">
-                    <div class="col-sm-9">
-                      <label>Primeiro nome:</label>
-                      <div class="form-group">
-                        <input
-                          type="text"
-                          class="form-control form-control--sm"
-                        />
-                      </div>
-                    </div>
-                    <div class="col-sm-9">
-                      <label>Segundo nome:</label>
-                      <div class="form-group">
-                        <input
-                          type="text"
-                          class="form-control form-control--sm"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-9">
-                      <label>Estado:</label>
-                      <div class="form-group select-wrapper">
-                        <select class="form-control form-control--sm">
-                          <option value="AL">Alabama</option>
-                          <option value="AK">Alaska</option>
-                          <option value="AZ">Arizona</option>
-                          <option value="AR">Arkansas</option>
-                          <option value="CA">California</option>
-                          <option value="CO">Colorado</option>
-                          <option value="CT">Connecticut</option>
-                          <option value="DE">Delaware</option>
-                          <option value="DC">District Of Columbia</option>
-                          <option value="FL">Florida</option>
-                          <option value="GA">Georgia</option>
-                          <option value="HI">Hawaii</option>
-                          <option value="ID">Idaho</option>
-                          <option value="IL">Illinois</option>
-                          <option value="IN">Indiana</option>
-                          <option value="IA">Iowa</option>
-                          <option value="KS">Kansas</option>
-                          <option value="KY">Kentucky</option>
-                          <option value="LA">Louisiana</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="col-sm-9">
-                      <label>CEP:</label>
-                      <div class="form-group">
-                        <input
-                          type="text"
-                          class="form-control form-control--sm"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="mt-2"></div>
-                  <label>Endereço:</label>
-                  <div class="form-group">
-                    <input type="text" class="form-control form-control--sm" />
-                  </div>
                 </div>
               </div>
               <div class="mt-2"></div>
@@ -397,35 +335,10 @@
                       name="radio1"
                       type="radio"
                       class="radio"
+                      checked
                     />
                     <label for="formcheckoutRadio2">
-                      GFL R$ 29,57 (12-20 dias)
-                    </label>
-                  </div>
-                  <div class="clearfix">
-                    <input
-                      id="formcheckoutRadio1"
-                      value=""
-                      name="radio1"
-                      type="radio"
-                      class="radio"
-                      checked="checked"
-                    />
-                    <label for="formcheckoutRadio1">
-                      Correios R$ 32,00 (14-20 dias)
-                    </label>
-                  </div>
-                  <div class="clearfix">
-                    <input
-                      id="formcheckoutRadio1"
-                      value=""
-                      name="radio1"
-                      type="radio"
-                      class="radio"
-                      checked="checked"
-                    />
-                    <label for="formcheckoutRadio1">
-                      SEDEX R$ 56,34 (10-14 dias)
+                      Transportadora R$ 30,00 (15-25 dias)
                     </label>
                   </div>
                 </div>
@@ -436,91 +349,95 @@
                   <h2>Método de pagamento</h2>
                   <div class="clearfix">
                     <input
-                      id="formcheckoutRadio4"
-                      value=""
-                      name="radio2"
+                      id="payment-method-pix"
+                      value="pix"
+                      name="payment_method"
                       type="radio"
                       class="radio"
-                      checked="checked"
                     />
-                    <label for="formcheckoutRadio4">Crédito</label>
+                    <label for="payment-method-pix">Pix</label>
                   </div>
                   <div class="clearfix">
                     <input
-                      id="formcheckoutRadio5"
-                      value=""
-                      name="radio2"
+                      id="payment-method-boleto"
+                      value="boleto"
+                      name="payment_method"
                       type="radio"
                       class="radio"
                     />
-                    <label for="formcheckoutRadio5">Débito</label>
+                    <label for="payment-method-boleto">Boleto</label>
                   </div>
                   <div class="clearfix">
                     <input
-                      id="formcheckoutRadio5"
-                      value=""
-                      name="radio2"
+                      id="payment-method-credit_card"
+                      value="credit_card"
+                      name="payment_method"
                       type="radio"
                       class="radio"
                     />
-                    <label for="formcheckoutRadio5">Pix</label>
+                    <label for="payment-method-credit_card">Crédito</label>
                   </div>
                   <div class="clearfix">
                     <input
-                      id="formcheckoutRadio5"
-                      value=""
-                      name="radio2"
+                      id="payment-method-debit"
+                      value="debit"
+                      name="payment_method"
                       type="radio"
                       class="radio"
                     />
-                    <label for="formcheckoutRadio5">Boleto</label>
+                    <label for="payment-method-debit">Débito</label>
                   </div>
-                  <div class="mt-2"></div>
-                  <label>Número do cartão</label>
-                  <div class="form-group">
-                    <input type="text" class="form-control form-control--sm" />
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-9">
-                      <label>Mês:</label>
-                      <div class="form-group select-wrapper">
-                        <select class="form-control form-control--sm">
-                          <option selected value="1">Janeiro</option>
-                          <option value="2">Fevereiro</option>
-                          <option value="3">Março</option>
-                          <option value="4">Abril</option>
-                          <option value="5">Maio</option>
-                          <option value="6">Junho</option>
-                          <option value="7">Julho</option>
-                          <option value="8">Agosto</option>
-                          <option value="9">Setembro</option>
-                          <option value="10">Outubro</option>
-                          <option value="11">Novembro</option>
-                          <option value="12">Dezembro</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="col-sm-9">
-                      <label>Ano:</label>
-                      <div class="form-group select-wrapper">
-                        <select class="form-control form-control--sm">
-                          <option value="2019">2019</option>
-                          <option value="2020">2020</option>
-                          <option value="2021">2021</option>
-                          <option value="2022">2022</option>
-                          <option value="2023">2023</option>
-                          <option value="2024">2024</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="mt-2">
-                    <label>CVV</label>
+                  <div class="card-form d-none">
+                    <div class="mt-2"></div>
+                    <label>Número do cartão</label>
                     <div class="form-group">
                       <input
                         type="text"
                         class="form-control form-control--sm"
                       />
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-9">
+                        <label>Mês:</label>
+                        <div class="form-group select-wrapper">
+                          <select class="form-control form-control--sm">
+                            <option selected value="1">Janeiro</option>
+                            <option value="2">Fevereiro</option>
+                            <option value="3">Março</option>
+                            <option value="4">Abril</option>
+                            <option value="5">Maio</option>
+                            <option value="6">Junho</option>
+                            <option value="7">Julho</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Setembro</option>
+                            <option value="10">Outubro</option>
+                            <option value="11">Novembro</option>
+                            <option value="12">Dezembro</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-sm-9">
+                        <label>Ano:</label>
+                        <div class="form-group select-wrapper">
+                          <select class="form-control form-control--sm">
+                            <option value="2019">2019</option>
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="mt-2">
+                      <label>CVV</label>
+                      <div class="form-group">
+                        <input
+                          type="text"
+                          class="form-control form-control--sm"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -542,66 +459,7 @@
                       Quantidade
                     </div>
                     <div class="cart-table-prd-price">Preço</div>
-                  </div>
-                </div>
-                <div class="cart-table-prd">
-                  <div class="cart-table-prd-image">
-                    <a href="#" class="prd-img"
-                      ><img
-                        class="lazyload fade-up"
-                        src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                        data-src="images/skins/fashion/products/product-01-1.jpg"
-                        alt=""
-                    /></a>
-                  </div>
-                  <div class="cart-table-prd-content-wrap">
-                    <div class="cart-table-prd-info">
-                      <h2 class="cart-table-prd-name">
-                        <a href="product.html">Camiseta básica</a>
-                      </h2>
-                    </div>
-                    <div class="cart-table-prd-qty">
-                      <div class="qty qty-changer">
-                        <input
-                          type="text"
-                          class="qty-input disabled"
-                          value="1"
-                          data-min="0"
-                          data-max="1000"
-                        />
-                      </div>
-                    </div>
-                    <div class="cart-table-prd-price-total">R$ 112,00</div>
-                  </div>
-                </div>
-                <div class="cart-table-prd">
-                  <div class="cart-table-prd-image">
-                    <a href="#" class="prd-img"
-                      ><img
-                        class="lazyload fade-up"
-                        src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                        data-src="images/skins/fashion/products/product-16-1.jpg"
-                        alt=""
-                    /></a>
-                  </div>
-                  <div class="cart-table-prd-content-wrap">
-                    <div class="cart-table-prd-info">
-                      <h2 class="cart-table-prd-name">
-                        <a href="product.html">Camiseta básica</a>
-                      </h2>
-                    </div>
-                    <div class="cart-table-prd-qty">
-                      <div class="qty qty-changer">
-                        <input
-                          type="text"
-                          class="qty-input disabled"
-                          value="1"
-                          data-min="0"
-                          data-max="1000"
-                        />
-                      </div>
-                    </div>
-                    <div class="cart-table-prd-price-total">R$ 124,00</div>
+                    <div class="cart-table-prd-price">Total</div>
                   </div>
                 </div>
               </div>
@@ -610,10 +468,12 @@
               <div class="mt-2"></div>
               <div class="cart-total-sm">
                 <span>Total</span>
-                <span class="card-total-price">R$ 236,00</span>
+                <span class="card-total-price"></span>
               </div>
               <div class="clearfix mt-2">
-                <button type="submit" class="btn btn--lg w-100">Comprar</button>
+                <button id="submit-btn" class="btn btn--lg w-100">
+                  Comprar
+                </button>
               </div>
             </div>
           </div>
@@ -1042,5 +902,114 @@
     <script src="js/vendor-special/instafeed.min.js"></script>
     <script src="js/vendor/vendor.min.js"></script>
     <script src="js/app-html.js"></script>
+    <script>
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]')
+      $('.card-total-price').html(
+        formatBRL(
+          cart.reduce(
+            (a, b) =>
+              a +
+              (b.promotion
+                ? b.price - b.price * (b.promotion / 100)
+                : b.price) *
+                b.count,
+            0
+          )
+        )
+      )
+      $('.cart-table').append(
+        cart
+          .map(i => {
+            const image =
+              i.photos[0] || 'images/skins/fashion/products/product-04-1.jpg'
+            const price = i.promotion
+              ? i.price - i.price * (i.promotion / 100)
+              : i.price
+
+            return `
+                <div class="cart-table-prd">
+                  <div class="cart-table-prd-image">
+                    <a href="#" class="prd-img"
+                      ><img
+                        class="lazyload fade-up"
+                        src="${image}"
+                        alt=""
+                    /></a>
+                  </div>
+                  <div class="cart-table-prd-content-wrap">
+                    <div class="cart-table-prd-info">
+                      <h2 class="cart-table-prd-name">
+                        <a href="product.html">${i.name}</a>
+                      </h2>
+                    </div>
+                    <div class="cart-table-prd-qty">
+                      <div class="qty qty-changer">
+                        <input
+                          type="text"
+                          class="qty-input disabled"
+                          value="${i.count}"
+                          disabled
+                        />
+                      </div>
+                    </div>
+                    <div class="cart-table-prd-price">${formatBRL(price)}</div>
+                    <div class="cart-table-prd-price-total">${formatBRL(
+                      price * i.count
+                    )}</div>
+                  </div>
+                </div>
+              `
+          })
+          .join('')
+      )
+
+      http_setup.get('address').then(({ data }) => {
+        const itemsHTML = data
+          .map(i => {
+            return `
+          <div class="clearfix">
+            <input
+              id="select-address-${i._id}"
+              value="${i._id}"
+              name="select-address"
+              type="radio"
+              class="radio"
+              required
+              ${i.isDefault ? 'checked' : ''}
+            />
+            <label for="select-address-${i._id}"> ${i.name} </label>
+          </div>
+          `
+          })
+          .join('')
+        $('.address-select').append(`
+          ${itemsHTML}
+          <div class="clearfix mt-2">
+            <button type="button" class="btn w-50 add-address">
+              Meus endereços
+            </button>
+          </div>
+          `)
+        $('.add-address').click(() => {
+          window.location.href = '/account-addresses.html'
+        })
+      })
+
+      $('input[name="payment_method"]').val(['pix'])
+
+      $('input[name="payment_method"]').on('change', function () {
+        const value = $(this).val()
+
+        if (['credit_card', 'debit'].includes(value)) {
+          $('.card-form').removeClass('d-none')
+        } else {
+          $('.card-form').addClass('d-none')
+        }
+      })
+
+      $('#submit-btn').on('click', () => {
+        alert('a')
+      })
+    </script>
   </body>
 </html>

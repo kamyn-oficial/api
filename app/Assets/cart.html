@@ -607,7 +607,6 @@
     <script>
       function update() {
         const cart = JSON.parse(localStorage.getItem('cart') || '[]')
-        console.log(cart)
         $('.cart-table-prd').remove()
         const products = cart
           .map(i => {

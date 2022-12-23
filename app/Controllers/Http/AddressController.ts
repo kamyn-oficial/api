@@ -20,7 +20,7 @@ export default class AddressController extends BaseController {
     }
   }
 
-  public async create({ request, response }: HttpContextContract) {
+  public async store({ request, response }: HttpContextContract) {
     try {
       const userId = await this.getUserId(request)
 

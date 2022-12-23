@@ -355,7 +355,7 @@
                   </svg>
                 </a>
               </h1>
-              <div class="row" id="addresses"></div>
+              <div class="row" style="gap: 10px" id="addresses"></div>
               <form class="card mt-3 d-none" id="updateAddress">
                 <div
                   class="card-body"
@@ -875,6 +875,7 @@
           Toastify({
             text: 'Endereço adicionado com sucesso!'
           }).showToast()
+          quantity++
         }
 
         editingID = ''
