@@ -12,6 +12,7 @@
   "devDependencies": {
     "@adonisjs/assembler": "^5.0.0",
     "@types/jsonwebtoken": "^8.5.4",
+    "@types/mercadopago": "^1.5.8",
     "@types/nodemailer": "^6.4.4",
     "@types/uuid": "^8.3.1",
     "adonis-preset-ts": "^2.1.0",
@@ -33,6 +34,7 @@
     "edge.js": "^5.3.1",
     "joi": "^17.4.0",
     "jsonwebtoken": "^8.5.1",
+    "mercadopago": "^1.5.14",
     "mongoose": "^5.13.8",
     "nodemailer": "^6.6.3",
     "nodemailer-juice": "^1.0.1",

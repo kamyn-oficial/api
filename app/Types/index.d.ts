@@ -10,6 +10,22 @@ export interface UserSchema {
   createdAt?: Number
 }
 
+export interface OrderSchema {
+  user: any
+  address: any
+  comment?: string
+  status: string
+  products: {
+    product: any
+    count: number
+    size: string
+    color: string
+  }
+  paymentMethod: string
+  paymentUrl?: string
+  createdAt?: Number
+}
+
 export interface ProductSchema {
   name: string
   price: number

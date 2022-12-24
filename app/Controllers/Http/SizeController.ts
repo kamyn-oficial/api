@@ -36,7 +36,7 @@ export default class SizeController extends BaseController {
     }
   }
 
-  public async create({ request, response }: HttpContextContract) {
+  public async store({ request, response }: HttpContextContract) {
     try {
       const data: UpdateSizeParams = request.only(['name'])
 

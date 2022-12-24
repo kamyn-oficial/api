@@ -2,6 +2,7 @@ import Env from '@ioc:Adonis/Core/Env'
 
 import JwtService from 'App/Services/JwtService'
 import UserRepository from 'App/Repositories/UserRepository'
+import mp from 'mercadopago'
 
 import type { ResponseContract } from '@ioc:Adonis/Core/Response'
 import type { RequestContract } from '@ioc:Adonis/Core/Request'
@@ -10,6 +11,12 @@ import type { JoiError } from 'App/Types'
 export default class BaseController {
   protected APP_FRONT_URL = Env.get('APP_FRONT_URL')
   protected APP_API_URL = Env.get('APP_API_URL')
+  protected MP_TOKEN = Env.get('MP_TOKEN')
+  protected MP = mp
+
+  constructor() {
+    this.MP.configurations.setAccessToken(this.MP_TOKEN)
+  }
 
   protected responseSomethingWrong(response: ResponseContract, error: any) {
     console.error(error)

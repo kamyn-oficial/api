@@ -11,10 +11,6 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import type { RegisterParams, UpdateMeUserParams } from 'App/Types'
 
 export default class AuthController extends BaseController {
-  public ping({ response }: HttpContextContract) {
-    return response.status(200)
-  }
-
   public async register({ request, response }: HttpContextContract) {
     try {
       const data: RegisterParams = request.only([

@@ -1288,7 +1288,7 @@
           data.sizes.map(
             size => `
             <li>
-              <a href="#" data-value="${size._id}">
+              <a href="#" data-value="${size._id}" data-name="${size.name}">
                 <span class="value">${size.name}</span>
               </a>
             </li>
@@ -1409,14 +1409,13 @@
                     </div>
                     <div class="prd-action">
                       <div class="prd-action-left">
-                        <form action="#">
-                          <button
-                            class="btn js-prd-addtocart"
-                            data-product='${JSON.stringify(i)}'
-                          >
-                            Adicionar ao carrinho
-                          </button>
-                        </form>
+                        <a href="product.html?id=${i._id}">
+                      <button
+                        class="btn"
+                      >
+                        Comprar
+                      </button>
+                    </a>
                       </div>
                     </div>
                   </div>

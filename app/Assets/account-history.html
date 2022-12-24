@@ -30,6 +30,19 @@
       type="text/javascript"
       src="js/vendor-special/axios.min.js"
     ></script>
+    <style>
+      .modal-info-heading p {
+        padding: 6px;
+        font-weight: 500;
+        margin: 0;
+      }
+      .modal-info-heading p strong {
+        color: #eb3240;
+      }
+      .modal-info-heading p:nth-of-type(2n) {
+        background-color: #f4f4f4;
+      }
+    </style>
   </head>
   <body class="has-smround-btns has-loader-bg equal-height has-sm-container">
     <!--header-->
@@ -333,85 +346,19 @@
                 >
                   <thead>
                     <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">ouder Number</th>
-                      <th scope="col">ouder Date</th>
+                      <th scope="col">Feito em</th>
                       <th scope="col">Status</th>
-                      <th scope="col">Total Price</th>
+                      <th scope="col">Preço total</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>
-                        <b>175525</b>
-                        <a href="cart.html" class="ml-1">View Details</a>
-                      </td>
-                      <td>01.02.2017</td>
-                      <td>Shipped</td>
-                      <td><span class="color">$1252.00</span></td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>
-                        <b>189067</b>
-                        <a href="cart.html" class="ml-1">View Details</a>
-                      </td>
-                      <td>12.02.2017</td>
-                      <td>Shipped</td>
-                      <td><span class="color">$367.00</span></td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>
-                        <b>186543</b>
-                        <a href="cart.html" class="ml-1">View Details</a>
-                      </td>
-                      <td>03.04.2017</td>
-                      <td>Shipped</td>
-                      <td><span class="color">$587.00</span></td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td>
-                        <b>209876</b>
-                        <a href="cart.html" class="ml-1">View Details</a>
-                      </td>
-                      <td>05.06.2017</td>
-                      <td>Shipped</td>
-                      <td><span class="color">$3654.00</span></td>
-                    </tr>
-                    <tr>
-                      <td>5</td>
-                      <td>
-                        <b>215879</b>
-                        <a href="cart.html" class="ml-1">View Details</a>
-                      </td>
-                      <td>06.07.2017</td>
-                      <td>Shipped</td>
-                      <td><span class="color">$258.00</span></td>
-                    </tr>
-                    <tr>
-                      <td>6</td>
-                      <td>
-                        <b>229876</b>
-                        <a href="cart.html" class="ml-1">View Details</a>
-                      </td>
-                      <td>12.08.2017</td>
-                      <td>Shipped</td>
-                      <td><span class="color">$314.00</span></td>
-                    </tr>
-                    <tr>
-                      <td>7</td>
-                      <td>
-                        <b>268745</b>
-                        <a href="cart.html" class="ml-1">View Details</a>
-                      </td>
-                      <td>01.09.2017</td>
-                      <td>Shipped</td>
-                      <td><span class="color">$522.00</span></td>
-                    </tr>
-                  </tbody>
+                  <tbody class="table-body"></tbody>
+                  <div
+                    id="details"
+                    style="display: none"
+                    class="modal-info-content modal-info-content-lg"
+                  >
+                    <div class="modal-info-heading"></div>
+                  </div>
                 </table>
               </div>
             </div>
@@ -669,5 +616,101 @@
     <script src="js/vendor-special/instafeed.min.js"></script>
     <script src="js/vendor/vendor.min.js"></script>
     <script src="js/app-html.js"></script>
+    <script>
+      http_setup.get('order/my').then(({ data }) => {
+        const getPaymentMethod = m => {
+          if (m === 'credit_card') return 'Cartão de crédito'
+          if (m === 'debit_card') return 'Cartão de crédito'
+          if (m === 'boleto') return 'Boleto'
+          if (m === 'pix') return 'Pix'
+          return 'Não definido'
+        }
+        const getStatus = m => {
+          if (m === 'created') return 'Aguardando pagamento'
+          if (m === 'invoiced') return 'Pago'
+          if (m === 'shipped') return 'Em transporte'
+          if (m === 'delivered') return 'Entregue'
+          if (m === 'canceled') return 'Cancelado'
+          return 'Não definido'
+        }
+        $('.table-body').html(
+          data
+            .map(i => {
+              const total = i.products.reduce(
+                (a, b) => a + b.price * b.count || 0,
+                0
+              )
+              return `
+          <tr>
+            <td>${new Date(i.createdAt).toLocaleString()} <a
+                data-fancybox
+                class="modal-info-link ml-1"
+                data-order='${JSON.stringify({ ...i })}''
+                data-src="#details">Ver detalhes</a></td>
+            <td>${getStatus(i.status)} ${
+                i.status === 'created'
+                  ? `
+              <a
+                href="${i.paymentUrl}"
+                target="_blank"
+                class="ml-1"
+                >Pagar agora</a>
+              `
+                  : ''
+              }</td>
+            <td><span class="color">${formatBRL(total)}</span></td>
+          </tr>
+        `
+            })
+            .join('')
+        )
+
+        $('.modal-info-link').on('click', function () {
+          const order = $(this).data('order')
+          console.log(order.products)
+          const total = order.products.reduce(
+            (a, b) => a + b.price * b.count || 0,
+            0
+          )
+          $('.modal-info-heading').html(`
+          <h2>Pedido: ${order._id}</h2>
+          <p>Responsável: ${order.address.receiver}</p>
+          <p>Endereço: ${
+            order.address.street
+          }, ${order.address.number} - ${order.address.neighborhood} | ${order.address.city} - ${order.address.state}</p>
+          <p>Complemento: ${order.address.complement}</p>
+          <p>Referência: ${order.address.reference}</p>
+          ${order.products
+            .map(
+              (p, index) =>
+                `
+                <p style="display:flex;align-items:center;justify-content:center;gap:10px">
+<strong>
+                    ${p.count} ${
+                  p.product.name
+                } no tamanho ${p.size.name.toUpperCase()} na cor
+                    <span style="display: inline;border-radius: 4px;width: 16px;height: 16px;background: ${
+                      p.color
+                    }"></span>
+                  </strong>
+
+                </p>
+                `
+            )
+            .toString()}
+          ${order.comment ? `<p>Comentário: ${order.comment}</p>` : ''}
+          <p>Total: <strong>${formatBRL(total)}</strong></p>
+          <p>Método de pagamento: ${getPaymentMethod(order.paymentMethod)}</p>
+          <p>
+            <strong>
+            <a href="${order.paymentUrl}">Pagar agora</a>
+          </strong>
+          </p>
+          <p>Status: ${getStatus(order.status)}</p>
+          <p>Feito em: ${new Date(order.createdAt).toLocaleString()}</p>
+        `)
+        })
+      })
+    </script>
   </body>
 </html>

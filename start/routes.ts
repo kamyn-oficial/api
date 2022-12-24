@@ -1,7 +1,6 @@
 import Route from '@ioc:Adonis/Core/Route'
 
 Route.group(() => {
-  Route.get('ping', 'AuthController.ping')
   Route.post('register', 'AuthController.register')
   Route.post('forgot-password', 'AuthController.forgotPassword')
   Route.post('reset-password', 'AuthController.resetPassword')
@@ -35,8 +34,12 @@ Route.group(() => {
       }).prefix('category')
 
       Route.group(() => {
+        Route.get('/', 'OrderController.index')
+      }).prefix('order')
+
+      Route.group(() => {
         Route.get('/:id', 'SizeController.show')
-        Route.post('/', 'SizeController.create')
+        Route.post('/', 'SizeController.store')
         Route.put('/:id', 'SizeController.update')
         Route.delete('/:id', 'SizeController.delete')
       }).prefix('size')
@@ -64,6 +67,13 @@ Route.group(() => {
       Route.put('/:id', 'AddressController.update')
       Route.delete('/:id', 'AddressController.delete')
     }).prefix('address')
+
+    Route.group(() => {
+      Route.get('/find/:id', 'OrderController.show')
+      Route.get('/my', 'OrderController.listUserLogged')
+      Route.post('/', 'OrderController.store')
+      Route.post('/cancel/:id', 'OrderController.cancel')
+    }).prefix('order')
 
     Route.group(() => {
       Route.post('/', 'CommentController.store')

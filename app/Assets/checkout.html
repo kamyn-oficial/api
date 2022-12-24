@@ -318,6 +318,7 @@
                 <div class="card-body">
                   <h3>Comentário</h3>
                   <textarea
+                    name="comment"
                     class="form-control form-control--sm textarea--height-200"
                     placeholder="Comentário sobre o pedido, ex. Notas especiais para entrega."
                   ></textarea>
@@ -357,15 +358,15 @@
                     />
                     <label for="payment-method-pix">Pix</label>
                   </div>
-                  <div class="clearfix">
+                  <!-- <div class="clearfix">
                     <input
-                      id="payment-method-boleto"
-                      value="boleto"
+                      id="payment-method-ticket"
+                      value="ticket"
                       name="payment_method"
                       type="radio"
                       class="radio"
                     />
-                    <label for="payment-method-boleto">Boleto</label>
+                    <label for="payment-method-ticket">Boleto</label>
                   </div>
                   <div class="clearfix">
                     <input
@@ -379,14 +380,14 @@
                   </div>
                   <div class="clearfix">
                     <input
-                      id="payment-method-debit"
-                      value="debit"
+                      id="payment-method-debit_card"
+                      value="debit_card"
                       name="payment_method"
                       type="radio"
                       class="radio"
                     />
-                    <label for="payment-method-debit">Débito</label>
-                  </div>
+                    <label for="payment-method-debit_card">Débito</label>
+                  </div> -->
                   <div class="card-form d-none">
                     <div class="mt-2"></div>
                     <label>Número do cartão</label>
@@ -904,6 +905,9 @@
     <script src="js/app-html.js"></script>
     <script>
       const cart = JSON.parse(localStorage.getItem('cart') || '[]')
+      if (!cart.length) {
+        window.location.href = 'index.html'
+      }
       $('.card-total-price').html(
         formatBRL(
           cart.reduce(
@@ -914,7 +918,7 @@
                 : b.price) *
                 b.count,
             0
-          )
+          ) + 30
         )
       )
       $('.cart-table').append(
@@ -929,7 +933,7 @@
             return `
                 <div class="cart-table-prd">
                   <div class="cart-table-prd-image">
-                    <a href="#" class="prd-img"
+                    <a href="product.html?id=${i._id}" class="prd-img"
                       ><img
                         class="lazyload fade-up"
                         src="${image}"
@@ -939,7 +943,7 @@
                   <div class="cart-table-prd-content-wrap">
                     <div class="cart-table-prd-info">
                       <h2 class="cart-table-prd-name">
-                        <a href="product.html">${i.name}</a>
+                        <a href="product.html?id=${i._id}">${i.name}</a>
                       </h2>
                     </div>
                     <div class="cart-table-prd-qty">
@@ -1000,15 +1004,39 @@
       $('input[name="payment_method"]').on('change', function () {
         const value = $(this).val()
 
-        if (['credit_card', 'debit'].includes(value)) {
+        if (['credit_card', 'debit_card'].includes(value)) {
           $('.card-form').removeClass('d-none')
         } else {
           $('.card-form').addClass('d-none')
         }
       })
 
-      $('#submit-btn').on('click', () => {
-        alert('a')
+      $('#submit-btn').on('click', async () => {
+        const comment = $('textarea[name="comment"]').val()
+        const address = $('input[name="select-address"]:checked').val()
+        const paymentMethod = $('input[name="payment_method"]:checked').val()
+        const products = cart.map(p => {
+          const price = p.promotion
+            ? p.price - p.price * (p.promotion / 100)
+            : p.price
+          return {
+            product: p._id,
+            count: p.count,
+            size: p.size,
+            color: p.color,
+            price: price + 30
+          }
+        })
+        const dto = {
+          comment,
+          address,
+          paymentMethod,
+          products
+        }
+        http_setup.post('order', dto).then(({ data }) => {
+          window.location.href = '/account-history.html'
+          localStorage.removeItem('cart')
+        })
       })
     </script>
   </body>
