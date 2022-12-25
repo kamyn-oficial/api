@@ -55,8 +55,6 @@ export default class OrderController extends BaseController {
 
       if (data.topic === 'payment') {
         const mpData = await this.MP.payment.get(data.id)
-        mpData.response.status = 'approved'
-
         const approved = mpData.response.status === 'approved'
         if (!approved) return response.status(200)
         const orderId = mpData.response.external_reference.split(':')[1]
