@@ -26,22 +26,28 @@
       href="https://fonts.googleapis.com/css2?family=Open%20Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet"
     />
+    <link href="js/vendor-special/toastify.min.css" rel="stylesheet" />
     <script
       type="text/javascript"
       src="js/vendor-special/axios.min.js"
     ></script>
+    <link
+      rel="stylesheet"
+      href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
+    />
     <style>
       .modal-info-heading p {
         padding: 6px;
         font-weight: 500;
         margin: 0;
+        background-color: #f4f4f4;
       }
       .modal-info-heading p strong,
       .modal-info-heading p a strong {
         color: #eb3240;
       }
       .modal-info-heading p:nth-of-type(2n) {
-        background-color: #f4f4f4;
+        background-color: transparent;
       }
     </style>
   </head>
@@ -353,6 +359,7 @@
                   <thead>
                     <tr>
                       <th scope="col">Feito em</th>
+                      <th scope="col">Código de rastreio</th>
                       <th scope="col">Status</th>
                       <th scope="col">Preço total</th>
                     </tr>
@@ -622,6 +629,7 @@
     <script src="js/vendor-special/instafeed.min.js"></script>
     <script src="js/vendor/vendor.min.js"></script>
     <script src="js/app-html.js"></script>
+    <script src="js/vendor-special/toastify.min.js"></script>
     <script>
       http_setup.get('order/my').then(({ data }) => {
         const getPaymentMethod = {
@@ -648,27 +656,48 @@
           <tr>
             <td>${new Date(i.createdAt).toLocaleString()} <a
                 data-fancybox
+                style="cursor:pointer"
                 class="modal-info-link ml-1"
                 data-order='${JSON.stringify({ ...i })}''
-                data-src="#details">Ver detalhes</a></td>
-            <td>${getStatus[i.status] || i.status} ${
+                data-src="#details">Detalhes</a>
+            </td>
+            <td>
+              ${i.trackcode || 'Não enviado'}
+              ${
+                i.trackcode
+                  ? `
+                <i style="font-size: 20px;cursor: pointer" class="uil uil-copy copy-trackcode" data-trackcode="${i.trackcode}"></i>
+                `
+                  : ''
+              }
+            </td>
+            <td>
+              ${getStatus[i.status] || i.status}
+              ${
                 i.status === 'created'
                   ? `
-              <a
-                href="${i.paymentUrl}"
-                target="_blank"
-                class="ml-1"
-                >Pagar agora</a>
-              `
+                <a
+                  href="${i.paymentUrl}"
+                  target="_blank"
+                  class="ml-1"
+                  >Pagar agora</a>
+                `
                   : ''
-              }</td>
+              }
+            </td>
             <td><span class="color">${formatBRL(total)}</span></td>
           </tr>
         `
             })
             .join('')
         )
-
+        $('.copy-trackcode').on('click', function () {
+          const trackcode = $(this).data('trackcode')
+          navigator.clipboard.writeText(trackcode)
+          Toastify({
+            text: 'Código de rastreio copiado!'
+          }).showToast()
+        })
         $('.modal-info-link').on('click', function () {
           const order = $(this).data('order')
           console.log(order.products)
@@ -677,32 +706,50 @@
             0
           )
           $('.modal-info-heading').html(`
-          <h2>Pedido: ${order._id}</h2>
+          <h2>Pedido #${order._id}</h2>
+          <p>
+            Código de rastreio: <strong>${order.trackcode}</strong>
+            <i style="font-size: 20px;cursor: pointer" class="uil uil-copy copy-trackcode" data-trackcode="${
+              order.trackcode
+            }"></i>
+          </p>
+          ${
+            order.trackcode
+              ? `
+            <p>
+              <a href="https://www2.correios.com.br/sistemas/rastreamento/default.cfm" target="_blank">
+                <strong>
+                  Rastrear pedido
+                </strong>
+              </a>
+            </p>
+            `
+              : ''
+          }
           <p>Responsável: ${order.address.receiver}</p>
+          <p>Cidade: ${order.address.city} - ${order.address.state}</p>
           <p>Endereço: ${
             order.address.street
-          }, ${order.address.number} - ${order.address.neighborhood} | ${order.address.city} - ${order.address.state}</p>
-          <p>Complemento: ${order.address.complement}</p>
-          <p>Referência: ${order.address.reference}</p>
+          }, ${order.address.number} - ${order.address.neighborhood}</p>
+          <p>Complemento e Referência: ${
+            order.address.complement
+          } | ${order.address.reference}</p>
+          ${order.comment ? `<p>Comentário: ${order.comment}</p>` : ''}
           ${order.products
             .map(
               (p, index) =>
                 `
                 <p style="display:flex;align-items:center;justify-content:center;gap:10px">
-<strong>
-                    ${p.count} ${
-                  p.product.name
-                } no tamanho ${p.size.name.toUpperCase()} na cor
-                    <span style="display: -webkit-inline-box;margin-bottom: -3px;margin-left: 2px;border-radius: 4px;border: 1px solid #282828;width: 18px;height: 18px;background: ${
-                      p.color
-                    }"></span>
+                  <a href="product.html?id=${p.product._id}">
+                  <strong>
+                    ${p.count}x ${p.product.name} no tamanho ${p.size.name} na cor
+                    <span style="display: -webkit-inline-box;margin-bottom: -3px;margin-left: 2px;border-radius: 4px;border: 1px solid #282828;width: 18px;height: 18px;background: ${p.color}"></span>
                   </strong>
-
+                  </a>
                 </p>
                 `
             )
-            .toString()}
-          ${order.comment ? `<p>Comentário: ${order.comment}</p>` : ''}
+            .join('\n')}
           <p>Total: <strong>${formatBRL(total)}</strong></p>
           <p>Método de pagamento: <strong>${
             getPaymentMethod[order.paymentMethod] || order.paymentMethod
@@ -714,7 +761,7 @@
             order.status === 'created'
               ? `
             <p>
-              <a href="${order.paymentUrl}">
+              <a href="${order.paymentUrl}" target="_blank">
                 <strong>
                   Pagar agora
                 </strong>
@@ -730,6 +777,13 @@
           }
           <p>Feito em: ${new Date(order.createdAt).toLocaleString()}</p>
         `)
+          $('.copy-trackcode').on('click', function () {
+            const trackcode = $(this).data('trackcode')
+            navigator.clipboard.writeText(trackcode)
+            Toastify({
+              text: 'Código de rastreio copiado!'
+            }).showToast()
+          })
         })
       })
     </script>

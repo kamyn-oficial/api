@@ -24,6 +24,7 @@ export interface OrderSchema {
   }
   paymentMethod: string
   paymentUrl?: string
+  trackcode?: string
   payAt?: number
   createdAt?: number
 }

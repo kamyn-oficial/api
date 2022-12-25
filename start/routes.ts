@@ -38,6 +38,7 @@ Route.group(() => {
 
       Route.group(() => {
         Route.get('/', 'OrderController.index')
+        Route.put('/:id', 'OrderController.updateStatus')
       }).prefix('order')
 
       Route.group(() => {

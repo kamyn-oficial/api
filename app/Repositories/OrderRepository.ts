@@ -32,6 +32,7 @@ class SizeRepository {
     const data = await OrderModel.find()
       .sort({ createdAt: -1 })
       .populate({ path: 'products.product', model: ProductModel })
+      .populate({ path: 'products.size', model: SizeModel })
       .populate({ path: 'user', model: UserModel })
       .populate({ path: 'address', model: AddressModel })
       .skip(skip)

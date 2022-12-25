@@ -190,24 +190,17 @@ export default class OrderController extends BaseController {
     }
   }
 
-  public async cancel({ request, response }: HttpContextContract) {
+  public async updateStatus({ request, response }: HttpContextContract) {
     try {
       const id = decodeURI(request.params().id)
+      const data = request.only(['status', 'trackcode'])
 
       const order = await OrderRepository.findById(id)
       if (!order) return response.status(404)
 
-      if (!['created'].includes(order.status)) {
-        return this.responseRequestError(response, [
-          {
-            field: '',
-            message: 'Não é possível cancelar um pedido que já foi enviado'
-          }
-        ])
-      }
-
       await OrderRepository.updateById(id, {
-        status: 'canceled'
+        status: data.status,
+        trackcode: data.trackcode
       })
 
       return response.safeStatus(200)
