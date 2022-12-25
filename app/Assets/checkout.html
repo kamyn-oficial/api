@@ -339,7 +339,7 @@
                       checked
                     />
                     <label for="formcheckoutRadio2">
-                      Padrão R$ 30,00 (7-14 dias úteis)
+                      Padrão frete grátis (7-14 dias úteis)
                     </label>
                   </div>
                 </div>
@@ -918,7 +918,7 @@
                 : b.price) *
                 b.count,
             0
-          ) + 30
+          )
         )
       )
       $('.cart-table').append(
@@ -1024,7 +1024,7 @@
             count: p.count,
             size: p.size,
             color: p.color,
-            price: price + 30
+            price: price
           }
         })
         const dto = {
