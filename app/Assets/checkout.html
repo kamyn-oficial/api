@@ -369,7 +369,7 @@
                     />
                     <label for="payment-method-bolbradesco">Boleto</label>
                   </div>
-                  <!-- <div class="clearfix">
+                  <div class="clearfix">
                     <input
                       id="payment-method-credit_card"
                       value="credit_card"
@@ -388,58 +388,61 @@
                       class="radio"
                     />
                     <label for="payment-method-debit_card">Débito</label>
-                  </div> -->
+                  </div>
                   <div class="card-form d-none">
                     <div class="mt-2"></div>
                     <label>Número do cartão</label>
                     <div class="form-group">
                       <input
-                        type="text"
+                        name="cardNumber"
+                        type="number"
                         class="form-control form-control--sm"
+                        placeholder="0000 0000 0000 0000"
                       />
                     </div>
                     <div class="row">
                       <div class="col-sm-9">
-                        <label>Mês:</label>
-                        <div class="form-group select-wrapper">
-                          <select class="form-control form-control--sm">
-                            <option selected value="1">Janeiro</option>
-                            <option value="2">Fevereiro</option>
-                            <option value="3">Março</option>
-                            <option value="4">Abril</option>
-                            <option value="5">Maio</option>
-                            <option value="6">Junho</option>
-                            <option value="7">Julho</option>
-                            <option value="8">Agosto</option>
-                            <option value="9">Setembro</option>
-                            <option value="10">Outubro</option>
-                            <option value="11">Novembro</option>
-                            <option value="12">Dezembro</option>
-                          </select>
+                        <label>Validade do cartão</label>
+                        <div class="form-group">
+                          <input
+                            name="expiration"
+                            type="text"
+                            class="form-control form-control--sm"
+                            placeholder="MM/AAAA"
+                          />
                         </div>
                       </div>
                       <div class="col-sm-9">
-                        <label>Ano:</label>
-                        <div class="form-group select-wrapper">
-                          <select class="form-control form-control--sm">
-                            <option value="2019">2019</option>
-                            <option value="2020">2020</option>
-                            <option value="2021">2021</option>
-                            <option value="2022">2022</option>
-                            <option value="2023">2023</option>
-                            <option value="2024">2024</option>
-                          </select>
+                        <label>Código de Segurança</label>
+                        <div class="form-group">
+                          <input
+                            name="cvv"
+                            type="number"
+                            class="form-control form-control--sm"
+                            placeholder="000"
+                          />
                         </div>
                       </div>
                     </div>
-                    <div class="mt-2">
-                      <label>CVV</label>
-                      <div class="form-group">
-                        <input
-                          type="text"
-                          class="form-control form-control--sm"
-                        />
-                      </div>
+                    <label class="mt-2">Parcelas:</label>
+                    <div class="form-group select-wrapper">
+                      <select
+                        class="form-control form-control--sm"
+                        name="installments"
+                      >
+                        <option selected value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                      </select>
                     </div>
                   </div>
                 </div>
@@ -1017,6 +1020,10 @@
         const comment = $('textarea[name="comment"]').val()
         const address = $('input[name="select-address"]:checked').val()
         const paymentMethod = $('input[name="payment_method"]:checked').val()
+        const installments = Number($('select[name="installments"]').val()) || 1
+        const cardNumber = $('input[name="cardNumber"]').val()
+        const expiration = $('input[name="expiration"]').val()
+        const cvv = $('input[name="cvv"]').val()
         const products = cart.map(p => {
           const price = p.promotion
             ? p.price - p.price * (p.promotion / 100)
@@ -1039,8 +1046,12 @@
         const dto = {
           comment,
           address,
+          products,
           paymentMethod,
-          products
+          installments,
+          cardNumber,
+          expiration,
+          cvv
         }
         http_setup.post('order', dto).then(({ data }) => {
           window.location.href = '/account-history.html'

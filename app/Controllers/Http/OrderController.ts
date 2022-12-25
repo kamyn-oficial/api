@@ -79,7 +79,11 @@ export default class OrderController extends BaseController {
         'address',
         'comment',
         'products',
-        'paymentMethod'
+        'paymentMethod', // pix, bolbradesco, credit_card, debit_card
+        'installments', // 1
+        'cardNumber', // 5031755734530604
+        'cvv', // 123
+        'expiration' // 12/2025,
       ])
 
       const created = await OrderRepository.create({
@@ -91,31 +95,17 @@ export default class OrderController extends BaseController {
       const order = await OrderRepository.findById(created._id)
       if (!order) return response.status(404)
 
-      const payload: any = {
-        transaction_amount: Number(
-          data.products
-            .reduce((acc, cur: any) => acc + cur.price * cur.count, 0)
-            .toFixed(2)
-        ),
-        date_of_expiration: new Date(
-          new Date().setDate(new Date().getDate() + 1)
-        ).toISOString(),
-        notification_url: `https://kamyn.com.br/api/order/notification`,
-        description: (order.products as any)
-          .map((p: any) => `${p.count}x ${p.product.name}`)
-          .join(', '),
-        external_reference: `${user._id}:${order._id}`,
-        payment_method_id: data.paymentMethod,
-        installments: 1,
-        payer: {
-          first_name: user.name.split(' ').slice(0, -1).join(' ') || user.name,
-          last_name: user.name.split(' ').slice(-1).join(' '),
-          email: user.email,
-          identification: {
-            type: 'CPF',
-            number: user.cpf
-          }
+      const getPaymentMethodId = (paymentMethod: string, cardNumber = '') => {
+        let id = ''
+        if (paymentMethod.includes('card')) {
+          if (paymentMethod.includes('debit')) id += 'deb'
+          if (cardNumber.startsWith('3')) id += 'amex'
+          if (cardNumber.startsWith('4')) id += 'visa'
+          else if (cardNumber.startsWith('5')) id += 'master'
+        } else {
+          id = paymentMethod
         }
+        return id
       }
 
       const getPaymentUrl = mpResponse => {
@@ -132,13 +122,59 @@ export default class OrderController extends BaseController {
         }
       }
 
+      const payload: any = {
+        transaction_amount: Number(
+          data.products
+            .reduce((acc, cur: any) => acc + cur.price * cur.count, 0)
+            .toFixed(2)
+        ),
+        date_of_expiration: new Date(
+          new Date().setDate(new Date().getDate() + 1)
+        ).toISOString(),
+        notification_url: `https://kamyn.com.br/api/order/notification`,
+        description: (order.products as any)
+          .map((p: any) => `${p.count}x ${p.product.name}`)
+          .join(', '),
+        external_reference: `${user._id}:${order._id}`,
+        payment_method_id: getPaymentMethodId(
+          data.paymentMethod,
+          data.cardNumber
+        ),
+        installments: data.installments,
+        payer: {
+          first_name: user.name.split(' ').slice(0, -1).join(' ') || user.name,
+          last_name: user.name.split(' ').slice(-1).join(' '),
+          email: user.email,
+          identification: {
+            type: 'CPF',
+            number: user.cpf
+          }
+        }
+      }
+
+      if (data.paymentMethod.includes('card')) {
+        console.log('Cartão: ', {
+          card_number: data.cardNumber,
+          security_code: data.cvv,
+          expiration_month: data.expiration.split('/')[0],
+          expiration_year: data.expiration.split('/')[1]
+        })
+        const tokenData = await this.MP.card_token.create({
+          card_number: data.cardNumber,
+          security_code: data.cvv,
+          expiration_month: data.expiration.split('/')[0],
+          expiration_year: data.expiration.split('/')[1]
+        })
+        payload.token = tokenData.response.id
+      }
+
+      console.log('Pagamento recebido: ', payload)
+
       const mpData = await this.MP.payment.create(payload)
 
       if (mpData.status === 201) {
-        console.log('Pagamento expedido', mpData.response)
+        console.log('Pagamento expedido: ', mpData.response)
         const paymentUrl = getPaymentUrl(mpData.response)
-        if (!paymentUrl)
-          throw new Error('Não foi possível gerar o link de pagamento')
         await OrderRepository.updateById(order.id, { paymentUrl })
         return response.json({ payload, mpData, paymentUrl })
       } else {
