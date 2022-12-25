@@ -627,7 +627,7 @@
         }
         const getStatus = m => {
           if (m === 'created') return 'Aguardando pagamento'
-          if (m === 'invoiced') return 'Pago'
+          if (m === 'invoiced') return 'Pago, aguardando envio'
           if (m === 'shipped') return 'Em transporte'
           if (m === 'delivered') return 'Entregue'
           if (m === 'canceled') return 'Cancelado'
@@ -701,11 +701,17 @@
           ${order.comment ? `<p>Comentário: ${order.comment}</p>` : ''}
           <p>Total: <strong>${formatBRL(total)}</strong></p>
           <p>Método de pagamento: ${getPaymentMethod(order.paymentMethod)}</p>
-          <p>
+          ${
+            i.status === 'created'
+              ? `
+            <p>
             <strong>
             <a href="${order.paymentUrl}">Pagar agora</a>
           </strong>
           </p>
+            `
+              : ''
+          }
           <p>Status: ${getStatus(order.status)}</p>
           <p>Feito em: ${new Date(order.createdAt).toLocaleString()}</p>
         `)
