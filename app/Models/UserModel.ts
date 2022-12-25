@@ -15,6 +15,10 @@ const schema = new Schema<UserSchema>(
       required: true,
       unique: true
     },
+    cpf: {
+      type: String,
+      required: true
+    },
     phone: {
       type: String
     },

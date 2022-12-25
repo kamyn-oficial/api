@@ -701,6 +701,7 @@
           ${order.comment ? `<p>Comentário: ${order.comment}</p>` : ''}
           <p>Total: <strong>${formatBRL(total)}</strong></p>
           <p>Método de pagamento: ${getPaymentMethod(order.paymentMethod)}</p>
+          <p>Status: ${getStatus(order.status)}</p>
           ${
             order.status === 'created'
               ? `
@@ -712,7 +713,11 @@
             `
               : ''
           }
-          <p>Status: ${getStatus(order.status)}</p>
+          ${
+            order.payAt
+              ? `<p>Pago em: ${new Date(order.payAt).toLocaleString()}</p>`
+              : ''
+          }
           <p>Feito em: ${new Date(order.createdAt).toLocaleString()}</p>
         `)
         })

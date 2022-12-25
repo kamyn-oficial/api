@@ -1,4 +1,3 @@
-import Logger from '@ioc:Adonis/Core/Logger'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 import BaseController from './BaseController'
@@ -59,7 +58,8 @@ export default class OrderController extends BaseController {
         if (!approved) return response.status(200)
         const orderId = mpData.response.external_reference.split(':')[1]
         await OrderRepository.updateById(orderId, {
-          status: 'invoiced'
+          status: 'invoiced',
+          payAt: new Date().getTime()
         })
         return response.status(200)
       }
@@ -108,18 +108,39 @@ export default class OrderController extends BaseController {
         payment_method_id: data.paymentMethod,
         installments: 1,
         payer: {
-          email: user.email
+          first_name: user.name.split(' ').slice(0, -1).join(' ') || user.name,
+          last_name: user.name.split(' ').slice(-1).join(' '),
+          email: user.email,
+          identification: {
+            type: 'CPF',
+            number: user.cpf
+          }
         }
       }
 
-      const mpResponse = await this.MP.payment.create(payload)
+      const getPaymentUrl = mpResponse => {
+        switch (true) {
+          case mpResponse.payment_method_id === 'bolbradesco':
+            return mpResponse.transaction_details.external_resource_url
 
-      if (mpResponse.status === 201) {
-        Logger.info(`Mercado Pago Response ${JSON.stringify(mpResponse)}}`)
-        const paymentUrl =
-          mpResponse.response.point_of_interaction.transaction_data.ticket_url
+          case mpResponse.payment_method_id === 'pix':
+            return mpResponse.response.point_of_interaction.transaction_data
+              .ticket_url
+
+          default:
+            return ''
+        }
+      }
+
+      const mpData = await this.MP.payment.create(payload)
+
+      if (mpData.status === 201) {
+        console.log('Pagamento expedido', mpData.response)
+        const paymentUrl = getPaymentUrl(mpData.response)
+        if (!paymentUrl)
+          throw new Error('Não foi possível gerar o link de pagamento')
         await OrderRepository.updateById(order.id, { paymentUrl })
-        return response.json({ payload, mpResponse, paymentUrl })
+        return response.json({ payload, mpData, paymentUrl })
       } else {
         return this.responseRequestError(response, [
           {

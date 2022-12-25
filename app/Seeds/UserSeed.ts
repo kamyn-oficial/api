@@ -30,6 +30,7 @@ class UserSeed {
         isAdm: true,
         name: this.adm.name,
         email: this.adm.email,
+        cpf: '00000000000',
         passwordHash
       }
 

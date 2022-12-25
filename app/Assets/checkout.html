@@ -14,6 +14,7 @@
     <!-- Vendor CSS -->
     <link href="css/vendor/bootstrap.min.css" rel="stylesheet" />
     <link href="css/vendor/vendor.min.css" rel="stylesheet" />
+    <link href="js/vendor-special/toastify.min.css" rel="stylesheet" />
     <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet" />
     <!-- Custom font -->
@@ -358,17 +359,17 @@
                     />
                     <label for="payment-method-pix">Pix</label>
                   </div>
-                  <!-- <div class="clearfix">
+                  <div class="clearfix">
                     <input
-                      id="payment-method-ticket"
-                      value="ticket"
+                      id="payment-method-bolbradesco"
+                      value="bolbradesco"
                       name="payment_method"
                       type="radio"
                       class="radio"
                     />
-                    <label for="payment-method-ticket">Boleto</label>
+                    <label for="payment-method-bolbradesco">Boleto</label>
                   </div>
-                  <div class="clearfix">
+                  <!-- <div class="clearfix">
                     <input
                       id="payment-method-credit_card"
                       value="credit_card"
@@ -903,6 +904,7 @@
     <script src="js/vendor-special/instafeed.min.js"></script>
     <script src="js/vendor/vendor.min.js"></script>
     <script src="js/app-html.js"></script>
+    <script src="js/vendor-special/toastify.min.js"></script>
     <script>
       const cart = JSON.parse(localStorage.getItem('cart') || '[]')
       if (!cart.length) {
@@ -1027,6 +1029,13 @@
             price: price
           }
         })
+
+        if (!address) {
+          return Toastify({
+            text: 'Selecione um endereço'
+          }).showToast()
+        }
+
         const dto = {
           comment,
           address,

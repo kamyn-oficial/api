@@ -56,7 +56,7 @@ const schema = new Schema<OrderSchema>(
       type: String
     },
     payAt: {
-      type: String
+      type: Number
     }
   },
   {

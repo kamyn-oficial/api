@@ -16,6 +16,7 @@ export default class AuthController extends BaseController {
       const data: RegisterParams = request.only([
         'name',
         'email',
+        'cpf',
         'phone',
         'password'
       ])
@@ -104,6 +105,7 @@ export default class AuthController extends BaseController {
       return response.json({
         name: user?.name,
         email: user?.email,
+        cpf: user?.cpf,
         phone: user?.phone,
         accessToken: user?.accessToken
       })
@@ -115,7 +117,7 @@ export default class AuthController extends BaseController {
   public async update({ request, response }: HttpContextContract) {
     try {
       const accessToken = this.getBearerToken(request)
-      const data: UpdateMeUserParams = request.only(['name', 'phone'])
+      const data: UpdateMeUserParams = request.only(['name', 'phone', 'cpf'])
 
       const errors = JoiValidateService.validate(JoiSchemas.updateMeUser, data)
       if (errors.length) return this.responseRequestError(response, errors)

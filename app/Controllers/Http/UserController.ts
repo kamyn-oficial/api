@@ -26,6 +26,7 @@ export default class UserController extends BaseController {
       const data: CreateUserParams = request.only([
         'name',
         'email',
+        'cpf',
         'password',
         'phone',
         'isAdm'
@@ -55,6 +56,7 @@ export default class UserController extends BaseController {
       const data: UpdateUserParams = request.only([
         'name',
         'email',
+        'cpf',
         'password',
         'phone',
         'isAdm'

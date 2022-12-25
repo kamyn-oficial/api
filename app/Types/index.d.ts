@@ -2,12 +2,13 @@ export interface UserSchema {
   isAdm?: boolean
   name: string
   email: string
+  cpf: string
   phone?: string
   passwordHash: string
   accessToken?: string
   resetPasswordToken?: string
   confirmationToken?: string
-  createdAt?: Number
+  createdAt?: number
 }
 
 export interface OrderSchema {
@@ -23,7 +24,8 @@ export interface OrderSchema {
   }
   paymentMethod: string
   paymentUrl?: string
-  createdAt?: Number
+  payAt?: number
+  createdAt?: number
 }
 
 export interface ProductSchema {
@@ -36,7 +38,7 @@ export interface ProductSchema {
   photos: string[]
   colors: string[]
   sizes: string[]
-  createdAt?: Number
+  createdAt?: number
 }
 
 export interface BannerSchema {
@@ -75,6 +77,7 @@ export interface JoiError {
 export interface RegisterParams {
   name: string
   email: string
+  cpf: string
   phone?: string
   password: string
 }
@@ -87,12 +90,13 @@ export interface UpdateMeUserParams {
 export interface CreateUserParams {
   name: string
   email: string
+  cpf: string
   password: string
   phone?: string
   isAdm?: boolean
 }
 
-export interface UpdateUserParams extends CreateUserParams { }
+export type UpdateUserParams = CreateUserParams
 
 export interface AddressSchema {
   name: string
