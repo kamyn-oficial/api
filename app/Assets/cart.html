@@ -642,16 +642,20 @@
                     </div>
                     <div class="cart-table-prd-qty">
                       <div class="qty qty-changer">
-                        <button class="decrease" data-id="${i.id}"></button>
+                        <button class="decrease" data-product='${JSON.stringify(
+                          i
+                        )}'></button>
                         <input
                           type="text"
                           class="qty-input"
                           value="${i.count}"
-                          data-id="${i.id}"
+                          data-product='${JSON.stringify(i)}'
                           data-min="0"
                           data-max="1000"
                         />
-                        <button class="increase" data-id="${i.id}"></button>
+                        <button class="increase"  data-product='${JSON.stringify(
+                          i
+                        )}'></button>
                       </div>
                     </div>
                     <div class="cart-table-prd-price-total">
@@ -663,7 +667,7 @@
                       href="#"
                       class="cart-table-prd-remove"
                       data-tooltip="Remover produto"
-                      data-id="${i.id}"
+                      data-product='${JSON.stringify(i)}'
                       ><i class="icon-recycle"></i
                     ></a>
                   </div>
@@ -688,33 +692,44 @@
           update()
         })
 
-        $('.cart-table-prd-remove').on('click', () => {
-          const id = $(this).data('id')
+        $('.cart-table-prd-remove').on('click', function () {
+          const product = $(this).data('product')
           const cart = JSON.parse(localStorage.getItem('cart') || '[]')
-          const newCart = cart.filter(i => i.id !== id)
-          localStorage.setItem('cart', JSON.stringify(newCart))
+          const index = cart.findIndex(
+            ({ _id, size, color }) =>
+              _id === product._id &&
+              size === product.size &&
+              color === product.color
+          )
+          cart.splice(index, 1)
+          localStorage.setItem('cart', JSON.stringify(cart))
           update()
         })
 
-        $('.increase').on('click', () => {
-          const id = $(this).data('id')
+        $('.increase').on('click', function () {
+          const product = $(this).data('product')
           const cart = JSON.parse(localStorage.getItem('cart') || '[]')
-          const newCart = cart.map(i => {
-            if (i.id === id) {
-              i.count += 1
-            }
-            return i
-          })
-          localStorage.setItem('cart', JSON.stringify(newCart))
+          const cartProduct = cart.find(
+            ({ _id, size, color }) =>
+              _id === product._id &&
+              size === product.size &&
+              color === product.color
+          )
+          if (cartProduct) cartProduct.count += 1
+          localStorage.setItem('cart', JSON.stringify(cart))
           update()
         })
 
-        $('.decrease').on('click', () => {
-          const id = $(this).data('id')
+        $('.decrease').on('click', function () {
+          const product = $(this).data('product')
           const cart = JSON.parse(localStorage.getItem('cart') || '[]')
           const newCart = cart
             .map(i => {
-              if (i.id === id) {
+              if (
+                i._id === product._id &&
+                i.size === product.size &&
+                i.color === product.color
+              ) {
                 i.count -= 1
                 if (i.count < 1) return null
               }
@@ -725,19 +740,22 @@
           update()
         })
 
-        $('.qty-input').on('change', e => {
-          const id = $(this).data('id')
+        $('.qty-input').on('change', function (e) {
+          const product = $(this).data('product')
           const cart = JSON.parse(localStorage.getItem('cart') || '[]')
           const newCart = cart
             .map(i => {
-              if (i.id === id) {
+              if (
+                i._id === product._id &&
+                i.size === product.size &&
+                i.color === product.color
+              ) {
                 i.count = Number(e.target.value)
                 if (i.count < 1) return null
               }
               return i
             })
             .filter(i => i)
-
           localStorage.setItem('cart', JSON.stringify(newCart))
           update()
         })

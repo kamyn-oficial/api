@@ -173,8 +173,9 @@ if (cartIcon) {
   }
   function addToCart(product) {
     const cart = JSON.parse(localStorage.getItem('cart') || '[]')
-    if (cart.find(({ _id }) => _id === product._id)) {
-      cart.find(({ _id }) => _id === product._id).count += 1
+    const cartProduct = cart.find(({ _id, size, color }) => _id === product._id && size === product.size && color === product.color)
+    if (cartProduct) {
+      cartProduct.count += 1
     } else {
       cart.push({ ...product, count: 1 })
     }
