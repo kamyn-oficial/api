@@ -36,7 +36,8 @@
         font-weight: 500;
         margin: 0;
       }
-      .modal-info-heading p strong {
+      .modal-info-heading p strong,
+      .modal-info-heading p a strong {
         color: #eb3240;
       }
       .modal-info-heading p:nth-of-type(2n) {
@@ -687,7 +688,7 @@
                     ${p.count} ${
                   p.product.name
                 } no tamanho ${p.size.name.toUpperCase()} na cor
-                    <span style="display: -webkit-inline-box;margin-bottom: -3px;margin-left: 2px;border-radius: 4px;width: 16px;height: 16px;background: ${
+                    <span style="display: -webkit-inline-box;margin-bottom: -3px;margin-left: 2px;border-radius: 4px;border: 1px solid #282828;width: 18px;height: 18px;background: ${
                       p.color
                     }"></span>
                   </strong>
@@ -698,18 +699,22 @@
             .toString()}
           ${order.comment ? `<p>Comentário: ${order.comment}</p>` : ''}
           <p>Total: <strong>${formatBRL(total)}</strong></p>
-          <p>Método de pagamento: ${
+          <p>Método de pagamento: <strong>${
             getPaymentMethod[order.paymentMethod] || order.paymentMethod
-          }</p>
-          <p>Status: ${getStatus[order.status] || order.status}</p>
+          }</strong> </p>
+          <p>Status: <strong> ${
+            getStatus[order.status] || order.status
+          }</strong></p>
           ${
             order.status === 'created'
               ? `
             <p>
-            <strong>
-            <a href="${order.paymentUrl}">Pagar agora</a>
-          </strong>
-          </p>
+              <a href="${order.paymentUrl}">
+                <strong>
+                  Pagar agora
+                </strong>
+              </a>
+            </p>
             `
               : ''
           }
