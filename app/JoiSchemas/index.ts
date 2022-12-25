@@ -58,6 +58,18 @@ class JoiSchemas {
       return err[0]
     })
 
+  public cpf = Joi.string()
+    .min(11)
+    .max(11)
+    .custom((value, helpers) => {
+      if (!validCPF(value)) return helpers.error('any.invalid')
+    })
+    .error(err => {
+      err[0].message = 'CPF inválido'
+      err[0].path = ['cpf']
+      return err[0]
+    })
+
   public phone = Joi.string()
     .min(11)
     .max(11)
@@ -127,18 +139,7 @@ class JoiSchemas {
     return Joi.object<RegisterParams>({
       name: this.name.required(),
       email: this.email.required(),
-      cpf: Joi.string()
-        .min(11)
-        .max(11)
-        .custom((value, helpers) => {
-          if (!validCPF(value)) return helpers.error('any.invalid')
-        })
-        .required()
-        .error(err => {
-          err[0].message = 'CPF inválido'
-          err[0].path = ['cpf']
-          return err[0]
-        }),
+      cpf: this.cpf.required(),
       password: this.password.required(),
       phone: this.phone
     })
@@ -161,7 +162,8 @@ class JoiSchemas {
   public get updateMeUser() {
     return Joi.object<UpdateMeUserParams>({
       name: this.name,
-      phone: this.phone
+      phone: this.phone,
+      cpf: this.cpf
     })
   }
 

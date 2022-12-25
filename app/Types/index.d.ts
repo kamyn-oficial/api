@@ -85,6 +85,7 @@ export interface RegisterParams {
 export interface UpdateMeUserParams {
   name: string
   phone: string
+  cpf: string
 }
 
 export interface CreateUserParams {
