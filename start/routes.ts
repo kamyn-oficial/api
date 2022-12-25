@@ -11,6 +11,9 @@ Route.group(() => {
   Route.get('banner', 'BannerController.index')
   Route.get('product/:id', 'ProductController.show')
   Route.get('fy', 'ProductController.fy')
+  Route.get('/category', 'CategoryController.index')
+  Route.get('/size', 'SizeController.index')
+  Route.post('/order/notification', 'OrderController.notification')
 
   Route.group(() => {
     Route.group(() => {
@@ -69,7 +72,6 @@ Route.group(() => {
     }).prefix('address')
 
     Route.group(() => {
-      Route.post('/notification', 'OrderController.notification')
       Route.get('/find/:id', 'OrderController.show')
       Route.get('/my', 'OrderController.listUserLogged')
       Route.post('/', 'OrderController.store')
@@ -81,9 +83,6 @@ Route.group(() => {
       Route.delete('/:id', 'CommentController.delete')
     }).prefix('comment')
   }).middleware('jwt:accessToken')
-
-  Route.get('/category', 'CategoryController.index')
-  Route.get('/size', 'SizeController.index')
 }).prefix('api')
 
 Route.get('/admin', ({ response }) => {
