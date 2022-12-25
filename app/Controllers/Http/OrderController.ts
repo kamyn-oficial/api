@@ -58,7 +58,7 @@ export default class OrderController extends BaseController {
         if (!approved) return response.status(200)
         const orderId = mpData.response.external_reference.split(':')[1]
         await OrderRepository.updateById(orderId, {
-          status: 'approved'
+          status: 'invoiced'
         })
         return response.status(200)
       }
