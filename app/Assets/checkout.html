@@ -1034,8 +1034,7 @@
           products
         }
         http_setup.post('order', dto).then(({ data }) => {
-          console.log(data)
-          // window.location.href = '/account-history.html'
+          window.location.href = '/account-history.html'
           localStorage.removeItem('cart')
         })
       })

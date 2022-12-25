@@ -1,3 +1,4 @@
+import Logger from '@ioc:Adonis/Core/Logger'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 import BaseController from './BaseController'
@@ -50,10 +51,12 @@ export default class OrderController extends BaseController {
 
   public async notification({ request, response }: HttpContextContract) {
     try {
-      const query = request.qs()
+      const data = request.only(['topic', 'id'])
 
-      if (query.topic === 'payment') {
-        const mpData = await this.MP.payment.get(query.id)
+      if (data.topic === 'payment') {
+        const mpData = await this.MP.payment.get(data.id)
+        mpData.response.status = 'approved'
+
         const approved = mpData.response.status === 'approved'
         if (!approved) return response.status(200)
         const orderId = mpData.response.external_reference.split(':')[1]
@@ -114,6 +117,7 @@ export default class OrderController extends BaseController {
       const mpResponse = await this.MP.payment.create(payload)
 
       if (mpResponse.status === 201) {
+        Logger.info(`Mercado Pago Response ${JSON.stringify(mpResponse)}}`)
         const paymentUrl =
           mpResponse.response.point_of_interaction.transaction_data.ticket_url
         await OrderRepository.updateById(order.id, { paymentUrl })
