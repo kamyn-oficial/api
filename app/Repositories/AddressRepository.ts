@@ -7,7 +7,9 @@ class AddressRepository {
   }
 
   public defaultAddress(userId: string) {
-    return AddressModel.find({ userId, isDefault: true })
+    return AddressModel.find({ userId, isDefault: true }).sort({
+      createdAt: -1
+    })
   }
 
   public findById(id: string) {
@@ -15,7 +17,7 @@ class AddressRepository {
   }
 
   public findByUserId(userId: string) {
-    return AddressModel.find({ userId })
+    return AddressModel.find({ userId }).sort({ createdAt: -1 })
   }
 
   public updateById(id: string, schema: Partial<UpdateAddressParams>) {

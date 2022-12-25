@@ -9,12 +9,13 @@ class SizeRepository {
   public readonly selectFields = ['_id', 'name']
 
   public findAll() {
-    return SizeModel.find()
+    return SizeModel.find().sort({ createdAt: -1 })
   }
 
   public async getAll(current_page = 1, per_page = 15) {
     const skip = (current_page - 1) * per_page
     const data = await SizeModel.find()
+      .sort({ createdAt: -1 })
       .select(this.selectFields)
       .skip(skip)
       .limit(per_page)

@@ -7,12 +7,15 @@ class BannerRepository {
   }
 
   public findAll() {
-    return BannerModel.find()
+    return BannerModel.find().sort({ createdAt: -1 })
   }
 
   public async getAll(current_page = 1, per_page = 15) {
     const skip = (current_page - 1) * per_page
-    const data = await BannerModel.find().skip(skip).limit(per_page)
+    const data = await BannerModel.find()
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(per_page)
     const total = await BannerModel.countDocuments()
     return {
       data,

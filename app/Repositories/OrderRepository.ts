@@ -13,12 +13,14 @@ class SizeRepository {
   public findAll(user = '') {
     if (user) {
       return OrderModel.find({ user })
+        .sort({ createdAt: -1 })
         .populate({ path: 'products.product', model: ProductModel })
         .populate({ path: 'products.size', model: SizeModel })
         .populate({ path: 'user', model: UserModel })
         .populate({ path: 'address', model: AddressModel })
     }
     return OrderModel.find()
+      .sort({ createdAt: -1 })
       .populate({ path: 'products.product', model: ProductModel })
       .populate({ path: 'products.size', model: SizeModel })
       .populate({ path: 'user', model: UserModel })
@@ -28,6 +30,7 @@ class SizeRepository {
   public async getAll(current_page = 1, per_page = 15) {
     const skip = (current_page - 1) * per_page
     const data = await OrderModel.find()
+      .sort({ createdAt: -1 })
       .populate({ path: 'products.product', model: ProductModel })
       .populate({ path: 'user', model: UserModel })
       .populate({ path: 'address', model: AddressModel })

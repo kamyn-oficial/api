@@ -9,12 +9,13 @@ class CategoryRepository {
   public readonly selectFields = ['_id', 'name']
 
   public findAll() {
-    return CategoryModel.find()
+    return CategoryModel.find().sort({ createdAt: -1 })
   }
 
   public async getAll(current_page = 1, per_page = 15) {
     const skip = (current_page - 1) * per_page
     const data = await CategoryModel.find()
+      .sort({ createdAt: -1 })
       .select(this.selectFields)
       .skip(skip)
       .limit(per_page)

@@ -5,14 +5,15 @@ import type { CommentSchema } from 'App/Types'
 
 class CategoryRepository {
   public findAll(userId?: string) {
-    return CommentModel.find(
-      userId ? { user: userId } : (undefined as any)
-    ).populate({ path: 'product', model: ProductModel })
+    return CommentModel.find(userId ? { user: userId } : (undefined as any))
+      .sort({ createdAt: -1 })
+      .populate({ path: 'product', model: ProductModel })
   }
 
   public async getAll(current_page = 1, per_page = 15) {
     const skip = (current_page - 1) * per_page
     const data = await CommentModel.find()
+      .sort({ createdAt: -1 })
       .populate({ path: 'product', model: ProductModel })
       .populate({ path: 'user', model: UserModel })
       .skip(skip)
