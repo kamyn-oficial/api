@@ -618,20 +618,18 @@
     <script src="js/app-html.js"></script>
     <script>
       http_setup.get('order/my').then(({ data }) => {
-        const getPaymentMethod = m => {
-          if (m === 'credit_card') return 'Cartão de crédito'
-          if (m === 'debit_card') return 'Cartão de crédito'
-          if (m === 'boleto') return 'Boleto'
-          if (m === 'pix') return 'Pix'
-          return 'Não definido'
+        const getPaymentMethod = {
+          credit_card: 'Cartão de crédito',
+          debit_card: 'Cartão de crédito',
+          bolbradesco: 'Boleto',
+          pix: 'Pix'
         }
-        const getStatus = m => {
-          if (m === 'created') return 'Aguardando pagamento'
-          if (m === 'invoiced') return 'Pago, aguardando envio'
-          if (m === 'shipped') return 'Em transporte'
-          if (m === 'delivered') return 'Entregue'
-          if (m === 'canceled') return 'Cancelado'
-          return 'Não definido'
+        const getStatus = {
+          created: 'Aguardando pagamento',
+          invoiced: 'Pago, aguardando envio',
+          shipped: 'Em transporte',
+          delivered: 'Entregue',
+          canceled: 'Cancelado'
         }
         $('.table-body').html(
           data
@@ -647,7 +645,7 @@
                 class="modal-info-link ml-1"
                 data-order='${JSON.stringify({ ...i })}''
                 data-src="#details">Ver detalhes</a></td>
-            <td>${getStatus(i.status)} ${
+            <td>${getStatus[i.status] || i.status} ${
                 i.status === 'created'
                   ? `
               <a
@@ -689,7 +687,7 @@
                     ${p.count} ${
                   p.product.name
                 } no tamanho ${p.size.name.toUpperCase()} na cor
-                    <span style="display: inline;border-radius: 4px;width: 16px;height: 16px;background: ${
+                    <span style="display: -webkit-inline-box;margin-bottom: -3px;margin-left: 2px;border-radius: 4px;width: 16px;height: 16px;background: ${
                       p.color
                     }"></span>
                   </strong>
@@ -700,8 +698,10 @@
             .toString()}
           ${order.comment ? `<p>Comentário: ${order.comment}</p>` : ''}
           <p>Total: <strong>${formatBRL(total)}</strong></p>
-          <p>Método de pagamento: ${getPaymentMethod(order.paymentMethod)}</p>
-          <p>Status: ${getStatus(order.status)}</p>
+          <p>Método de pagamento: ${
+            getPaymentMethod[order.paymentMethod] || order.paymentMethod
+          }</p>
+          <p>Status: ${getStatus[order.status] || order.status}</p>
           ${
             order.status === 'created'
               ? `
