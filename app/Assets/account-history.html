@@ -334,7 +334,7 @@
                   >Pedidos</a
                 >
                 <a href="account-comments.html" class="list-group-item"
-                  >Comentários</a
+                  >Avaliações</a
                 >
               </div>
             </div>
@@ -702,7 +702,7 @@
           <p>Total: <strong>${formatBRL(total)}</strong></p>
           <p>Método de pagamento: ${getPaymentMethod(order.paymentMethod)}</p>
           ${
-            i.status === 'created'
+            order.status === 'created'
               ? `
             <p>
             <strong>
