@@ -29,5 +29,6 @@ export default Env.rules({
   SMTP_PASSWORD: Env.schema.string(),
   USER_ADM_NAME: Env.schema.string(),
   USER_ADM_EMAIL: Env.schema.string(),
-  USER_ADM_PASSWORD: Env.schema.string()
+  USER_ADM_PASSWORD: Env.schema.string(),
+  MP_TOKEN: Env.schema.string()
 })

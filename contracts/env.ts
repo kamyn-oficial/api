@@ -29,5 +29,6 @@ declare module '@ioc:Adonis/Core/Env' {
     USER_ADM_NAME: string
     USER_ADM_EMAIL: string
     USER_ADM_PASSWORD: string
+    MP_TOKEN: string
   }
 }

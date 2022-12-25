@@ -48,6 +48,27 @@ export default class OrderController extends BaseController {
     }
   }
 
+  public async notification({ request, response }: HttpContextContract) {
+    try {
+      const query = request.qs()
+
+      if (query.topic === 'payment') {
+        const mpData = await this.MP.payment.get(query.id)
+        const approved = mpData.response.status === 'approved'
+        if (!approved) return response.status(200)
+        const orderId = mpData.response.external_reference.split(':')[1]
+        await OrderRepository.updateById(orderId, {
+          status: 'approved'
+        })
+        return response.status(200)
+      }
+
+      return response.status(200)
+    } catch (error) {
+      return this.responseSomethingWrong(response, error)
+    }
+  }
+
   public async store({ request, response }: HttpContextContract) {
     try {
       const user = await this.getUser(request)

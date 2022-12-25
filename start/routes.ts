@@ -69,6 +69,7 @@ Route.group(() => {
     }).prefix('address')
 
     Route.group(() => {
+      Route.post('/notification', 'OrderController.notification')
       Route.get('/find/:id', 'OrderController.show')
       Route.get('/my', 'OrderController.listUserLogged')
       Route.post('/', 'OrderController.store')
