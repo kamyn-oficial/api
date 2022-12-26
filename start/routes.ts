@@ -76,7 +76,7 @@ Route.group(() => {
       Route.get('/find/:id', 'OrderController.show')
       Route.get('/my', 'OrderController.listUserLogged')
       Route.post('/', 'OrderController.store')
-      Route.post('/cancel/:id', 'OrderController.cancel')
+      Route.post('/delivered/:id', 'OrderController.delivered')
     }).prefix('order')
 
     Route.group(() => {

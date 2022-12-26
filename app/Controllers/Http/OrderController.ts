@@ -208,4 +208,26 @@ export default class OrderController extends BaseController {
       return this.responseSomethingWrong(response, error)
     }
   }
+
+  public async delivered({ request, response }: HttpContextContract) {
+    try {
+      const user = await this.getUser(request)
+      if (!user) return response.status(401)
+
+      const id = decodeURI(request.params().id)
+
+      const order = await OrderRepository.findById(id)
+      if (!order) return response.status(404)
+      if (String(order.user._id) !== String(user._id))
+        return response.status(401)
+
+      await OrderRepository.updateById(id, {
+        status: 'delivered'
+      })
+
+      return response.safeStatus(200)
+    } catch (error) {
+      return this.responseSomethingWrong(response, error)
+    }
+  }
 }

@@ -36,18 +36,40 @@
       href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
     />
     <style>
-      .modal-info-heading p {
+      #details p {
+        text-align: center;
         padding: 6px;
         font-weight: 500;
         margin: 0;
         background-color: #f4f4f4;
       }
-      .modal-info-heading p strong,
-      .modal-info-heading p a strong {
+      #details p strong,
+      #details p a strong {
         color: #eb3240;
       }
-      .modal-info-heading p:nth-of-type(2n) {
+      #details p:nth-of-type(2n) {
         background-color: transparent;
+      }
+
+      .products-container {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        gap: 30px;
+        margin-bottom: 20px;
+      }
+
+      .product-wrapper {
+        display: flex;
+        flex-direction: row;
+        gap: 15px;
+      }
+
+      .product-wrapper div p {
+        font-size: 0.9rem;
+        padding: 0 !important;
+        text-align: start !important;
+        background-color: transparent !important;
       }
     </style>
   </head>
@@ -369,9 +391,12 @@
                     id="details"
                     style="display: none"
                     class="modal-info-content modal-info-content-lg"
-                  >
-                    <div class="modal-info-heading"></div>
-                  </div>
+                  ></div>
+                  <div
+                    id="delivered"
+                    style="display: none"
+                    class="modal-info-content modal-info-content-lg"
+                  ></div>
                 </table>
               </div>
             </div>
@@ -631,33 +656,36 @@
     <script src="js/app-html.js"></script>
     <script src="js/vendor-special/toastify.min.js"></script>
     <script>
-      http_setup.get('order/my').then(({ data }) => {
-        const getPaymentMethod = {
-          credit_card: 'Cartão de crédito',
-          debit_card: 'Cartão de crédito',
-          bolbradesco: 'Boleto',
-          pix: 'Pix'
-        }
-        const getStatus = {
-          created: 'Aguardando pagamento',
-          invoiced: 'Pago, aguardando envio',
-          shipped: 'Em transporte',
-          delivered: 'Entregue',
-          canceled: 'Cancelado'
-        }
-        $('.table-body').html(
-          data
-            .map(i => {
-              const total = i.products.reduce(
-                (a, b) => a + b.price * b.count || 0,
-                0
-              )
-              return `
+      fetch()
+
+      function fetch() {
+        http_setup.get('order/my').then(({ data }) => {
+          const getPaymentMethod = {
+            credit_card: 'Cartão de crédito',
+            debit_card: 'Cartão de crédito',
+            bolbradesco: 'Boleto',
+            pix: 'Pix'
+          }
+          const getStatus = {
+            created: 'Aguardando pagamento',
+            invoiced: 'Pago, aguardando envio',
+            shipped: 'Em transporte',
+            delivered: 'Entregue',
+            canceled: 'Cancelado'
+          }
+          $('.table-body').html(
+            data
+              .map(i => {
+                const total = i.products.reduce(
+                  (a, b) => a + b.price * b.count || 0,
+                  0
+                )
+                return `
           <tr>
             <td>${new Date(i.createdAt).toLocaleString()} <a
                 data-fancybox
                 style="cursor:pointer"
-                class="modal-info-link ml-1"
+                class="modal-info-link details-modal ml-1"
                 data-order='${JSON.stringify({ ...i })}''
                 data-src="#details">Detalhes</a>
             </td>
@@ -684,79 +712,68 @@
                 `
                   : ''
               }
+              ${
+                i.status === 'shipped'
+                  ? `
+                <a
+                  data-fancybox
+                  style="cursor:pointer"
+                  class="modal-delivered-link ml-1"
+                  data-order='${JSON.stringify(i)}'
+                  data-src="#delivered"
+                >
+                  Recebeu o pedido?
+                </a>
+                `
+                  : ''
+              }
             </td>
             <td><span class="color">${formatBRL(total)}</span></td>
           </tr>
         `
-            })
-            .join('')
-        )
-        $('.copy-trackcode').on('click', function () {
-          const trackcode = $(this).data('trackcode')
-          navigator.clipboard.writeText(trackcode)
-          Toastify({
-            text: 'Código de rastreio copiado!'
-          }).showToast()
-        })
-        $('.modal-info-link').on('click', function () {
-          const order = $(this).data('order')
-          console.log(order.products)
-          const total = order.products.reduce(
-            (a, b) => a + b.price * b.count || 0,
-            0
+              })
+              .join('')
           )
-          $('.modal-info-heading').html(`
-          <h2>Pedido #${order._id}</h2>
-          <p>
-            Código de rastreio: <strong>${order.trackcode}</strong>
-            <i style="font-size: 20px;cursor: pointer" class="uil uil-copy copy-trackcode" data-trackcode="${
-              order.trackcode
-            }"></i>
-          </p>
-          ${
-            order.trackcode
-              ? `
-            <p>
-              <a href="https://www2.correios.com.br/sistemas/rastreamento/default.cfm" target="_blank">
-                <strong>
-                  Rastrear pedido
-                </strong>
-              </a>
-            </p>
-            `
-              : ''
-          }
-          <p>Responsável: ${order.address.receiver}</p>
-          <p>Cidade: ${order.address.city} - ${order.address.state}</p>
-          <p>Endereço: ${
-            order.address.street
-          }, ${order.address.number} - ${order.address.neighborhood}</p>
-          <p>Complemento e Referência: ${
-            order.address.complement
-          } | ${order.address.reference}</p>
-          ${order.comment ? `<p>Comentário: ${order.comment}</p>` : ''}
-          ${order.products
-            .map(
-              (p, index) =>
-                `
-                <p style="display:flex;align-items:center;justify-content:center;gap:10px">
-                  <a href="product.html?id=${p.product._id}">
-                  <strong>
-                    ${p.count}x ${p.product.name} no tamanho ${p.size.name} na cor
-                    <span style="display: -webkit-inline-box;margin-bottom: -3px;margin-left: 2px;border-radius: 4px;border: 1px solid #282828;width: 18px;height: 18px;background: ${p.color}"></span>
-                  </strong>
-                  </a>
-                </p>
-                `
+          $('.copy-trackcode').on('click', function () {
+            const trackcode = $(this).data('trackcode')
+            navigator.clipboard.writeText(trackcode)
+            Toastify({
+              text: 'Código de rastreio copiado!'
+            }).showToast()
+          })
+          setModalDelivered()
+          $('.modal-info-link').on('click', function () {
+            const order = $(this).data('order')
+            const total = order.products.reduce(
+              (a, b) => a + b.price * b.count || 0,
+              0
             )
-            .join('\n')}
-          <p>Total: <strong>${formatBRL(total)}</strong></p>
-          <p>Método de pagamento: <strong>${
-            getPaymentMethod[order.paymentMethod] || order.paymentMethod
-          }</strong> </p>
-          <p>Status: <strong> ${
-            getStatus[order.status] || order.status
-          }</strong></p>
+            $('#details').html(`
+          <div class="modal-info-heading">
+            <h2>Pedido #${order._id}</h2>
+          </div>
+          <div class="products-container">
+            ${order.products
+              .map(p => {
+                return `
+              <div class="product-wrapper">
+                <img width="100" height="100" style="border-radius: 100%" src="${p.product.photos[0]}" alt="" />
+                <div>
+                  <p>Produto: ${p.product.name}</p>
+                  <p>Quantidade: ${p.count}</p>
+                  <p>Tamanho: ${p.size.name}</p>
+                  <p>
+                    Cor:
+                    <span
+                      style="display: -webkit-inline-box;margin-bottom: -3px;margin-left: 2px;border-radius: 4px;border: 1px solid #282828;width: 18px;height: 18px;background: ${p.color}"
+                    ></span>
+                  </p>
+                </div>
+              </div>
+                `
+              })
+              .join('')}
+          </div>
           ${
             order.status === 'created'
               ? `
@@ -771,21 +788,149 @@
               : ''
           }
           ${
+            order.status === 'shipped'
+              ? `
+              <p>
+            <a
+            data-fancybox
+            style="cursor:pointer"
+            class="modal-delivered-link ml-1"
+            data-order='${JSON.stringify(order)}'
+            data-src="#delivered"
+            >
+              <strong>
+                Recebeu o pedido?
+              </strong>
+            </a>
+          </p>
+
+            `
+              : ''
+          }
+          ${
+            order.status === 'shipped' && order.trackcode
+              ? `
+            <p>
+              <a href="https://www2.correios.com.br/sistemas/rastreamento/default.cfm" target="_blank">
+                <strong>
+                  Rastrear pedido
+                </strong>
+              </a>
+            </p>
+            `
+              : ''
+          }
+          <p>
+            Código de rastreio: <strong>${
+              order.trackcode || 'Não enviado'
+            }</strong>
+            ${
+              order.trackcode
+                ? `<i style="font-size: 20px;cursor: pointer" class="uil uil-copy copy-trackcode" data-trackcode="${order.trackcode}"></i>`
+                : ''
+            }
+          </p>
+          <p>Responsável: ${order.address.receiver}</p>
+          <p>Cidade: ${order.address.city} - ${order.address.state}</p>
+          <p>Endereço: ${
+            order.address.street
+          }, ${order.address.number} - ${order.address.neighborhood}</p>
+          <p>Complemento e Referência: ${
+            order.address.complement
+          } | ${order.address.reference}</p>
+          ${order.comment ? `<p>Comentário: ${order.comment}</p>` : ''}
+          <p>Total: <strong>${formatBRL(total)}</strong></p>
+          <p>Método de pagamento: <strong>${
+            getPaymentMethod[order.paymentMethod] || order.paymentMethod
+          }</strong> </p>
+          <p>Status: <strong> ${
+            getStatus[order.status] || order.status
+          }</strong></p>
+          ${
             order.payAt
               ? `<p>Pago em: ${new Date(order.payAt).toLocaleString()}</p>`
               : ''
           }
           <p>Feito em: ${new Date(order.createdAt).toLocaleString()}</p>
         `)
-          $('.copy-trackcode').on('click', function () {
-            const trackcode = $(this).data('trackcode')
-            navigator.clipboard.writeText(trackcode)
-            Toastify({
-              text: 'Código de rastreio copiado!'
-            }).showToast()
+            $('.copy-trackcode').on('click', function () {
+              const trackcode = $(this).data('trackcode')
+              navigator.clipboard.writeText(trackcode)
+              Toastify({
+                text: 'Código de rastreio copiado!'
+              }).showToast()
+            })
+            setModalDelivered()
           })
         })
-      })
+      }
+
+      function setModalDelivered() {
+        $('.modal-delivered-link').on('click', function () {
+          const order = $(this).data('order')
+
+          $('#delivered').html(`
+          <div class="modal-info-heading">
+            <h2>Você já recebeu o pedido?</h2>
+          </div>
+          <div style="display: flex;flex-direction: column;gap: 20px">
+            <div class="products-container">
+              ${order.products
+                .map(p => {
+                  return `
+                <div class="product-wrapper">
+                  <img width="125" height="125" style="border-radius: 100%" src="${p.product.photos[0]}" alt="" />
+                  <div>
+                    <p style="margin: 0 0 5px 0;padding: 0">Produto: ${p.product.name}</p>
+                    <p style="margin: 0 0 5px 0;padding: 0">Quantidade: ${p.count}</p>
+                    <p style="margin: 0 0 5px 0;padding: 0">Tamanho: ${p.size.name}</p>
+                    <p style="margin: 0 0 5px 0;padding: 0">
+                      Cor:
+                      <span
+                        style="display: -webkit-inline-box;margin-bottom: -3px;margin-left: 2px;border-radius: 4px;border: 1px solid #282828;width: 18px;height: 18px;background: ${p.color}"
+                      ></span>
+                    </p>
+                  </div>
+                </div>
+                  `
+                })
+                .join('')}
+            </div>
+            <button
+              id="delivered-button"
+              data-id="${order._id}"
+              style="margin: auto"
+              class="btn btn--lg"
+            >
+              Sim
+            </button>
+          </div>
+          `)
+          $('#delivered-button').on('click', function () {
+            const id = $(this).data('id')
+            http_setup.post(`order/delivered/${id}`).then(() => {
+              Toastify({
+                text: 'Pedido marcado como entregue!'
+              }).showToast()
+              Toastify({
+                text: 'Obrigado por comprar na Kamyn!'
+              }).showToast()
+              fetch()
+              $.fancybox.close(true)
+            })
+          })
+        })
+        $('.modal-delivered-link').fancybox({
+          type: 'inline',
+          buttons: ['close'],
+          touch: false,
+          backFocus: false,
+          btnTpl: {
+            smallBtn:
+              '<div data-fancybox-close class="fancybox-close-small modal-close"><i class="icon-close"></i></div>'
+          }
+        })
+      }
     </script>
   </body>
 </html>
