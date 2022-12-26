@@ -1027,7 +1027,7 @@
         }
       })
 
-      $('#submit-btn').on('click', async () => {
+      $('#submit-btn').on('click', async function () {
         const comment = $('textarea[name="comment"]').val()
         const address = $('input[name="select-address"]:checked').val()
         const paymentMethod = $('input[name="payment_method"]:checked').val()
@@ -1064,10 +1064,16 @@
           expiration,
           cvv
         }
-        http_setup.post('order', dto).then(({ data }) => {
-          window.location.href = '/account-history.html'
-          localStorage.removeItem('cart')
-        })
+        $(this).attr('disabled', true)
+        http_setup
+          .post('order', dto)
+          .then(({ data }) => {
+            window.location.href = '/account-history.html'
+            localStorage.removeItem('cart')
+          })
+          .finally(() => {
+            $(this).attr('disabled', false)
+          })
       })
     </script>
   </body>
