@@ -7,6 +7,7 @@ function formatBRL(number) {
 function fetchProductsDataTab({ per_page = 8, categories = '', sizes = '', price = '', name = '' } = {}) {
   const favorites = JSON.parse(localStorage.getItem('favorites') || '[]')
   http_setup.get(`products?page=1&per_page=${per_page}&categories=${categories}&sizes=${sizes}&price=${price}&name=${name}`).then(({ data }) => {
+    $('.items-count').html(`${data.total} item(s)`)
     const products = data.data.map(i => {
       const created = new Date(i.createdAt).getTime();
       const now = new Date().getTime() + 1000 * 60 * 60 * 24 * 7;
