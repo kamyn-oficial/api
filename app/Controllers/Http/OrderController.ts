@@ -114,8 +114,7 @@ export default class OrderController extends BaseController {
             return mpResponse.transaction_details.external_resource_url
 
           case mpResponse.payment_method_id === 'pix':
-            return mpResponse.response.point_of_interaction.transaction_data
-              .ticket_url
+            return mpResponse.point_of_interaction.transaction_data.ticket_url
 
           default:
             return ''
