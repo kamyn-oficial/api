@@ -382,7 +382,7 @@
                       <label class="text-uppercase">CPF:</label>
                       <div class="form-group">
                         <input
-                          type="text"
+                          type="number"
                           class="form-control form-control--sm"
                           name="cpf"
                           required
@@ -662,6 +662,7 @@
       function fetchPersonalData() {
         http_setup.get('me').then(({ data }) => {
           data.phone = data.phone || ''
+          data.cpf = data.cpf || ''
 
           setInputValue('name', data.name)
           setInputValue('phone', data.phone)
