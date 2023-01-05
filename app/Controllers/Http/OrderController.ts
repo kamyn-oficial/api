@@ -132,12 +132,7 @@ export default class OrderController extends BaseController {
           new Date().setDate(new Date().getDate() + 1)
         ).toISOString(),
         notification_url: `https://kamyn.com.br/api/order/notification`,
-        back_urls: {
-          success: `https://kamyn.com.br/account-history.html`,
-          failure: `https://kamyn.com.br/account-history.html`,
-          pending: `https://kamyn.com.br/account-history.html`
-        },
-        auto_return: 'approved',
+        callback_url: 'https://kamyn.com.br/account-history.html',
         description: (order.products as any)
           .map((p: any) => `${p.count}x ${p.product.name}`)
           .join(', '),
