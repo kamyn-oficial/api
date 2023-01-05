@@ -52,6 +52,9 @@ const schema = new Schema<OrderSchema>(
     paymentUrl: {
       type: String
     },
+    tracklink: {
+      type: String
+    },
     trackcode: {
       type: String
     },

@@ -149,6 +149,7 @@ class JoiSchemas {
     return Joi.object<CreateUserParams>({
       name: this.name.required(),
       email: this.email.required(),
+      cpf: this.cpf.required(),
       password: this.password.required(),
       phone: this.phone,
       isAdm: Joi.boolean()
@@ -162,14 +163,12 @@ class JoiSchemas {
   public get updateMeUser() {
     return Joi.object<UpdateMeUserParams>({
       name: this.name,
-      phone: this.phone,
-      cpf: this.cpf
+      phone: this.phone
     })
   }
 
   public get updateAddress() {
     return Joi.object<UpdateAddressParams>({
-      name: Joi.string().required(),
       receiver: Joi.string().required(),
       neighborhood: Joi.string().required(),
       number: Joi.number().required(),

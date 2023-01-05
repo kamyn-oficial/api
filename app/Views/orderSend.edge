@@ -1,0 +1,77 @@
+<html>
+  <style>
+    header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 80px;
+      background-color: #ffffff;
+      margin-bottom: 30px;
+    }
+
+    header img {
+      display: block;
+      margin: auto;
+    }
+
+    h1,
+    p,
+    a {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+      font-weight: 400;
+      line-height: 1.4;
+      text-align: center;
+    }
+
+    h1,
+    p {
+      color: #333333;
+    }
+
+    h1 {
+      font-size: 18px;
+    }
+
+    p,
+    a {
+      font-size: 15px;
+    }
+
+    a {
+      color: #2e74fd;
+    }
+
+    .reset-link {
+      color: #2d9cdb;
+      text-decoration: none;
+    }
+  </style>
+  <body>
+    <header>
+      <img
+        src="cid:logo.png"
+        alt="Logo"
+      />
+    </header>
+
+    <main>
+      <h1>Olá, {{ name }}!</h1>
+
+      <p>
+        ‎Seu pedido solicitado na Kamyn em https://kamyn.com, foi enviado!
+      </p>
+
+      <p>
+        ‎Você pode acompanhar seu pedido pelo código de rastreio <strong>{{ trackcode}}</strong>
+      </p>
+
+      <p>‎{{ products }}</p>
+
+      <p>
+        <a class="reset-link" href="{{ tracklink }}">Acompanhar pedido</a>
+      </p>
+    </main>
+  </body>
+</html>

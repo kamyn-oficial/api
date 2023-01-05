@@ -378,17 +378,6 @@
                         />
                       </div>
                     </div>
-                    <div class="col-sm-9 mt-2">
-                      <label class="text-uppercase">CPF:</label>
-                      <div class="form-group">
-                        <input
-                          type="number"
-                          class="form-control form-control--sm"
-                          name="cpf"
-                          required
-                        />
-                      </div>
-                    </div>
                   </div>
                   <div class="mt-2">
                     <button
@@ -663,17 +652,15 @@
       function fetchPersonalData() {
         http_setup.get('me').then(({ data }) => {
           data.phone = data.phone || ''
-          data.cpf = data.cpf || ''
 
           setInputValue('name', data.name)
           setInputValue('phone', data.phone)
-          setInputValue('cpf', data.cpf)
 
           document.getElementById('personal-data').innerHTML = `
           <b>Nome:</b> ${data.name}<br />
           <b>Telefone:</b> ${data.phone}<br />
-          <b>CPF:</b> ${data.cpf}<br />
           <b>Email:</b> ${data.email}<br />
+          <b>CPF:</b> ${data.cpf}<br />
         `
         })
       }

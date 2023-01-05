@@ -10,6 +10,7 @@ class UserRepository {
     '_id',
     'name',
     'email',
+    'cpf',
     'password',
     'accessTokenExp',
     'isAdm',
@@ -40,6 +41,10 @@ class UserRepository {
 
   public existByEmail(email: string) {
     return UserModel.exists({ email })
+  }
+
+  public existByCPF(cpf: string) {
+    return UserModel.exists({ cpf })
   }
 
   public async isAdm(id: string) {

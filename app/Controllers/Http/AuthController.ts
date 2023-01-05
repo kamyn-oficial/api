@@ -21,23 +21,35 @@ export default class AuthController extends BaseController {
         'password'
       ])
 
+      data.cpf = data.cpf.replace(/\D/g, '')
+
       const errors = JoiValidateService.validate(JoiSchemas.register, data)
       if (errors.length) return this.responseRequestError(response, errors)
 
       const existEmail = await UserRepository.existByEmail(data.email)
       if (existEmail) return this.responseEmailExist(response)
 
+      const existCPF = await UserRepository.existByCPF(data.cpf)
+      if (existCPF) return this.responseCpfExist(response)
+
       const passwordHash = await Hash.make(data.password)
 
-      await UserRepository.create({
+      const userDB = await UserRepository.create({
         ...data,
         passwordHash
+      })
+
+      const accessToken = await JwtService.accessToken(userDB._id)
+
+      await UserRepository.updateById(userDB._id, {
+        accessToken
       })
 
       const user = {
         name: data.name,
         email: data.email,
-        phone: data.phone
+        phone: data.phone,
+        accessToken
       }
 
       return response.status(201).json(user)
@@ -117,7 +129,7 @@ export default class AuthController extends BaseController {
   public async update({ request, response }: HttpContextContract) {
     try {
       const accessToken = this.getBearerToken(request)
-      const data: UpdateMeUserParams = request.only(['name', 'phone', 'cpf'])
+      const data: UpdateMeUserParams = request.only(['name', 'phone'])
 
       const errors = JoiValidateService.validate(JoiSchemas.updateMeUser, data)
       if (errors.length) return this.responseRequestError(response, errors)

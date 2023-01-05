@@ -86,7 +86,6 @@ export interface RegisterParams {
 export interface UpdateMeUserParams {
   name: string
   phone: string
-  cpf: string
 }
 
 export interface CreateUserParams {
@@ -101,7 +100,6 @@ export interface CreateUserParams {
 export type UpdateUserParams = CreateUserParams
 
 export interface AddressSchema {
-  name: string
   receiver: string
   neighborhood: string
   state: string

@@ -3,10 +3,6 @@ import { AddressSchema } from 'App/Types'
 
 const schema = new Schema<AddressSchema>(
   {
-    name: {
-      type: String,
-      required: true
-    },
     receiver: {
       type: String,
       required: true

@@ -369,6 +369,14 @@
                       required
                     />
                   </div>
+                  <div class="form-group" style="display: flex;justify-content: space-between">
+                    <a
+                      href="/account-login.html"
+                      class="custom-color"
+                      >
+                        Já possui uma conta?
+                      </a>
+                  </div>
                   <div class="clearfix">
                     <input
                       id="aceita_termos"
@@ -675,7 +683,9 @@
             }).showToast()
 
           try {
-            await http_setup.post('register', dto)
+            const { data } = await http_setup.post('register', dto)
+
+            localStorage.setItem('accessToken', data.accessToken)
 
             Toastify({
               text: 'Cadastro realizado com sucesso!'
@@ -683,12 +693,11 @@
 
             setTimeout(() => {
               window.location.assign(
-                `${window.location.origin}/account-login.html`
+                window.location.origin
               )
             }, 1500)
           } catch (e) {
             console.error(e)
-
           }
         })
     </script>

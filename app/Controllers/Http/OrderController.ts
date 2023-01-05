@@ -1,6 +1,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 import BaseController from './BaseController'
+import MailService from 'App/Services/MailService'
 import OrderRepository from 'App/Repositories/OrderRepository'
 
 export default class OrderController extends BaseController {
@@ -131,6 +132,12 @@ export default class OrderController extends BaseController {
           new Date().setDate(new Date().getDate() + 1)
         ).toISOString(),
         notification_url: `https://kamyn.com.br/api/order/notification`,
+        back_urls: {
+          success: `https://kamyn.com.br/account-history.html`,
+          failure: `https://kamyn.com.br/account-history.html`,
+          pending: `https://kamyn.com.br/account-history.html`
+        },
+        auto_return: 'approved',
         description: (order.products as any)
           .map((p: any) => `${p.count}x ${p.product.name}`)
           .join(', '),
@@ -192,14 +199,19 @@ export default class OrderController extends BaseController {
   public async updateStatus({ request, response }: HttpContextContract) {
     try {
       const id = decodeURI(request.params().id)
-      const data = request.only(['status', 'trackcode'])
+      const data = request.only(['status', 'tracklink', 'trackcode'])
 
-      const order = await OrderRepository.findById(id)
+      const order: any = await OrderRepository.findById(id)
       if (!order) return response.status(404)
 
-      await OrderRepository.updateById(id, {
-        status: data.status,
-        trackcode: data.trackcode
+      await OrderRepository.updateById(id, data)
+
+      await MailService.sendEmailOrderSend(order.user.email, {
+        name: order.user.name,
+        products: order.products
+          .map(p => `${p.count}x ${p.product.name}`)
+          .join(', '),
+        tracklink: data.tracklink
       })
 
       return response.safeStatus(200)

@@ -71,6 +71,39 @@
         text-align: start !important;
         background-color: transparent !important;
       }
+
+      .load {
+        display: flex;
+        justify-content: center;
+        margin: 100px auto;
+      }
+
+      .load div {
+        width: 20px;
+        height: 20px;
+        background-color: #eb3240;
+        border-radius: 50%;
+        margin: 0 5px;
+        animation-name: up-and-down;
+        animation-duration: 0.8s;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+      }
+
+      .load .two {
+        animation-delay: 0.3s;
+      }
+
+      .load .three {
+        animation-delay: 0.6s;
+      }
+
+      @keyframes up-and-down {
+        to {
+          opacity: 0.2;
+          transform: translateY(-20px);
+        }
+      }
     </style>
   </head>
   <body class="has-smround-btns has-loader-bg equal-height has-sm-container">
@@ -399,6 +432,11 @@
                   ></div>
                 </table>
               </div>
+              <div class="load">
+                <div class="one"></div>
+                <div class="two"></div>
+                <div class="three"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -660,28 +698,30 @@
       fetch()
 
       function fetch() {
-        http_setup.get('order/my').then(({ data }) => {
-          const getPaymentMethod = {
-            credit_card: 'Cartão de crédito',
-            debit_card: 'Cartão de crédito',
-            bolbradesco: 'Boleto',
-            pix: 'Pix'
-          }
-          const getStatus = {
-            created: 'Aguardando pagamento',
-            invoiced: 'Pago, aguardando envio',
-            shipped: 'Em transporte',
-            delivered: 'Entregue',
-            canceled: 'Cancelado'
-          }
-          $('.table-body').html(
-            data
-              .map(i => {
-                const total = i.products.reduce(
-                  (a, b) => a + b.price * b.count || 0,
-                  0
-                )
-                return `
+        http_setup
+          .get('order/my')
+          .then(({ data }) => {
+            const getPaymentMethod = {
+              credit_card: 'Cartão de crédito',
+              debit_card: 'Cartão de crédito',
+              bolbradesco: 'Boleto',
+              pix: 'Pix'
+            }
+            const getStatus = {
+              created: 'Aguardando pagamento',
+              invoiced: 'Pago, aguardando envio',
+              shipped: 'Em transporte',
+              delivered: 'Entregue',
+              canceled: 'Cancelado'
+            }
+            $('.table-body').html(
+              data
+                .map(i => {
+                  const total = i.products.reduce(
+                    (a, b) => a + b.price * b.count || 0,
+                    0
+                  )
+                  return `
           <tr>
             <td>${new Date(i.createdAt).toLocaleString()} <a
                 data-fancybox
@@ -732,24 +772,24 @@
             <td><span class="color">${formatBRL(total)}</span></td>
           </tr>
         `
-              })
-              .join('')
-          )
-          $('.copy-trackcode').on('click', function () {
-            const trackcode = $(this).data('trackcode')
-            navigator.clipboard.writeText(trackcode)
-            Toastify({
-              text: 'Código de rastreio copiado!'
-            }).showToast()
-          })
-          setModalDelivered()
-          $('.modal-info-link').on('click', function () {
-            const order = $(this).data('order')
-            const total = order.products.reduce(
-              (a, b) => a + b.price * b.count || 0,
-              0
+                })
+                .join('')
             )
-            $('#details').html(`
+            $('.copy-trackcode').on('click', function () {
+              const trackcode = $(this).data('trackcode')
+              navigator.clipboard.writeText(trackcode)
+              Toastify({
+                text: 'Código de rastreio copiado!'
+              }).showToast()
+            })
+            setModalDelivered()
+            $('.modal-info-link').on('click', function () {
+              const order = $(this).data('order')
+              const total = order.products.reduce(
+                (a, b) => a + b.price * b.count || 0,
+                0
+              )
+              $('#details').html(`
           <div class="modal-info-heading">
             <h2>Pedido #${order._id}</h2>
           </div>
@@ -854,16 +894,19 @@
           }
           <p>Feito em: ${new Date(order.createdAt).toLocaleString()}</p>
         `)
-            $('.copy-trackcode').on('click', function () {
-              const trackcode = $(this).data('trackcode')
-              navigator.clipboard.writeText(trackcode)
-              Toastify({
-                text: 'Código de rastreio copiado!'
-              }).showToast()
+              $('.copy-trackcode').on('click', function () {
+                const trackcode = $(this).data('trackcode')
+                navigator.clipboard.writeText(trackcode)
+                Toastify({
+                  text: 'Código de rastreio copiado!'
+                }).showToast()
+              })
+              setModalDelivered()
             })
-            setModalDelivered()
           })
-        })
+          .finally(() => {
+            $('.load').hide()
+          })
       }
 
       function setModalDelivered() {

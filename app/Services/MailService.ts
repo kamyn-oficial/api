@@ -49,6 +49,27 @@ class MailService {
       ]
     })
   }
+
+  public async sendEmailOrderSend(
+    to: string,
+    state: { name: string; products: string; tracklink: string }
+  ) {
+    const html = await renderView('orderSend', state)
+
+    await this.transporter.sendMail({
+      subject: 'Pedido Enviado',
+      from: this.from,
+      to,
+      html,
+      attachments: [
+        {
+          filename: 'logo.png',
+          path: `${this.assetsPath}/images/logo.png`,
+          cid: 'logo.png'
+        }
+      ]
+    })
+  }
 }
 
 export default new MailService()

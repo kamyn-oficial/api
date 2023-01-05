@@ -998,7 +998,9 @@
               required
               ${i.isDefault ? 'checked' : ''}
             />
-            <label for="select-address-${i._id}"> ${i.name} </label>
+            <label for="select-address-${i._id}"> ${i.street}, ${i.number} - ${
+              i.neighborhood
+            } </label>
           </div>
           `
           })
@@ -1012,6 +1014,15 @@
           </div>
           `)
         $('.add-address').click(() => {
+          const redirectKey = 'on-add-address-redirect-to-checkout'
+          if (!data.length) {
+            sessionStorage.setItem(redirectKey, true)
+            setTimeout(() => {
+              sessionStorage.removeItem(redirectKey)
+            }, 120000)
+          } else {
+            sessionStorage.removeItem(redirectKey)
+          }
           window.location.href = '/account-addresses.html'
         })
       })
@@ -1069,7 +1080,7 @@
         http_setup
           .post('order', dto)
           .then(({ data }) => {
-            window.location.href = '/account-history.html'
+            window.location.href = data.paymentUrl
             localStorage.removeItem('cart')
           })
           .finally(() => {

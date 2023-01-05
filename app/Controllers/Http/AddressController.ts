@@ -25,7 +25,6 @@ export default class AddressController extends BaseController {
       const userId = await this.getUserId(request)
 
       const data: UpdateAddressParams = request.only([
-        'name',
         'receiver',
         'neighborhood',
         'state',
@@ -71,7 +70,6 @@ export default class AddressController extends BaseController {
       if (!user) return response.status(404)
 
       const data: UpdateAddressParams = request.only([
-        'name',
         'receiver',
         'neighborhood',
         'state',

@@ -363,17 +363,6 @@
                 >
                   <div style="display: flex; flex-direction: row; gap: 20px">
                     <div style="width: 100%">
-                      <label class="text-uppercase">Nome:</label>
-                      <div class="form-group">
-                        <input
-                          type="text"
-                          class="form-control"
-                          name="name"
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div style="width: 100%">
                       <label class="text-uppercase">
                         Nome do destinatário:
                       </label>
@@ -877,6 +866,12 @@
             text: 'Endereço adicionado com sucesso!'
           }).showToast()
           quantity++
+          const redirectKey = 'on-add-address-redirect-to-checkout'
+          const redirect = sessionStorage.getItem(redirectKey)
+          if (redirect) {
+            sessionStorage.removeItem(redirectKey)
+            window.location.assign('/checkout.html')
+          }
         }
 
         editingID = ''
@@ -891,6 +886,28 @@
           check.checked = true
         }
         setFormValue()
+        setTimeout(() => {
+          const cepInput = document.getElementsByName('zipcode')[0]
+          cepInput.addEventListener('change', async e => {
+            let { value } = e.target
+            value = value.replace(/\D/g, '')
+            if (value.length === 8) {
+              const { data } = await http_setup.get(`https://viacep.com.br/ws/${value}/json/`)
+              if (data.erro) {
+                Toastify({
+                  text: 'CEP não encontrado!'
+                }).showToast()
+                return
+              }
+              const { logradouro, bairro, localidade, uf } = data
+              document.getElementsByName('street')[0].value = logradouro
+              document.getElementsByName('neighborhood')[0].value = bairro
+              document.getElementsByName('city')[0].value = localidade
+              document.getElementsByName('state')[0].value = estados.find(e => e.sigla === uf).nome
+              updateCities(localidade)
+            }
+        })
+        }, 100)
       })
 
       form.addEventListener('submit', handleSubmit)
@@ -904,7 +921,7 @@
             <div class="col-sm-9">
               <div class="card">
                 <div class="card-body">
-                  <h3>${address.name} ${
+                  <h3>${address.street}, ${address.number} - ${address.neighborhood} ${
                 address.isDefault ? '(Padrão)' : ''
               }</h3>
                   <p>
@@ -942,7 +959,7 @@
           $('.delete-btn').on('click', async ({ target }) => {
             const address = getAddress(target.dataset.id)
             const yes = await confirm(
-              `Deseja deletar o endereço "${address.name}"?`
+              `Deseja deletar o endereço "${address.street}, ${address.number} - ${address.neighborhood}"?`
             )
             if (yes) deleteAddress(address._id)
           })
@@ -962,7 +979,7 @@
           $('.define-default-btn').on('click', async ({ target }) => {
             const address = getAddress(target.dataset.id)
             const yes = await confirm(
-              `Deseja definir o endereço "${address.name}" como padrão?`
+              `Deseja definir o endereço "${address.street}, ${address.number} - ${address.neighborhood}" como padrão?`
             )
             if (yes) defineDefault(address)
           })

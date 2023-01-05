@@ -61,6 +61,12 @@ export default class BaseController {
     })
   }
 
+  protected responseCpfExist(response: ResponseContract) {
+    return response.status(409).json({
+      errors: [{ field: 'cpf', message: 'Este CPF já está sendo utilizado' }]
+    })
+  }
+
   protected responseEmailNotFound(response: ResponseContract) {
     return response.status(404).json({
       errors: [{ field: 'email', message: 'Email não encontrado' }]
