@@ -37,10 +37,10 @@ export default class UserController extends BaseController {
       const errors = JoiValidateService.validate(JoiSchemas.createUser, data)
       if (errors.length) return this.responseRequestError(response, errors)
 
-      const existEmail = await UserRepository.existByEmail(data.email)
+      const existEmail = await UserRepository.existByEmail('', data.email)
       if (existEmail) return this.responseEmailExist(response)
 
-      const existCPF = await UserRepository.existByCPF(data.cpf)
+      const existCPF = await UserRepository.existByCPF('', data.cpf)
       if (existCPF) return this.responseCpfExist(response)
 
       const passwordHash = await Hash.make(data.password)
@@ -75,10 +75,10 @@ export default class UserController extends BaseController {
       const errors = JoiValidateService.validate(JoiSchemas.updateUser, data)
       if (errors.length) return this.responseRequestError(response, errors)
 
-      const existEmail = await UserRepository.existByEmail(data.email)
+      const existEmail = await UserRepository.existByEmail(id, data.email)
       if (existEmail) return this.responseEmailExist(response)
 
-      const existCPF = await UserRepository.existByCPF(data.cpf)
+      const existCPF = await UserRepository.existByCPF(id, data.cpf)
       if (existCPF) return this.responseCpfExist(response)
 
       const passwordHash = await Hash.make(data.password)

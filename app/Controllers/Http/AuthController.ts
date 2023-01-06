@@ -26,10 +26,10 @@ export default class AuthController extends BaseController {
       const errors = JoiValidateService.validate(JoiSchemas.register, data)
       if (errors.length) return this.responseRequestError(response, errors)
 
-      const existEmail = await UserRepository.existByEmail(data.email)
+      const existEmail = await UserRepository.existByEmail('', data.email)
       if (existEmail) return this.responseEmailExist(response)
 
-      const existCPF = await UserRepository.existByCPF(data.cpf)
+      const existCPF = await UserRepository.existByCPF('', data.cpf)
       if (existCPF) return this.responseCpfExist(response)
 
       const passwordHash = await Hash.make(data.password)

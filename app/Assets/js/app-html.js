@@ -65,7 +65,7 @@ function fetchProductsDataTab({ per_page = 8, categories = '', sizes = '', price
                     ${i.categories.map((c, index) => `<a href="category.html?category=${c._id}">${index > 0 ? ' - ' : ''}${c.name}</a>`).join('')}
                   </div>
                   <h2 class="prd-title">
-                    <a href="product.html?id=${i._id}">${i.name}</a>
+                    <a href="product.html?id=${i._id}">${i.name.slice(0, 60)}</a>
                   </h2>
                   <div class="prd-description">
                     ${i.description}

@@ -39,12 +39,15 @@ class UserRepository {
     return data.save()
   }
 
-  public existByEmail(email: string) {
-    return UserModel.exists({ email })
+  public existByEmail(id: string, email: string) {
+    return UserModel.exists({
+      email,
+      _id: id ? { $ne: id } : { $exists: true }
+    })
   }
 
-  public existByCPF(cpf: string) {
-    return UserModel.exists({ cpf })
+  public existByCPF(id: string, cpf: string) {
+    return UserModel.exists({ cpf, _id: id ? { $ne: id } : { $exists: true } })
   }
 
   public async isAdm(id: string) {

@@ -19,7 +19,7 @@ class UserSeed {
 
   public async createAdm() {
     try {
-      const existEmail = await UserRepository.existByEmail(this.adm.email)
+      const existEmail = await UserRepository.existByEmail('', this.adm.email)
 
       if (existEmail) return Logger.info('user admin already exists')
       Logger.info('user admin created')
