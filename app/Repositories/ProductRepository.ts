@@ -97,7 +97,7 @@ class ProductRepository {
     }
 
     return {
-      ...data._doc,
+      ...data?._doc,
       rating
     }
   }

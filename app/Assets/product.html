@@ -1199,16 +1199,16 @@
     <script src="js/vendor-special/jquery.ez-plus.js"></script>
     <script src="js/vendor-special/instafeed.min.js"></script>
     <script src="js/vendor/vendor.min.js"></script>
+    <script>
+      var data = '{}'
+      if (data === '{}') window.location.href = 'index.html'
+    </script>
     <script src="js/app-html.js"></script>
     <script src="js/vendor-special/toastify.min.js"></script>
     <script>
-      const params = new URLSearchParams(location.search)
-      const id = params.get('id') || params.get('_id')
-      if (!id) window.location.href = 'index.html'
-      http_setup.get(`product/${id}`).then(({ data }) => {
-        $('#product-name').html(data.name)
-        $('#product-name').attr('href', `product.html?id=${data._id}`)
-        $('.rating-js').html(`
+      $('#product-name').html(data.name)
+      $('#product-name').attr('href', `product.html?id=${data._id}`)
+      $('.rating-js').html(`
           ${new Array(5)
             .fill()
             .map(
@@ -1224,41 +1224,41 @@
             </a>
           </span>
         `)
-        $('.prd-block_title').html(data.name)
-        const discount = data.price * (data.promotion / 100)
-        $('.prd-block_price--actual').html(
-          formatBRL(data.promotion ? data.price - discount : data.price)
-        )
-        if (data.promotion) {
-          $('.prd-block_price-old-wrap').html(`
+      $('.prd-block_title').html(data.name)
+      const discount = data.price * (data.promotion / 100)
+      $('.prd-block_price--actual').html(
+        formatBRL(data.promotion ? data.price - discount : data.price)
+      )
+      if (data.promotion) {
+        $('.prd-block_price-old-wrap').html(`
             <span class="prd-block_price--old">${formatBRL(data.price)}</span>
             <span class="prd-block_price--text">
               Você economiza: ${formatBRL(discount)} (${data.promotion}%)
             </span>
           `)
-        }
-        $('.description-js').html(data.description)
-        $('.js-stock-left').html(data.quantity)
-        $('.prd-in-stock').html(data.quantity > 0 ? 'Em estoque' : 'Esgotado')
-        $('.product-id').html(data._id)
-        $('.product-categories').html(
-          data.categories.map(category => category.name).join(', ')
-        )
-        $('#SingleOptionSelector-0').html(
-          data.colors
-            .map(
-              color => `
+      }
+      $('.description-js').html(data.description)
+      $('.js-stock-left').html(data.quantity)
+      $('.prd-in-stock').html(data.quantity > 0 ? 'Em estoque' : 'Esgotado')
+      $('.product-id').html(data._id)
+      $('.product-categories').html(
+        data.categories.map(category => category.name).join(', ')
+      )
+      $('#SingleOptionSelector-0').html(
+        data.colors
+          .map(
+            color => `
           <option value="${color}">
             ${color}
           </option>
         `
-            )
-            .join('')
-        )
-        $('.images-list.js-color-list').append(
-          data.colors
-            .map(
-              (color, index) => `
+          )
+          .join('')
+      )
+      $('.images-list.js-color-list').append(
+        data.colors
+          .map(
+            (color, index) => `
                 ${index > 0 ? '<li></li>' : ''}
                 <li>
                   <a
@@ -1276,66 +1276,66 @@
                     </a>
                 </li>
               `
-            )
-            .join('')
-        )
-        $('#SingleOptionSelector-1').append(
-          data.sizes
-            .map(
-              size => `
+          )
+          .join('')
+      )
+      $('#SingleOptionSelector-1').append(
+        data.sizes
+          .map(
+            size => `
             <option value="${size._id}">
               ${size.name}
             </option>
           `
-            )
-            .join('')
-        )
-        $('.size-list.js-size-list').append(
-          data.sizes.map(
-            size => `
+          )
+          .join('')
+      )
+      $('.size-list.js-size-list').append(
+        data.sizes.map(
+          size => `
             <li>
               <a href="#" data-value="${size._id}" data-name="${size.name}">
                 <span class="value">${size.name}</span>
               </a>
             </li>
             `
+        )
+      )
+      $('.js-prd-addtocart').attr('data-product', JSON.stringify(data))
+      $('.btn-add-to-wishlist').attr('data-product', JSON.stringify(data))
+      $('.tags-list').append(
+        data.categories
+          .map(
+            c => `<li><a href="category.html?id=${c._id}">${c.name}</a></li>`
           )
-        )
-        $('.js-prd-addtocart').attr('data-product', JSON.stringify(data))
-        $('.btn-add-to-wishlist').attr('data-product', JSON.stringify(data))
-        $('.tags-list').append(
-          data.categories
-            .map(
-              c => `<li><a href="category.html?id=${c._id}">${c.name}</a></li>`
-            )
-            .join('')
-        )
-        const favorites = JSON.parse(localStorage.getItem('favorites') || '[]')
-        http_setup
-          .get('fy')
-          .then(({ data }) => {
-            $('#fy').append(
-              data
-                .map(i => {
-                  const created = new Date(i.createdAt).getTime()
-                  const now = new Date().getTime() + 1000 * 60 * 60 * 24 * 7
-                  const isNew = now > created
-                  i.path =
-                    i.photos[0] ||
-                    'images/skins/fashion/products/product-03-1.jpg'
-                  i.url = `product.html?id=${i._id}`
-                  i.aspect_ratio = 0.778
-                  const isFavorite =
-                    favorites.findIndex(({ _id }) => _id === i._id) > -1
-                  i.rating = Math.round(i.rating)
-                  return `
+          .join('')
+      )
+      const favorites = JSON.parse(localStorage.getItem('favorites') || '[]')
+      http_setup
+        .get('fy')
+        .then(({ data }) => {
+          $('#fy').append(
+            data
+              .map(i => {
+                const created = new Date(i.createdAt).getTime()
+                const now = new Date().getTime() + 1000 * 60 * 60 * 24 * 7
+                const isNew = now > created
+                i.path =
+                  i.photos[0] ||
+                  'images/skins/fashion/products/product-03-1.jpg'
+                i.url = `/${i.name.replaceAll(' ', '-')}-${i._id}`
+                i.aspect_ratio = 0.778
+                const isFavorite =
+                  favorites.findIndex(({ _id }) => _id === i._id) > -1
+                i.rating = Math.round(i.rating)
+                return `
               <div class="prd prd--style2 prd-labels--max prd-labels-shadow prd-w-lg ${
                 isFavorite ? 'prd--in-wishlist' : ''
               }">
               <div class="prd-inside">
                 <div class="prd-img-area">
                   <a
-                    href="product.html?id=${i._id}"
+                    href="/${i.name.replaceAll(' ', '-')}-${i._id}"
                     class="prd-img image-hover-scale image-container"
                   >
                     <img
@@ -1397,7 +1397,9 @@
                         .join('')}
                     </div>
                     <h2 class="prd-title">
-                      <a href="product.html?id=${i._id}">${i.name}</a>
+                      <a href="/${i.name.replaceAll(' ', '-')}-${i._id}">${
+                  i.name
+                }</a>
                     </h2>
                   </div>
                   <div class="prd-hovers">
@@ -1415,7 +1417,7 @@
                     </div>
                     <div class="prd-action">
                       <div class="prd-action-left">
-                        <a href="product.html?id=${i._id}">
+                        <a href="/${i.name.replaceAll(' ', '-')}-${i._id}">
                       <button
                         class="btn"
                       >
@@ -1429,18 +1431,18 @@
               </div>
             </div>
               `
-                })
-                .join(' ')
-            )
-          })
-          .finally(() => {
-            THEME.product.init()
-            THEME.documentLoad.init()
-          })
-        $('.js-product-main-carousel').append(
-          data.photos
-            .map(
-              p => `
+              })
+              .join(' ')
+          )
+        })
+        .finally(() => {
+          THEME.product.init()
+          THEME.documentLoad.init()
+        })
+      $('.js-product-main-carousel').append(
+        data.photos
+          .map(
+            p => `
               <div data-value="Beige">
                 <span class="prd-img">
                   <img
@@ -1451,13 +1453,13 @@
                   />
                 </span>
               </div>`
-            )
-            .join('')
-        )
-        $('.js-product-previews-carousel').append(
-          data.photos
-            .map(
-              p => `
+          )
+          .join('')
+      )
+      $('.js-product-previews-carousel').append(
+        data.photos
+          .map(
+            p => `
                 <a href="#" data-value="">
                   <span class="prd-img">
                     <img
@@ -1468,12 +1470,12 @@
                   </span>
                 </a>
               `
-            )
-            .join('')
-        )
-        $('#productReviewsBottom').append(
-          data.comments.map(c => {
-            return `
+          )
+          .join('')
+      )
+      $('#productReviewsBottom').append(
+        data.comments.map(c => {
+          return `
               <div class="review-item">
                 <div class="review-item_rating">
                   ${new Array(5)
@@ -1501,9 +1503,8 @@
                 </div>
               </div>
             `
-          })
-        )
-      })
+        })
+      )
 
       $('#addComment').on('submit', async e => {
         e.preventDefault()

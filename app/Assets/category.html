@@ -1106,7 +1106,7 @@
                 i.path =
                   i.photos[0] ||
                   'images/skins/fashion/products/product-03-1.jpg'
-                i.url = `product.html?id=${i._id}`
+                i.url = `/${i.name.replaceAll(' ', '-')}-${i._id}`
                 i.aspect_ratio = 0.778
                 const isFavorite =
                   favorites.findIndex(({ _id }) => _id === i._id) > -1
@@ -1118,7 +1118,7 @@
               <div class="prd-inside">
                 <div class="prd-img-area">
                   <a
-                    href="product.html?id=${i._id}"
+                    href="/${i.name.replaceAll(' ', '-')}-${i._id}"
                     class="prd-img image-hover-scale image-container"
                   >
                     <img
@@ -1180,7 +1180,9 @@
                         .join('')}
                     </div>
                     <h2 class="prd-title">
-                      <a href="product.html?id=${i._id}">${i.name}</a>
+                      <a href="/${i.name.replaceAll(' ', '-')}-${i._id}">${
+                  i.name
+                }</a>
                     </h2>
                   </div>
                   <div class="prd-hovers">
@@ -1198,7 +1200,7 @@
                     </div>
                     <div class="prd-action">
                       <div class="prd-action-left">
-                        <a href="product.html?id=${i._id}">
+                        <a href="/${i.name.replaceAll(' ', '-')}-${i._id}">
                           <button
                             class="btn"
                           >

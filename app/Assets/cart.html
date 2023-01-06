@@ -624,7 +624,9 @@
             return `
         <div class="cart-table-prd">
                   <div class="cart-table-prd-image">
-                    <a href="product.html?id=${i._id}" class="prd-img"
+                    <a href="/${i.name.replaceAll(' ', '-')}-${
+              i._id
+            }" class="prd-img"
                       ><img
                         class="lazyload fade-up"
                         src="${image}"
@@ -637,7 +639,9 @@
                         <div class="price-new">${formatBRL(price)}</div>
                       </div>
                       <h2 class="cart-table-prd-name">
-                        <a href="product.html?_id=${i._id}">${i.name}</a>
+                        <a href="/${i.name.replaceAll(' ', '-')}-${i._id}">${
+              i.name
+            }</a>
                         <p style="color: black">${i.sizeName}</p>
                         <div style="border: 1px solid #282828;border-radius: 4px;width: 18px;height: 18px;background: ${
                           i.color

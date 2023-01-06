@@ -944,7 +944,9 @@
             return `
                 <div class="cart-table-prd">
                   <div class="cart-table-prd-image">
-                    <a href="product.html?id=${i._id}" class="prd-img"
+                    <a href="/${i.name.replaceAll(' ', '-')}-${
+              i._id
+            }" class="prd-img"
                       ><img
                         class="lazyload fade-up"
                         src="${image}"
@@ -954,7 +956,9 @@
                   <div class="cart-table-prd-content-wrap">
                     <div class="cart-table-prd-info">
                       <h2 class="cart-table-prd-name">
-                        <a href="product.html?id=${i._id}">${i.name}</a>
+                        <a href="/${i.name.replaceAll(' ', '-')}-${i._id}">${
+              i.name
+            }</a>
                         <p style="text-transform: uppercase;color: black">${
                           i.sizeName
                         }</p>

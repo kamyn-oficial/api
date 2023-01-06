@@ -1,5 +1,7 @@
 "use strict";
 
+var data;
+
 function formatBRL(number) {
   return number.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
@@ -21,7 +23,7 @@ function fetchProductsDataTab({ per_page = 8, categories = '', sizes = '', price
             <div class="prd-inside">
               <div class="prd-img-area">
                 <a
-                  href="product.html?id=${i._id}"
+                  href="/${i.name.replaceAll(' ', '-')}-${i._id}"
                   class="prd-img image-hover-scale image-container"
                 >
                   <img
@@ -65,13 +67,13 @@ function fetchProductsDataTab({ per_page = 8, categories = '', sizes = '', price
                     ${i.categories.map((c, index) => `<a href="category.html?category=${c._id}">${index > 0 ? ' - ' : ''}${c.name}</a>`).join('')}
                   </div>
                   <h2 class="prd-title">
-                    <a href="product.html?id=${i._id}">${i.name.slice(0, 60)}</a>
+                    <a href="/${i.name.replaceAll(' ', '-')}-${i._id}">${i.name.slice(0, 60)}</a>
                   </h2>
                   <div class="prd-description">
                     ${i.description}
                   </div>
                   <div class="prd-action">
-                    <a href="product.html?id=${i._id}">
+                    <a href="/${i.name.replaceAll(' ', '-')}-${i._id}">
                       <button
                         class="btn"
                       >
@@ -104,7 +106,7 @@ function fetchProductsDataTab({ per_page = 8, categories = '', sizes = '', price
                   </div>
                   <div class="prd-action">
                     <div class="prd-action-left">
-                      <a href="product.html?id=${i._id}">
+                      <a href="/${i.name.replaceAll(' ', '-')}-${i._id}">
                         <button
                           class="btn"
                         >
@@ -7655,7 +7657,7 @@ if (cartIcon) {
       THEME.initialization.init();
       THEME.header.init();
       THEME.forms.init();
-      if (!['/product.html', '/category.html'].includes(window.location.pathname)) THEME.product.init();
+      if (!['/product.html', '/category.html'].includes(window.location.pathname) && !data) THEME.product.init();
       if (catalogPage) THEME.catalog.init();
       if (productPage) THEME.productPage.productTitleReposition();
       THEME.initialization.initDelay();
@@ -7783,7 +7785,7 @@ if (cartIcon) {
   if (!['/', '/index.html'].includes(window.location.pathname)) {
     THEME.beforeReady.init();
     THEME.documentReady.init()
-    if (!['/product.html', '/category.html'].includes(window.location.pathname)) $window.on('load', THEME.documentLoad.init);
+    if (!['/product.html', '/category.html'].includes(window.location.pathname) && !data) $window.on('load', THEME.documentLoad.init);
     $window.on('resize', THEME.documentResize.init);
   }
 })(jQuery);

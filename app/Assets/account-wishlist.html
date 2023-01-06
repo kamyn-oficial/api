@@ -620,7 +620,7 @@
                     <div class="prd-inside">
                       <div class="prd-img-area">
                         <a
-                          href="product.html?_id=${i._id}"
+                          href="/${i.name.replaceAll(' ', '-')}-${i._id}"
                           class="prd-img image-hover-scale image-container"
                         >
                           <img
@@ -662,7 +662,7 @@
                               .join('')}
                           </div>
                           <h2 class="prd-title">
-                            <a href="product.html?_id=${i._id}">
+                            <a href="/${i.name.replaceAll(' ', '-')}-${i._id}">
                               ${i.name}
                             </a>
                           </h2>
@@ -684,7 +684,9 @@
                           </div>
                           <div class="prd-action">
                             <div class="prd-action-left">
-                              <a href="product.html?_id=${i._id}">
+                              <a href="/${i.name.replaceAll(' ', '-')}-${
+                i._id
+              }">
                                 <button class="btn">Comprar</button>
                               </a>
                             </div>

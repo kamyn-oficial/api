@@ -37,6 +37,13 @@
       type="text/javascript"
       src="js/vendor-special/axios.min.js"
     ></script>
+    <style>
+      @media (min-width: 720px) {
+        .bnslider-vert {
+          margin-right: 70px !important;
+        }
+      }
+    </style>
   </head>
 
   <body class="has-smround-btns has-loader-bg equal-height">
@@ -644,11 +651,11 @@
                   >
                     <div class="bnslider-text-content-flex">
                       <div
-                        class="bnslider-vert w-s-60 w-ms-100"
-                        style="padding: 0px"
+                        class="bnslider-vert"
+                        style="padding: 30px;background: rgba(255, 255, 255, 0.3);"
                       >
                         <div
-                          class="bnslider-text order-1 mt-sm bnslider-text--md text-center data-ini"
+                          class="bnslider-text order-1 bnslider-text--md text-center data-ini"
                           data-animation="fadeInUp"
                           data-animation-delay="800"
                           data-fontcolor="#282828"
@@ -658,11 +665,11 @@
                           ${b.title}
                         </div>
                         <div
-                          class="bnslider-text order-2 mt-sm bnslider-text--xs text-center data-ini"
+                          class="bnslider-text order-2 mt-sm bnslider-text--sm text-center data-ini"
                           data-animation="fadeInUp"
                           data-animation-delay="1000"
-                          data-fontcolor="#7c7c7c"
-                          data-fontweight="400"
+                          data-fontcolor="#282828"
+                          data-fontweight="500"
                           data-fontline="1.5"
                         >
                           ${b.subtitle}
@@ -690,6 +697,10 @@
           THEME.documentReady.init()
           $(window).on('load', THEME.documentLoad.init)
           $(window).on('resize', THEME.documentResize.init)
+
+          setTimeout(() => {
+            if ($('.mmenu-js').length > 1) $('.mmenu-js').eq(0).remove()
+          }, 100)
         })
     </script>
   </body>

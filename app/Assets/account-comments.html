@@ -620,7 +620,9 @@
                 i => `
               <tr>
                 <td>
-                  <a href="product.html?id=${i._id}" class="ml-1">
+                  <a href="/${i.name.replaceAll(' ', '-')}-${
+                  i._id
+                }" class="ml-1">
                     <b>${i.product.name}</b>
                   </a>
                 </td>
