@@ -1071,10 +1071,7 @@
             <div class="popup-addedtocart-close js-popupAddToCart-close">
               <i class="icon-close"></i>
             </div>
-            <div
-              class="popup-addedtocart-cart js-open-drop"
-              data-panel="#dropdnMinicart"
-            >
+            <div class="popup-addedtocart-cart" data-panel="#dropdnMinicart">
               <i class="icon-basket"></i>
             </div>
             <div class="col-auto popup-addedtocart_logo">
@@ -1515,6 +1512,10 @@
           text: 'Comentário enviado com sucesso!'
         }).showToast()
         $.fancybox.close()
+      })
+
+      $('.popup-addedtocart-cart').on('click', () => {
+        window.location.assign('/cart.html')
       })
     </script>
   </body>
