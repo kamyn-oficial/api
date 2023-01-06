@@ -97,7 +97,8 @@ Route.get('/:product_name', async ({ request, response }) => {
   const productName = decodeURI(request.params().product_name)
   const productId = productName.split('-').pop()
   try {
-    if (!productId) return response.redirect(productName)
+    if (!productId || productId.length < 24)
+      return response.redirect(productName)
     const product = await ProductRepository.findById(productId)
     if (!product._id) return response.redirect('/404.html')
     const filePath = path.join(__dirname, '..', 'app', 'Assets', 'product.html')
