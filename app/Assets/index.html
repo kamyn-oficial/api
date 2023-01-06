@@ -125,7 +125,7 @@
                 <div class="dropdn dropdn_fullheight minicart">
                   <a
                     href="cart.html"
-                    class="dropdn-link js-dropdn-link minicart-link only-icon"
+                    class="dropdn-link minicart-link only-icon"
                   >
                     <i class="icon-basket"></i>
                     <span class="minicart-qty">0</span>
@@ -694,10 +694,6 @@
           THEME.documentReady.init()
           $(window).on('load', THEME.documentLoad.init)
           $(window).on('resize', THEME.documentResize.init)
-
-          setTimeout(() => {
-            if ($('.mmenu-js').length > 1) $('.mmenu-js').eq(0).remove()
-          }, 100)
         })
     </script>
   </body>
