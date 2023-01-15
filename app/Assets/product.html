@@ -31,6 +31,24 @@
       type="text/javascript"
       src="js/vendor-special/axios.min.js"
     ></script>
+    <style>
+      .payment-btn-custom {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        height: 28px;
+        margin-left: -120px;
+        margin-top: auto;
+        margin-bottom: -5px;
+      }
+
+      @media (min-width: 580px) {
+        .payment-btn-custom {
+          display: none;
+        }
+      }
+    </style>
   </head>
   <body
     class="template-product has-smround-btns has-loader-bg equal-height has-sm-container"
@@ -1085,17 +1103,8 @@
                 </div>
                 <a
                   href="checkout.html"
-                  class="btn btn--sm btn--invert"
-                  style="
-                    display: flex;
-                    flex-direction: row;
-                    align-items: center;
-                    justify-content: center;
-                    height: 28px;
-                    margin-left: -120px;
-                    margin-top: auto;
-                    margin-bottom: -5px;
-                  "
+                  class="btn btn--sm btn--invert payment-btn-custom"
+                  style=""
                   ><i style="top: 0" class="icon-envelope-1"></i
                   ><span>Pagar</span></a
                 >

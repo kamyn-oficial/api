@@ -884,6 +884,31 @@
           </div>
         </div>
       </div>
+      <div
+        id="paymentPix"
+        style="display: none"
+        class="modal-info-content modal-info-content-lg"
+      >
+        <div class="modal-info-heading">
+          <h2>Efetuar pagamento</h2>
+        </div>
+        <div
+          style="
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+          "
+        >
+          <img
+            style="margin: auto"
+            width="256"
+            src="https://devtools.com.br/img/pix/logo-pix-png-930x616.png"
+          />
+          <img style="margin: auto" width="256" id="pixCode" />
+        </div>
+      </div>
       <!-- back to top -->
       <a
         class="back-to-top js-back-to-top compensate-for-scrollbar"
@@ -1081,7 +1106,19 @@
         http_setup
           .post('order', dto)
           .then(({ data }) => {
-            window.location.href = data.paymentUrl
+            if (data.payload.payment_method_id === 'pix') {
+              $('#pixCode').attr(
+                'src',
+                'data:image/png;base64,' +
+                  data.mpData.body.point_of_interaction.transaction_data
+                    .qr_code_base64
+              )
+              $.fancybox.open({
+                src: '#paymentPix'
+              })
+            } else {
+              window.location.href = data.paymentUrl
+            }
             localStorage.removeItem('cart')
           })
           .finally(() => {
