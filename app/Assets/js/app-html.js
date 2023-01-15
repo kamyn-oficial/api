@@ -14,7 +14,7 @@ function fetchProductsDataTab({ per_page = 8, categories = '', sizes = '', price
       const created = new Date(i.createdAt).getTime();
       const now = new Date().getTime() + 1000 * 60 * 60 * 24 * 7;
       const isNew = now > created
-      i.path = i.photos[0] || 'images/skins/fashion/products/product-03-1.jpg'
+      i.path = i.photos[0] || 'images/skins/fashion/products/product-01-1.jpg'
       i.aspect_ratio = 0.778
       const isFavorite = favorites.findIndex(({ _id }) => _id === i._id) > -1
       i.rating = Math.round(i.rating)
