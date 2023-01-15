@@ -3,7 +3,7 @@ $heading_font_family_scss_var: 'Open Sans', sans-serif !default;
 $body_font_family_scss_var: 'Open Sans', sans-serif !default;
 $desktop-menu_font_family_scss_var: 'Open Sans', sans-serif !default;
 //main color
-$custom_color_scss_var: #EB3240 !default;
+$custom_color_scss_var: #01caaa !default;
 $text_color_dark_scss_var: #0f0909 !default;
 $text_color_middle_scss_var: #282828 !default;
 $text_color_light_scss_var: #7e7e7e !default;
@@ -137,9 +137,9 @@ $breadcrumbs_bg_scss_var: #f9f9f9 !default;
 $breadcrumbs_color_scss_var: $text_color_middle_scss_var !default;
 $breadcrumbs-hover_color_scss_var: $custom_color_scss_var !default;
 // loader
-$loader-spinner_border_color_scss_var: rgba(100, 100, 100, .5) !default;
+$loader-spinner_border_color_scss_var: rgba(100, 100, 100, 0.5) !default;
 $loader-spinner_spin_color_scss_var: #fff !default;
-$ajax-loader_bg_scss_var: rgba(255, 255, 255, .9) !default;
+$ajax-loader_bg_scss_var: rgba(255, 255, 255, 0.9) !default;
 $loader-circle_width_scss_var: 120px;
 $loader-circle_color_scss_var: $custom_color_scss_var !default;
 $loader-icon_color_scss_var: #282828 !default;
@@ -267,7 +267,7 @@ $header-topline-dark-custom-text_color_scss_var: #fff !default;
 $header-topline-dark-custom-text-span_color_scss_var: $custom_color_scss_var !default;
 // header dropdown
 $header-dropdown_bg_scss_var: #fff !default;
-$header-dropdown_bg_transparent_scss_var: rgba(255,255,255,0) !default;
+$header-dropdown_bg_transparent_scss_var: rgba(255, 255, 255, 0) !default;
 $header-dropdown_color_scss_var: $text_color_middle_scss_var !default;
 $header-dropdown_title_scss_var: $text_color_middle_scss_var !default;
 $header-dropdown-link_color_scss_var: $text_color_middle_scss_var !default;
@@ -392,12 +392,12 @@ $bnslider_bg_scss_var: $body_bg_scss_var !default;
 $bnslider_text_scss_var: #282828 !default;
 $slide-content_text_color_scss_var: $body_text_color_scss_var !default;
 $slide_nav_color_scss_var: #282828 !default;
-$slide_nav_bg_scss_var: rgba(255, 255, 255, .55) !default;
+$slide_nav_bg_scss_var: rgba(255, 255, 255, 0.55) !default;
 $slide_nav-hover_color_scss_var: #fff !default;
 $slide_nav-hover_bg_scss_var: $custom_color_scss_var !default;
 $slide_nav-mobile_color_scss_var: #fff !default;
 $slide_nav-mobile_bg_scss_var: $custom_color_scss_var !default;
-$slide_video-control_bg_scss_var: rgba(255, 255, 255, .55) !default;
+$slide_video-control_bg_scss_var: rgba(255, 255, 255, 0.55) !default;
 $slide_video-control_color_scss_var: #282828 !default;
 $slide_video-control-hover_bg_scss_var: $custom_color_scss_var !default;
 $slide_video-control-hover_color_scss_var: #fff !default;
@@ -410,14 +410,14 @@ $product-title_color_scss_var: $text_color_middle_scss_var !default;
 $product-title-hover_color_scss_var: $custom_color_scss_var !default;
 $product-category_color_scss_var: #9e9e9e !default;
 $product-rating_color_scss_var: #b4b4b4 !default;
-$product-rating-fill_color_scss_var: #FFD400 !default;
+$product-rating-fill_color_scss_var: #ffd400 !default;
 $product-simple-title_color_scss_var: $body_text_color_scss_var !default;
 $product-simple-price_color_scss_var: $body_text_color_scss_var !default;
 $product-price_actual_color_scss_var: $body_text_color_scss_var !default;
 $product-price_old_color_scss_var: $text_color_middle_scss_var !default;
-$label_stock_bg_scss_var: #4F4F4F !default;
+$label_stock_bg_scss_var: #4f4f4f !default;
 $label_stock_color_scss_var: #fff !default;
-$label_new_bg_scss_var: #33C7FD !default;
+$label_new_bg_scss_var: #33c7fd !default;
 $label_new_color_scss_var: #fff !default;
 $label_sale_bg_scss_var: #fb317d !default;
 $label_sale_color_scss_var: #fff !default;
@@ -431,15 +431,15 @@ $product-promo-title-hover_color_scss_var: $custom_color_scss_var !default;
 // product page
 $product-page-container_scss_var: 1400px !default;
 $product-page-video_bg_scss_var: $body_bg_scss_var !default;
-$product-page-rating_color_scss_var: #EFCE4A !default;
-$product-page-rating-fill_color_scss_var: #EFCE4A !default;
+$product-page-rating_color_scss_var: #efce4a !default;
+$product-page-rating-fill_color_scss_var: #efce4a !default;
 $product-page-rating-author_color_scss_var: $text_color_light_scss_var !default;
 $product-page-prevnext-arrow_color_scss_var: #c5c5c5 !default;
 $product-page-prevnext-arrow-hover_color_scss_var: #161717 !default;
 $product-page-info-description_bg_scss_var: transparent !default; // product style 2
-$product-page-info-description_border_color_scss_var: $decor_border_color_darker_scss_var  !default; // product style 2
-$product-page-info-option-link_color_scss_var: $text_color_dark_scss_var  !default; // size swatch link
-$product-page-info-option-link-hover_color_scss_var: $custom_color_scss_var  !default; // size swatch link
+$product-page-info-description_border_color_scss_var: $decor_border_color_darker_scss_var !default; // product style 2
+$product-page-info-option-link_color_scss_var: $text_color_dark_scss_var !default; // size swatch link
+$product-page-info-option-link-hover_color_scss_var: $custom_color_scss_var !default; // size swatch link
 $product-page-info-option-border_color_scss_var: #dedede !default;
 $product-page-size-list_color_scss_var: $text_color_middle_scss_var !default;
 $product-page-size-list_bg_scss_var: transparent !default;
@@ -455,7 +455,7 @@ $product-page-title_font_family_scss_var: $heading_font_family_scss_var !default
 $product-page-option-label_color_scss_var: $text_color_middle_scss_var !default;
 $product-page-option-selected-text_color_scss_var: $text_color_middle_scss_var !default;
 $product-page-block-link_color_scss_var: $text_color_middle_scss_var !default;
-$product-page-block-link_bg_scss_var: #F7F7F8 !default;
+$product-page-block-link_bg_scss_var: #f7f7f8 !default;
 $product-page-block-link-hover_color_scss_var: $custom_color_scss_var !default;
 $product-page-block-link-divider_color_scss_var: #f4f4f4 !default;
 $product-page-block-shopping-block_color_scss_var: $text_color_middle_scss_var !default;
@@ -464,7 +464,7 @@ $product-page-block-shopping-block-divider_color_scss_var: #dadbde !default;
 $product-page-block-shopping-block-icon_color_scss_var: $custom_color_scss_var !default;
 $product-page-block-wishlist_color_scss_var: $body_text_color_scss_var !default;
 $product-page-block-wishlist-hover_color_scss_var: #fb317d !default;
-$product-page-block-viewed_bg_scss_var: #F7F7F8 !default;
+$product-page-block-viewed_bg_scss_var: #f7f7f8 !default;
 $product-page-block-viewed_color_scss_var: #282828 !default;
 $product-page-block-visitiors_bg_scss_var: $custom_color_scss_var !default;
 $product-page-block-visitiors_color_scss_var: #fff !default;
@@ -493,7 +493,7 @@ $button-add-to-compare-hover_color_scss_var: #fff !default;
 $button-add-to-compare_hover_bg_scss_var: #282828 !default;
 $product-page-progress-bar-text_color_scss_var: $custom_color_scss_var !default;
 $product-page-progress-bar_bg_scss_var: #7c7c7c !default;
-$product-page-info-box_bg_scss_var: #F7F7F8 !default;
+$product-page-info-box_bg_scss_var: #f7f7f8 !default;
 $product-page-info-box_color_scss_var: #282828 !default;
 $product-page-button_addtocart_font_family_scss_var: $body_font_family_scss_var !default;
 // sidebar filters
@@ -568,7 +568,7 @@ $inside-car-arrow-hover-bg_scss_var: #fff !default;
 $inside-car-arrow-color_scss_var: #000 !default;
 $slideSpeed_scss_var: 0.3s !default;
 // slick carousel arrows
-$slick-arrow-no-bg_color_scss_var: #2D2C2C !default;
+$slick-arrow-no-bg_color_scss_var: #2d2c2c !default;
 $slick-arrow-no-bg-hover_color_scss_var: $custom_color_scss_var !default;
 $slick-arrow_bg_scss_var: rgba(255, 255, 255, 0.7) !default;
 $slick-arrow-hover_bg_scss_var: rgba(255, 255, 255, 1) !default;
@@ -613,10 +613,11 @@ $tooltip_text_color_scss_var: #282828 !default;
 $tooltip_border_color_scss_var: $decor_border_color_darker_scss_var !default;
 $tooltip_border_width_scss_var: 1px !default;
 $tooltip-arrow-width_scss_var: 5px !default;
-$tooltip-arrow-border-width_scss_var: $tooltip-arrow-width_scss_var + $tooltip-border-width_scss_var !default;
+$tooltip-arrow-border-width_scss_var: $tooltip-arrow-width_scss_var +
+  $tooltip-border-width_scss_var !default;
 // modal
 $modal_bg_scss_var: $body_bg_scss_var !default;
-$modal_bg_transparent_scss_var: rgba(255,255,255,0) !default;
+$modal_bg_transparent_scss_var: rgba(255, 255, 255, 0) !default;
 $modal-close_color_scss_var: #fff !default;
 $modal-close_bg_scss_var: $custom_color_scss_var !default;
 $modal-close-invert_color_scss_var: $custom_color_scss_var !default;
@@ -698,8 +699,8 @@ $timeline-item_text_color_scss_var: #fff !default;
 // gallery
 $gallery-title_color_scss_var: #fff !default;
 $gallery-subtitle_color_scss_var: #fff !default;
-$gallery-style-1_bg_scss_var: rgba(0, 0, 0, .3) !default;
-$gallery-item-link_bg_scss_var: rgba(255, 255, 255, .3) !default;
+$gallery-style-1_bg_scss_var: rgba(0, 0, 0, 0.3) !default;
+$gallery-item-link_bg_scss_var: rgba(255, 255, 255, 0.3) !default;
 $gallery-item-link-hover_bg_scss_var: rgba(255, 255, 255, 1) !default;
 $gallery-item-link_color_scss_var: #fff !default;
 $gallery-item-link-hover_color_scss_var: #282828 !default;
@@ -708,13 +709,13 @@ $count-banner-link_bg_scss_var: #000 !default;
 $count-banner1-txt1_color_scss_var: #fff !default;
 $count-banner1-txt2_color_scss_var: #fff !default;
 $count-banner1-span_color_scss_var: $custom_color_scss_var !default;
-$count-banner2_bg_scss_var: rgba(0, 0, 0, .7) !default;
+$count-banner2_bg_scss_var: rgba(0, 0, 0, 0.7) !default;
 $count-banner2_border_color_scss_var: #fff !default;
 $count-banner2-txt1_color_scss_var: #fff !default;
 $count-banner2-txt2_color_scss_var: $custom_color_scss_var !default;
 $count-banner2-count-label_color_scss_var: #a1a0a0 !default;
 $count-banner2-count_color_scss_var: #fff !default;
-$count-banner2-count_bg_scss_var: rgba(255, 255, 255, .35) !default;
+$count-banner2-count_bg_scss_var: rgba(255, 255, 255, 0.35) !default;
 // collection item with hover caption
 $collection-item-title_color_scss_var: $heading_color_scss_var !default;
 $collection-item-qty_color_scss_var: #a1a0a0 !default;
@@ -737,7 +738,7 @@ $product-single-slider2-item-info_color_scss_var: $body_text_color_scss_var !def
 $product-single-slider2-item-title_color_scss_var: $body_text_color_scss_var !default;
 $product-single-slider2-item-price_color_scss_var: $body_text_color_scss_var !default;
 // big slide with caption
-$big-slide-caption_bg_scss_var: rgba(255, 255, 255, .85) !default;
+$big-slide-caption_bg_scss_var: rgba(255, 255, 255, 0.85) !default;
 $big-slide-caption_color_scss_var: $body_text_color_scss_var !default;
 $big-slide-title_color_scss_var: $heading_color_scss_var !default;
 $big-slide-subtitle_color_scss_var: $heading_color_scss_var !default;
@@ -751,8 +752,8 @@ $tabs-content_title_color_scss_var: $text_color_middle_scss_var !default;
 $panel-heading-border_color_scss_var: #f0f0f0 !default;
 $panel-heading-link_color_scss_var: $text_color_middle_scss_var !default;
 $panel-heading-link-active_color_scss_var: $text_color_middle_scss_var !default;
-$panel-heading_bg_scss_var: #ffffff !default;  // for style 1
-$panel-heading_bg2_scss_var: #f9f9f9 !default;  // for style 2
+$panel-heading_bg_scss_var: #ffffff !default; // for style 1
+$panel-heading_bg2_scss_var: #f9f9f9 !default; // for style 2
 $panel-heading-icon_color_scss_var: $panel-heading-link_color_scss_var !default;
 // post previews
 $post-previews_bg_scss_var: #f9f9f9 !default;

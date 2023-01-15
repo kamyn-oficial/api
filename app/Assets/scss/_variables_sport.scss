@@ -3,7 +3,7 @@ $heading_font_family: 'Montserrat', sans-serif !default;
 $body_font_family: 'Montserrat', sans-serif !default;
 $desktop-menu_font_family: 'Montserrat', sans-serif !default;
 //main color
-$custom_color: #EB3240 !default;
+$custom_color: #01caaa !default;
 $text_color_dark: #0f0909 !default;
 $text_color_middle: #282828 !default;
 $text_color_light: #7e7e7e !default;
@@ -142,9 +142,9 @@ $breadcrumbs_bg: #f4f4f5 !default;
 $breadcrumbs_color: $text_color_middle !default;
 $breadcrumbs-hover_color: $custom_color !default;
 // loader
-$loader-spinner_border_color: rgba(100, 100, 100, .5) !default;
+$loader-spinner_border_color: rgba(100, 100, 100, 0.5) !default;
 $loader-spinner_spin_color: #fff !default;
-$ajax-loader_bg: rgba(255, 255, 255, .9) !default;
+$ajax-loader_bg: rgba(255, 255, 255, 0.9) !default;
 $loader-circle_width: 120px;
 $loader-circle_color: $custom_color !default;
 $loader-icon_color: #282828 !default;
@@ -274,7 +274,7 @@ $header-topline-dark-custom-text_color: #fff !default;
 $header-topline-dark-custom-text-span_color: $custom_color !default;
 // header dropdown
 $header-dropdown_bg: #fff !default;
-$header-dropdown_bg_transparent: rgba(255,255,255,0) !default;
+$header-dropdown_bg_transparent: rgba(255, 255, 255, 0) !default;
 $header-dropdown_color: $text_color_middle !default;
 $header-dropdown_title: $text_color_middle !default;
 $header-dropdown-link_color: $text_color_middle !default;
@@ -400,12 +400,12 @@ $bnslider_bg: $body_bg !default;
 $bnslider_text: #282828 !default;
 $slide-content_text_color: $body_text_color !default;
 $slide_nav_color: #282828 !default;
-$slide_nav_bg: rgba(255, 255, 255, .55) !default;
+$slide_nav_bg: rgba(255, 255, 255, 0.55) !default;
 $slide_nav-hover_color: #fff !default;
 $slide_nav-hover_bg: $custom_color !default;
 $slide_nav-mobile_color: #fff !default;
 $slide_nav-mobile_bg: $custom_color !default;
-$slide_video-control_bg: rgba(255, 255, 255, .55) !default;
+$slide_video-control_bg: rgba(255, 255, 255, 0.55) !default;
 $slide_video-control_color: #282828 !default;
 $slide_video-control-hover_bg: $custom_color !default;
 $slide_video-control-hover_color: #fff !default;
@@ -418,14 +418,14 @@ $product-title_color: $text_color_middle !default;
 $product-title-hover_color: $custom_color !default;
 $product-category_color: #9e9e9e !default;
 $product-rating_color: #b4b4b4 !default;
-$product-rating-fill_color: #FFD400 !default;
+$product-rating-fill_color: #ffd400 !default;
 $product-simple-title_color: $body_text_color !default;
 $product-simple-price_color: $body_text_color !default;
 $product-price_actual_color: $body_text_color !default;
 $product-price_old_color: $text_color_middle !default;
-$label_stock_bg: #4F4F4F !default;
+$label_stock_bg: #4f4f4f !default;
 $label_stock_color: #fff !default;
-$label_new_bg: #33C7FD !default;
+$label_new_bg: #33c7fd !default;
 $label_new_color: #fff !default;
 $label_sale_bg: #fb317d !default;
 $label_sale_color: #fff !default;
@@ -442,15 +442,15 @@ $product_description_color: $text_color_middle !default;
 // product page
 $product-page-container: 1400px !default;
 $product-page-video_bg: $body_bg !default;
-$product-page-rating_color: #EFCE4A !default;
-$product-page-rating-fill_color: #EFCE4A !default;
+$product-page-rating_color: #efce4a !default;
+$product-page-rating-fill_color: #efce4a !default;
 $product-page-rating-author_color: $text_color_light !default;
 $product-page-prevnext-arrow_color: #c5c5c5 !default;
 $product-page-prevnext-arrow-hover_color: #161717 !default;
 $product-page-info-description_bg: transparent !default; // product style 2
-$product-page-info-description_border_color: $decor_border_color_darker  !default; // product style 2
-$product-page-info-option-link_color: $text_color_dark  !default; // size swatch link
-$product-page-info-option-link-hover_color: $custom_color  !default; // size swatch link
+$product-page-info-description_border_color: $decor_border_color_darker !default; // product style 2
+$product-page-info-option-link_color: $text_color_dark !default; // size swatch link
+$product-page-info-option-link-hover_color: $custom_color !default; // size swatch link
 $product-page-info-option-border_color: #dedede !default;
 $product-page-size-list_color: $text_color_middle !default;
 $product-page-size-list_bg: transparent !default;
@@ -466,7 +466,7 @@ $product-page-title_font_family: $heading_font_family !default;
 $product-page-option-label_color: $text_color_middle !default;
 $product-page-option-selected-text_color: $text_color_middle !default;
 $product-page-block-link_color: $text_color_middle !default;
-$product-page-block-link_bg: #F7F7F8 !default;
+$product-page-block-link_bg: #f7f7f8 !default;
 $product-page-block-link-hover_color: $custom_color !default;
 $product-page-block-link-divider_color: #dadbde !default;
 $product-page-block-shopping-block_color: $text_color_middle !default;
@@ -475,7 +475,7 @@ $product-page-block-shopping-block-divider_color: #dadbde !default;
 $product-page-block-shopping-block-icon_color: $custom_color !default;
 $product-page-block-wishlist_color: $body_text_color !default;
 $product-page-block-wishlist-hover_color: #fb317d !default;
-$product-page-block-viewed_bg: #F7F7F8 !default;
+$product-page-block-viewed_bg: #f7f7f8 !default;
 $product-page-block-viewed_color: #282828 !default;
 $product-page-block-visitiors_bg: $custom_color !default;
 $product-page-block-visitiors_color: #fff !default;
@@ -504,7 +504,7 @@ $button-add-to-compare-hover_color: #fff !default;
 $button-add-to-compare_hover_bg: #282828 !default;
 $product-page-progress-bar-text_color: $custom_color !default;
 $product-page-progress-bar_bg: #fb317d !default;
-$product-page-info-box_bg: #F7F7F8 !default;
+$product-page-info-box_bg: #f7f7f8 !default;
 $product-page-info-box_color: #282828 !default;
 $product-page-button_addtocart_font_family: $body_font_family !default;
 // sidebar filters
@@ -579,7 +579,7 @@ $inside-car-arrow-hover-bg: #fff !default;
 $inside-car-arrow-color: #000 !default;
 $slideSpeed: 0.3s !default;
 // slick carousel arrows
-$slick-arrow-no-bg_color: #2D2C2C !default;
+$slick-arrow-no-bg_color: #2d2c2c !default;
 $slick-arrow-no-bg-hover_color: $custom_color !default;
 $slick-arrow_bg: rgba(255, 255, 255, 0.7) !default;
 $slick-arrow-hover_bg: rgba(255, 255, 255, 1) !default;
@@ -627,7 +627,7 @@ $tooltip-arrow-width: 5px !default;
 $tooltip-arrow-border-width: $tooltip-arrow-width + $tooltip-border-width !default;
 // modal
 $modal_bg: $body_bg !default;
-$modal_bg_transparent: rgba(255,255,255,0) !default;
+$modal_bg_transparent: rgba(255, 255, 255, 0) !default;
 $modal-close_color: #fff !default;
 $modal-close_bg: $custom_color !default;
 $modal-close-invert_color: $custom_color !default;
@@ -709,8 +709,8 @@ $timeline-item_text_color: #fff !default;
 // gallery
 $gallery-title_color: #fff !default;
 $gallery-subtitle_color: #fff !default;
-$gallery-style-1_bg: rgba(0, 0, 0, .3) !default;
-$gallery-item-link_bg: rgba(255, 255, 255, .3) !default;
+$gallery-style-1_bg: rgba(0, 0, 0, 0.3) !default;
+$gallery-item-link_bg: rgba(255, 255, 255, 0.3) !default;
 $gallery-item-link-hover_bg: rgba(255, 255, 255, 1) !default;
 $gallery-item-link_color: #fff !default;
 $gallery-item-link-hover_color: #282828 !default;
@@ -719,13 +719,13 @@ $count-banner-link_bg: #000 !default;
 $count-banner1-txt1_color: #fff !default;
 $count-banner1-txt2_color: #fff !default;
 $count-banner1-span_color: $custom_color !default;
-$count-banner2_bg: rgba(0, 0, 0, .7) !default;
+$count-banner2_bg: rgba(0, 0, 0, 0.7) !default;
 $count-banner2_border_color: #fff !default;
 $count-banner2-txt1_color: #fff !default;
 $count-banner2-txt2_color: $custom_color !default;
 $count-banner2-count-label_color: #a1a0a0 !default;
 $count-banner2-count_color: #fff !default;
-$count-banner2-count_bg: rgba(255, 255, 255, .35) !default;
+$count-banner2-count_bg: rgba(255, 255, 255, 0.35) !default;
 // collection item with hover caption
 $collection-item-title_color: $heading_color !default;
 $collection-item-qty_color: #a1a0a0 !default;
@@ -748,7 +748,7 @@ $product-single-slider2-item-info_color: $body_text_color !default;
 $product-single-slider2-item-title_color: $body_text_color !default;
 $product-single-slider2-item-price_color: $body_text_color !default;
 // big slide with caption
-$big-slide-caption_bg: rgba(255, 255, 255, .85) !default;
+$big-slide-caption_bg: rgba(255, 255, 255, 0.85) !default;
 $big-slide-caption_color: $body_text_color !default;
 $big-slide-title_color: $heading_color !default;
 $big-slide-subtitle_color: $heading_color !default;
@@ -762,8 +762,8 @@ $tabs-content_title_color: $text_color_middle !default;
 $panel-heading-border_color: #f0f0f0 !default;
 $panel-heading-link_color: $text_color_middle !default;
 $panel-heading-link-active_color: $text_color_middle !default;
-$panel-heading_bg: #ffffff !default;  // for style 1
-$panel-heading_bg2: #f9f9f9 !default;  // for style 2
+$panel-heading_bg: #ffffff !default; // for style 1
+$panel-heading_bg2: #f9f9f9 !default; // for style 2
 $panel-heading-icon_color: $panel-heading-link_color !default;
 // post previews
 $post-previews_bg: $body_bg !default;
