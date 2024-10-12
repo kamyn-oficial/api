@@ -131,8 +131,8 @@ export default class OrderController extends BaseController {
         date_of_expiration: new Date(
           new Date().setDate(new Date().getDate() + 1)
         ).toISOString(),
-        notification_url: `https://kamyn.com.br/api/order/notification`,
-        callback_url: 'https://kamyn.com.br/account-history.html',
+        notification_url: `https://riolifeoficial.com.br/api/order/notification`,
+        callback_url: 'https://riolifeoficial.com.br/account-history.html',
         description: (order.products as any)
           .map((p: any) => `${p.count}x ${p.product.name}`)
           .join(', '),

@@ -24,7 +24,7 @@ class MailService {
 
     this.transporter.use('compile', inLineCss())
 
-    this.from = `Kamyn <${Env.get('SMTP_USER')}>`
+    this.from = `Rio life <${Env.get('SMTP_USER')}>`
 
     this.assetsPath = join(__filename, '..', '..', 'Assets')
   }
