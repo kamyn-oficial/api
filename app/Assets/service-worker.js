@@ -142,7 +142,7 @@
 
   // Update 'version' if you need to refresh the cache
   const staticCacheName = 'static'
-  const version = 'v0.0.2::'
+  const version = 'v0.0.3::'
 
   // Store core files in a cache (including a page to display when offline)
   function updateStaticCache() {
